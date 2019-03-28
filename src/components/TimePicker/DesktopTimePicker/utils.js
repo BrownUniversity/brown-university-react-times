@@ -1,7 +1,7 @@
-export const getInputValueIsValid = val => {
-  // "hh:mm A" format
-  return /\b((1[0-2]|0?[1-9]):([0-5][0-9]) ([AaPp][Mm]))/.test(val);
-};
+export const getInputIsDirty = val => val !== null;
+
+export const getInputValueIsValid = val =>
+  /\b((1[0-2]|0?[1-9]):([0-5][0-9]) ([AP][M]))/.test(val);
 
 export const mungeTimeIn = time => {
   if (!time) {
@@ -11,41 +11,41 @@ export const mungeTimeIn = time => {
   const [HH, mm] = time.split(":");
   const HHAsNum = Number(HH);
   const A = HHAsNum < 12 ? "AM" : "PM";
-  let h;
+  let hh;
 
   if (HHAsNum === 0) {
-    h = "12";
+    hh = "12";
   } else if (HHAsNum > 12) {
-    h = String(HHAsNum - 12);
+    hh = String(HHAsNum - 12).padStart(2, "0");
   } else {
-    h = String(HHAsNum);
+    hh = String(HHAsNum).padStart(2, "0");
   }
 
-  return [h, mm, A];
+  return [hh, mm, A];
 };
 
-export const mungeTimeOut = (h, mm, A) => {
-  if (!h || !mm || !A) {
+export const mungeTimeOut = (hh, mm, A) => {
+  if (!hh || !mm || !A) {
     return null;
   }
 
-  const hAsNum = Number(h);
+  const hhAsNum = Number(hh);
   let HH;
 
-  if (hAsNum === 12 && A === "AM") {
+  if (hhAsNum === 12 && A === "AM") {
     HH = "00";
-  } else if (hAsNum < 12 && A === "PM") {
-    HH = String(hAsNum + 12);
+  } else if (hhAsNum < 12 && A === "PM") {
+    HH = String(hhAsNum + 12);
   } else {
-    HH = h.padStart(2, "0");
+    HH = hh.padStart(2, "0");
   }
 
   return `${HH}:${mm}`;
 };
 
-export const hOptions = Array(12)
+export const hhOptions = Array(12)
   .fill()
-  .map((_, idx) => String(1 + idx));
+  .map((_, idx) => String(1 + idx).padStart(2, "0"));
 
 export const mmOptions = Array(60)
   .fill()

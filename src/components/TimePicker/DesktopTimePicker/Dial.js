@@ -12,10 +12,6 @@ const Button = styled.button`
   border-radius: 3px;
   color: ${({ color }) => colors[color]};
   cursor: pointer;
-
-  &:focus {
-    outline: 0;
-  }
 `;
 
 const Value = styled.div`
