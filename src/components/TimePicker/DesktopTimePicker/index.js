@@ -42,7 +42,7 @@ const TimePickerPopper = styled.div`
 const TimePickerDialsWrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  width: 100px;
+  width: 104px;
 `;
 
 const TimePickerFang = styled.div`

@@ -1,3 +1,5 @@
+const svgRule = require("../webpack/rules/svg");
+
 module.exports = ({ config }) => ({
   ...config,
   module: {
@@ -21,6 +23,7 @@ module.exports = ({ config }) => ({
         test: /\.css$/,
         use: ["style-loader", "css-loader"]
       },
+      svgRule,
       {
         test: /\.woff$/,
         use: "file-loader?name=[name].[ext]"
