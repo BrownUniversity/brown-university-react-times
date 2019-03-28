@@ -1,0 +1,9 @@
+{
+  "extends": ["brown", "brown/jest", "brown/prettier", "brown/prettier/react"],
+  "env": {
+    "browser": true
+  },
+  "rules": {
+    "import/no-extraneous-dependencies": "off"
+  }
+}
