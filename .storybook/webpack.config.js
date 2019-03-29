@@ -12,7 +12,10 @@ module.exports = ({ config }) => ({
             loader: "babel-loader",
             options: {
               babelrc: false,
-              plugins: ["babel-plugin-styled-components"],
+              plugins: [
+                "@babel/plugin-proposal-class-properties",
+                "babel-plugin-styled-components"
+              ],
               presets: ["@babel/preset-env", "@babel/preset-react"]
             }
           }

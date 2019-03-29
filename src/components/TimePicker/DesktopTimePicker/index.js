@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import styled from "styled-components";
 import { Manager, Reference, Popper } from "react-popper";
 import Dial from "./Dial";
@@ -29,7 +29,7 @@ const DesktopInput = styled.input`
   }
 `;
 
-const TimePickerPopper = styled.div`
+const PopperWrapper = styled.div`
   background-color: #fff;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.07);
   border-radius: 3px;
@@ -40,13 +40,7 @@ const TimePickerPopper = styled.div`
   }
 `;
 
-const TimePickerDialsWrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 104px;
-`;
-
-const TimePickerFang = styled.div`
+const Fang = styled.div`
   &[data-placement*="bottom-start"] {
     position: absolute;
     border: 8px solid transparent;
@@ -69,23 +63,21 @@ const TimePickerFang = styled.div`
   }
 `;
 
+const ClockWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 104px;
+`;
+
 /*
   outer DesktopTimePicker component
 */
-class DesktopTimePicker extends Component {
-  constructor(props) {
-    super(props);
+class DesktopTimePicker extends PureComponent {
+  state = {
+    inputValue: null
+  };
 
-    this.state = {
-      inputValue: null
-    };
-
-    this.wrapper = React.createRef();
-
-    this.handleInputValueChange = this.handleInputValueChange.bind(this);
-    this.handleInputValueReset = this.handleInputValueReset.bind(this);
-    this.handleOutsideClick = this.handleOutsideClick.bind(this);
-  }
+  wrapper = React.createRef();
 
   componentDidMount() {
     document.addEventListener("click", this.handleOutsideClick);
@@ -108,7 +100,7 @@ class DesktopTimePicker extends Component {
     document.removeEventListener("click", this.handleOutsideClick);
   }
 
-  handleInputValueChange(e) {
+  handleInputValueChange = e => {
     this.setState({
       inputValue: e.target.value
     });
@@ -116,17 +108,17 @@ class DesktopTimePicker extends Component {
     if (!this.props.focused) {
       this.props.onFocusChange({ focused: true });
     }
-  }
+  };
 
-  handleInputValueReset() {
+  handleInputValueReset = () => {
     this.setState({ inputValue: null });
-  }
+  };
 
-  handleOutsideClick(e) {
+  handleOutsideClick = e => {
     if (!this.wrapper.current.contains(e.target)) {
       this.props.onFocusChange({ focused: false });
     }
-  }
+  };
 
   render() {
     const {
@@ -165,16 +157,17 @@ class DesktopTimePicker extends Component {
           {focused && (
             <Popper placement="bottom-start">
               {({ ref, style, placement }) => (
-                <TimePickerPopper
+                <PopperWrapper
                   ref={ref}
                   style={style}
                   data-placement={placement}
                 >
-                  <TimePickerDialsWrapper aria-label="Clock">
+                  <Fang data-placement={placement} />
+                  <ClockWrapper aria-label="Clock">
                     <Dial
                       color={color}
+                      name="hours"
                       value={shouldShowDialValues ? hhDialValue : "--"}
-                      incrementAriaLabel="Increment hours"
                       increment={() =>
                         onTimeChange(
                           transformTimeOut(
@@ -184,7 +177,6 @@ class DesktopTimePicker extends Component {
                           )
                         )
                       }
-                      decrementAriaLabel="Decrement hours"
                       decrement={() =>
                         onTimeChange(
                           transformTimeOut(
@@ -197,8 +189,8 @@ class DesktopTimePicker extends Component {
                     />
                     <Dial
                       color={color}
+                      name="minutes"
                       value={shouldShowDialValues ? mmDialValue : "--"}
-                      incrementAriaLabel="Increment minutes"
                       increment={() =>
                         onTimeChange(
                           transformTimeOut(
@@ -208,7 +200,6 @@ class DesktopTimePicker extends Component {
                           )
                         )
                       }
-                      decrementAriaLabel="Decrement minutes"
                       decrement={() =>
                         onTimeChange(
                           transformTimeOut(
@@ -221,8 +212,8 @@ class DesktopTimePicker extends Component {
                     />
                     <Dial
                       color={color}
+                      name="meridiem"
                       value={shouldShowDialValues ? aaDialValue : "--"}
-                      incrementAriaLabel="Increment meridiem"
                       increment={() =>
                         onTimeChange(
                           transformTimeOut(
@@ -232,7 +223,6 @@ class DesktopTimePicker extends Component {
                           )
                         )
                       }
-                      decrementAriaLabel="Decrement meridiem"
                       decrement={() =>
                         onTimeChange(
                           transformTimeOut(
@@ -243,9 +233,8 @@ class DesktopTimePicker extends Component {
                         )
                       }
                     />
-                    <TimePickerFang data-placement={placement} />
-                  </TimePickerDialsWrapper>
-                </TimePickerPopper>
+                  </ClockWrapper>
+                </PopperWrapper>
               )}
             </Popper>
           )}

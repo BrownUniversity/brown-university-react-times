@@ -37,19 +37,12 @@ const Value = styled.div`
 /*
   outer Dial component
 */
-const Dial = ({
-  color,
-  value,
-  incrementAriaLabel,
-  increment,
-  decrementAriaLabel,
-  decrement
-}) => (
+const Dial = ({ color, name, value, increment, decrement }) => (
   <Wrapper>
     <Button
       type="button"
       color={color}
-      aria-label={incrementAriaLabel}
+      aria-label={`Increment ${name}`}
       onClick={increment}
     >
       <ChevronUpSVG />
@@ -58,7 +51,7 @@ const Dial = ({
     <Button
       type="button"
       color={color}
-      aria-label={decrementAriaLabel}
+      aria-label={`Decrement ${name}`}
       onClick={decrement}
     >
       <ChevronDownSVG />
@@ -75,10 +68,9 @@ Dial.propTypes = {
     "navy",
     "idRed"
   ]).isRequired,
+  name: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
-  incrementAriaLabel: PropTypes.string.isRequired,
   increment: PropTypes.func.isRequired,
-  decrementAriaLabel: PropTypes.string.isRequired,
   decrement: PropTypes.func.isRequired
 };
 

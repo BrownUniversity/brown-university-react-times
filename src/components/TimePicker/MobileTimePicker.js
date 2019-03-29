@@ -18,7 +18,7 @@ const MobileTimePicker = ({ id, time, onTimeChange }) => (
   <MobileInput
     type="time"
     id={id}
-    value={time}
+    value={time || ""}
     onChange={e => onTimeChange(e.target.value)}
   />
 );

@@ -1,11 +1,15 @@
 {
   "env": {
     "commonjs": {
-      "plugins": ["babel-plugin-styled-components"],
+      "plugins": [
+        "@babel/plugin-proposal-class-properties",
+        "babel-plugin-styled-components"
+      ],
       "presets": ["@babel/preset-env", "@babel/preset-react"]
     },
     "es": {
       "plugins": [
+        "@babel/plugin-proposal-class-properties",
         "babel-plugin-styled-components",
         [
           "babel-plugin-inline-react-svg",
