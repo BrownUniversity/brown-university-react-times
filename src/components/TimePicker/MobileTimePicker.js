@@ -14,19 +14,21 @@ const MobileInput = styled.input`
 /*
   outer MobileTimePicker component
 */
-const MobileTimePicker = ({ id, time, onTimeChange }) => (
+const MobileTimePicker = ({ id, time, onTimeChange, onFocusChange }) => (
   <MobileInput
     type="time"
     id={id}
     value={time || ""}
     onChange={e => onTimeChange(e.target.value)}
+    onBlur={() => onFocusChange({ focused: false })}
   />
 );
 
 MobileTimePicker.propTypes = {
   id: PropTypes.string.isRequired,
   time: PropTypes.string,
-  onTimeChange: PropTypes.func.isRequired
+  onTimeChange: PropTypes.func.isRequired,
+  onFocusChange: PropTypes.func.isRequired
 };
 
 MobileTimePicker.defaultProps = {

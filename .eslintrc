@@ -9,7 +9,7 @@
   "settings": {
     "import/resolver": {
       "node": {
-        "moduleDirectory": ["node_modules", "jest/utils"]
+        "moduleDirectory": ["node_modules", "./", "jest/utils"]
       }
     }
   }

@@ -10,26 +10,30 @@ const TimePickerContainer = ({
   id = "time-picker",
   time: initialTime = null,
   focused: initialFocused = false,
+  onTimeChange = () => undefined,
+  onFocusChange = () => undefined,
   children,
   ...restProps
 }) => {
   const [time, setTime] = useState(initialTime);
   const [focused, setFocused] = useState(initialFocused);
 
-  const onTimeChange = nextTime => {
+  const handleTimeChange = nextTime => {
     setTime(nextTime);
+    onTimeChange(nextTime);
   };
 
-  const onFocusChange = ({ focused: nextFocused }) => {
+  const handleFocusChange = ({ focused: nextFocused }) => {
     setFocused(nextFocused);
+    onFocusChange({ focused: nextFocused });
   };
 
   return React.cloneElement(children, {
     id,
     time,
-    onTimeChange,
+    onTimeChange: handleTimeChange,
     focused,
-    onFocusChange,
+    onFocusChange: handleFocusChange,
     ...restProps
   });
 };

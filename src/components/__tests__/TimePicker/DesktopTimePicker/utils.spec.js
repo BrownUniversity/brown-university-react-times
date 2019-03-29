@@ -1,11 +1,11 @@
 import {
   getInputIsDirty,
   getInputValueIsValid,
-  transformInputValueForOutput,
-  transformTimeIn,
-  transformTimeOut,
-  getNextOption,
-  getPreviousOption
+  transformInputValueToDialValues,
+  transformTimeToDialValues,
+  transformDialValuesToTime,
+  getNextDialOption,
+  getPreviousDialOption
 } from "../../../TimePicker/DesktopTimePicker/utils";
 
 describe("DesktopTimePicker utils", () => {
@@ -53,105 +53,121 @@ describe("DesktopTimePicker utils", () => {
     });
   });
 
-  describe("transformInputValueForOutput", () => {
+  describe("transformInputValueToDialValues", () => {
     const expectedAM = ["09", "41", "AM"];
     const expectedPM = ["09", "41", "PM"];
 
     it("handles present space between mm and aa", () => {
-      expect(transformInputValueForOutput("09:41 am")).toEqual(expectedAM);
-      expect(transformInputValueForOutput("09:41 aM")).toEqual(expectedAM);
-      expect(transformInputValueForOutput("09:41 Am")).toEqual(expectedAM);
-      expect(transformInputValueForOutput("09:41 AM")).toEqual(expectedAM);
-      expect(transformInputValueForOutput("09:41 pm")).toEqual(expectedPM);
-      expect(transformInputValueForOutput("09:41 Pm")).toEqual(expectedPM);
-      expect(transformInputValueForOutput("09:41 pM")).toEqual(expectedPM);
-      expect(transformInputValueForOutput("09:41 PM")).toEqual(expectedPM);
+      expect(transformInputValueToDialValues("09:41 am")).toEqual(expectedAM);
+      expect(transformInputValueToDialValues("09:41 aM")).toEqual(expectedAM);
+      expect(transformInputValueToDialValues("09:41 Am")).toEqual(expectedAM);
+      expect(transformInputValueToDialValues("09:41 AM")).toEqual(expectedAM);
+      expect(transformInputValueToDialValues("09:41 pm")).toEqual(expectedPM);
+      expect(transformInputValueToDialValues("09:41 Pm")).toEqual(expectedPM);
+      expect(transformInputValueToDialValues("09:41 pM")).toEqual(expectedPM);
+      expect(transformInputValueToDialValues("09:41 PM")).toEqual(expectedPM);
     });
 
     it("handles absent space between mm and aa", () => {
-      expect(transformInputValueForOutput("09:41am")).toEqual(expectedAM);
-      expect(transformInputValueForOutput("09:41aM")).toEqual(expectedAM);
-      expect(transformInputValueForOutput("09:41Am")).toEqual(expectedAM);
-      expect(transformInputValueForOutput("09:41AM")).toEqual(expectedAM);
-      expect(transformInputValueForOutput("09:41pm")).toEqual(expectedPM);
-      expect(transformInputValueForOutput("09:41Pm")).toEqual(expectedPM);
-      expect(transformInputValueForOutput("09:41pM")).toEqual(expectedPM);
-      expect(transformInputValueForOutput("09:41PM")).toEqual(expectedPM);
+      expect(transformInputValueToDialValues("09:41am")).toEqual(expectedAM);
+      expect(transformInputValueToDialValues("09:41aM")).toEqual(expectedAM);
+      expect(transformInputValueToDialValues("09:41Am")).toEqual(expectedAM);
+      expect(transformInputValueToDialValues("09:41AM")).toEqual(expectedAM);
+      expect(transformInputValueToDialValues("09:41pm")).toEqual(expectedPM);
+      expect(transformInputValueToDialValues("09:41Pm")).toEqual(expectedPM);
+      expect(transformInputValueToDialValues("09:41pM")).toEqual(expectedPM);
+      expect(transformInputValueToDialValues("09:41PM")).toEqual(expectedPM);
     });
   });
 
-  describe("transformTimeIn", () => {
-    it("should handle missing time", () => {
-      expect(transformTimeIn(null)).toEqual(["--", "--", "--"]);
+  describe("transformTimeToDialValues", () => {
+    it("handles missing time", () => {
+      expect(transformTimeToDialValues(null)).toEqual(["--", "--", "--"]);
     });
 
-    it("should handle AM time", () => {
-      expect(transformTimeIn("01:30")).toEqual(["01", "30", "AM"]);
+    it("handles empty time", () => {
+      expect(transformTimeToDialValues("")).toEqual(["--", "--", "--"]);
     });
 
-    it("should handle PM time", () => {
-      expect(transformTimeIn("23:59")).toEqual(["11", "59", "PM"]);
+    it("handles invalid time", () => {
+      expect(transformTimeToDialValues("Invalid Time")).toEqual([
+        "--",
+        "--",
+        "--"
+      ]);
     });
 
-    it("should handle midnignt", () => {
-      expect(transformTimeIn("00:00")).toEqual(["12", "00", "AM"]);
+    it("handles AM time", () => {
+      expect(transformTimeToDialValues("01:30")).toEqual(["01", "30", "AM"]);
     });
 
-    it("should handle noon", () => {
-      expect(transformTimeIn("12:00")).toEqual(["12", "00", "PM"]);
-    });
-  });
-
-  describe("transformTimeOut", () => {
-    it("should handle missing time", () => {
-      expect(transformTimeOut(null)).toEqual(null);
+    it("handles PM time", () => {
+      expect(transformTimeToDialValues("23:59")).toEqual(["11", "59", "PM"]);
     });
 
-    it("should handle AM time", () => {
-      expect(transformTimeOut("01", "30", "AM")).toBe("01:30");
+    it("handles midnignt", () => {
+      expect(transformTimeToDialValues("00:00")).toEqual(["12", "00", "AM"]);
     });
 
-    it("should handle PM time", () => {
-      expect(transformTimeOut("11", "59", "PM")).toBe("23:59");
-    });
-
-    it("should handle midnignt", () => {
-      expect(transformTimeOut("12", "00", "AM")).toBe("00:00");
-    });
-
-    it("should handle noon", () => {
-      expect(transformTimeOut("12", "00", "PM")).toBe("12:00");
+    it("handles noon", () => {
+      expect(transformTimeToDialValues("12:00")).toEqual(["12", "00", "PM"]);
     });
   });
 
-  describe("getNextOption", () => {
-    const options = [1, 2];
+  describe("transformDialValuesToTime", () => {
+    it("handles missing hours value", () => {
+      expect(transformDialValuesToTime(null, "20", "AM")).toEqual(null);
+    });
 
+    it("handles missing minutes value", () => {
+      expect(transformDialValuesToTime("01", null, "AM")).toEqual(null);
+    });
+
+    it("handles missing meridiem value", () => {
+      expect(transformDialValuesToTime("01", "30", null)).toEqual(null);
+    });
+
+    it("handles values for AM time", () => {
+      expect(transformDialValuesToTime("01", "30", "AM")).toBe("01:30");
+    });
+
+    it("handles values PM time", () => {
+      expect(transformDialValuesToTime("11", "59", "PM")).toBe("23:59");
+    });
+
+    it("handles values for midnignt", () => {
+      expect(transformDialValuesToTime("12", "00", "AM")).toBe("00:00");
+    });
+
+    it("handles values for noon", () => {
+      expect(transformDialValuesToTime("12", "00", "PM")).toBe("12:00");
+    });
+  });
+
+  describe("getNextDialOption", () => {
     describe("when current is not last option", () => {
-      it("should return next option in array", () => {
-        expect(getNextOption(options, 1)).toBe(2);
+      it("returns next option in array", () => {
+        expect(getNextDialOption([1, 2], 1)).toBe(2);
       });
     });
 
     describe("when current is last option", () => {
-      it("should return first option in array", () => {
-        expect(getNextOption(options, 2)).toBe(1);
+      it("returns first option in array", () => {
+        expect(getNextDialOption([1, 2], 2)).toBe(1);
       });
     });
   });
 
-  describe("getPreviousOption", () => {
-    const options = [1, 2];
-
+  describe("getPreviousDialOption", () => {
     describe("when current is not first option", () => {
-      it("should return previous option in array", () => {
-        expect(getPreviousOption(options, 2)).toBe(1);
+      it("returns previous option in array", () => {
+        expect(getPreviousDialOption([1, 2], 2)).toBe(1);
       });
     });
 
     describe("when current is first option", () => {
-      it("should return last option in array", () => {
-        expect(getPreviousOption(options, 1)).toBe(2);
+      it("returns last option in array", () => {
+        expect(getPreviousDialOption([1, 2], 1)).toBe(2);
       });
     });
   });

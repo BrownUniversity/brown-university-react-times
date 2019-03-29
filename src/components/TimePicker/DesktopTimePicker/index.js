@@ -6,14 +6,14 @@ import Dial from "./Dial";
 import {
   getInputIsDirty,
   getInputValueIsValid,
-  transformInputValueForOutput,
-  transformTimeIn,
-  transformTimeOut,
-  hhOptions,
-  mmOptions,
-  aaOptions,
-  getNextOption,
-  getPreviousOption
+  transformInputValueToDialValues,
+  transformTimeToDialValues,
+  transformDialValuesToTime,
+  hoursDialOptions,
+  minutesDialOptions,
+  meridiemDialOptions,
+  getNextDialOption,
+  getPreviousDialOption
 } from "./utils";
 import { inputCSS } from "../../../styles";
 
@@ -74,8 +74,12 @@ const ClockWrapper = styled.div`
 */
 class DesktopTimePicker extends PureComponent {
   state = {
-    inputValue: null
+    inputIsDirty: false,
+    inputValue: null,
+    inputValueIsValid: false
   };
+
+  initialState = this.state;
 
   wrapper = React.createRef();
 
@@ -83,16 +87,25 @@ class DesktopTimePicker extends PureComponent {
     document.addEventListener("click", this.handleOutsideClick);
   }
 
-  componentDidUpdate(prevProps) {
-    const { inputValue } = this.state;
+  componentDidUpdate(prevProps, prevState) {
+    const timeChanged = prevProps.time !== this.props.time;
+    const inputValueChanged = prevState.inputValue !== this.state.inputValue;
+    const { inputIsDirty, inputValue, inputValueIsValid } = this.state;
 
-    if (getInputIsDirty(inputValue) && getInputValueIsValid(inputValue)) {
+    if (inputValueIsValid) {
+      // trigger time change and reset input value if it becomes valid
       this.props.onTimeChange(
-        transformTimeOut(...transformInputValueForOutput(inputValue))
+        transformDialValuesToTime(
+          ...transformInputValueToDialValues(inputValue)
+        )
       );
       this.handleInputValueReset();
-    } else if (prevProps.time !== this.props.time) {
+    } else if (timeChanged && !["", "Invalid Time"].includes(this.props.time)) {
+      // reset input value if time becomes valid
       this.handleInputValueReset();
+    } else if (inputValueChanged && inputIsDirty && !inputValueIsValid) {
+      // trigger time change if input value changes to an empty or invalid value
+      this.props.onTimeChange(inputValue === "" ? "" : "Invalid Time");
     }
   }
 
@@ -101,8 +114,12 @@ class DesktopTimePicker extends PureComponent {
   }
 
   handleInputValueChange = e => {
+    const inputValue = e.target.value;
+
     this.setState({
-      inputValue: e.target.value
+      inputIsDirty: getInputIsDirty(inputValue),
+      inputValue,
+      inputValueIsValid: getInputValueIsValid(inputValue)
     });
 
     if (!this.props.focused) {
@@ -111,7 +128,7 @@ class DesktopTimePicker extends PureComponent {
   };
 
   handleInputValueReset = () => {
-    this.setState({ inputValue: null });
+    this.setState(this.initialState);
   };
 
   handleOutsideClick = e => {
@@ -129,13 +146,11 @@ class DesktopTimePicker extends PureComponent {
       focused,
       onFocusChange
     } = this.props;
-    const { inputValue } = this.state;
-    const inputIsDirty = getInputIsDirty(inputValue);
-    const inputValueIsValid = getInputValueIsValid(inputValue);
-    const [hh, mm, aa] = transformTimeIn(time);
-    const hhDialValue = hh === "--" ? "12" : hh;
-    const mmDialValue = mm === "--" ? "00" : mm;
-    const aaDialValue = aa === "--" ? "PM" : aa;
+    const { inputIsDirty, inputValue, inputValueIsValid } = this.state;
+    const [hh, mm, aa] = transformTimeToDialValues(time);
+    const hoursDialValue = hh === "--" ? "12" : hh;
+    const minutesDialValue = mm === "--" ? "00" : mm;
+    const meridiemDialValue = aa === "--" ? "PM" : aa;
     const shouldShowDialValues = !inputIsDirty || inputValueIsValid;
 
     return (
@@ -144,7 +159,7 @@ class DesktopTimePicker extends PureComponent {
           <Reference>
             {({ ref }) => (
               <DesktopInput
-                aria-label="hh:mm aa"
+                aria-label="hours:minutes meridiem"
                 type="text"
                 ref={ref}
                 id={id}
@@ -167,22 +182,25 @@ class DesktopTimePicker extends PureComponent {
                     <Dial
                       color={color}
                       name="hours"
-                      value={shouldShowDialValues ? hhDialValue : "--"}
+                      value={shouldShowDialValues ? hoursDialValue : "--"}
                       increment={() =>
                         onTimeChange(
-                          transformTimeOut(
-                            getNextOption(hhOptions, hhDialValue),
-                            mmDialValue,
-                            aaDialValue
+                          transformDialValuesToTime(
+                            getNextDialOption(hoursDialOptions, hoursDialValue),
+                            minutesDialValue,
+                            meridiemDialValue
                           )
                         )
                       }
                       decrement={() =>
                         onTimeChange(
-                          transformTimeOut(
-                            getPreviousOption(hhOptions, hhDialValue),
-                            mmDialValue,
-                            aaDialValue
+                          transformDialValuesToTime(
+                            getPreviousDialOption(
+                              hoursDialOptions,
+                              hoursDialValue
+                            ),
+                            minutesDialValue,
+                            meridiemDialValue
                           )
                         )
                       }
@@ -190,22 +208,28 @@ class DesktopTimePicker extends PureComponent {
                     <Dial
                       color={color}
                       name="minutes"
-                      value={shouldShowDialValues ? mmDialValue : "--"}
+                      value={shouldShowDialValues ? minutesDialValue : "--"}
                       increment={() =>
                         onTimeChange(
-                          transformTimeOut(
-                            hhDialValue,
-                            getNextOption(mmOptions, mmDialValue),
-                            aaDialValue
+                          transformDialValuesToTime(
+                            hoursDialValue,
+                            getNextDialOption(
+                              minutesDialOptions,
+                              minutesDialValue
+                            ),
+                            meridiemDialValue
                           )
                         )
                       }
                       decrement={() =>
                         onTimeChange(
-                          transformTimeOut(
-                            hhDialValue,
-                            getPreviousOption(mmOptions, mmDialValue),
-                            aaDialValue
+                          transformDialValuesToTime(
+                            hoursDialValue,
+                            getPreviousDialOption(
+                              minutesDialOptions,
+                              minutesDialValue
+                            ),
+                            meridiemDialValue
                           )
                         )
                       }
@@ -213,22 +237,28 @@ class DesktopTimePicker extends PureComponent {
                     <Dial
                       color={color}
                       name="meridiem"
-                      value={shouldShowDialValues ? aaDialValue : "--"}
+                      value={shouldShowDialValues ? meridiemDialValue : "--"}
                       increment={() =>
                         onTimeChange(
-                          transformTimeOut(
-                            hhDialValue,
-                            mmDialValue,
-                            getNextOption(aaOptions, aaDialValue)
+                          transformDialValuesToTime(
+                            hoursDialValue,
+                            minutesDialValue,
+                            getNextDialOption(
+                              meridiemDialOptions,
+                              meridiemDialValue
+                            )
                           )
                         )
                       }
                       decrement={() =>
                         onTimeChange(
-                          transformTimeOut(
-                            hhDialValue,
-                            mmDialValue,
-                            getPreviousOption(aaOptions, aaDialValue)
+                          transformDialValuesToTime(
+                            hoursDialValue,
+                            minutesDialValue,
+                            getPreviousDialOption(
+                              meridiemDialOptions,
+                              meridiemDialValue
+                            )
                           )
                         )
                       }

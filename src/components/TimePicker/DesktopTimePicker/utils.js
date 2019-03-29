@@ -1,3 +1,6 @@
+/*
+  input
+*/
 export const getInputIsDirty = val => val !== null;
 
 export const getInputValueIsValid = val =>
@@ -5,7 +8,7 @@ export const getInputValueIsValid = val =>
   val.trim().length < 9 &&
   /\b((1[0-2]|0?[1-9]):([0-5][0-9]) ?([AaPp][Mm]))/.test(val);
 
-export const transformInputValueForOutput = val => {
+export const transformInputValueToDialValues = val => {
   const cleanedVal = val
     .trim()
     .replace("am", "AM")
@@ -22,8 +25,11 @@ export const transformInputValueForOutput = val => {
   return [...cleanedVal.replace(/[AP]/, " $&").split(/:| /)];
 };
 
-export const transformTimeIn = time => {
-  if (!time) {
+/*
+  dials
+*/
+export const transformTimeToDialValues = time => {
+  if (!time || time === "" || time === "Invalid Time") {
     return ["--", "--", "--"];
   }
 
@@ -43,7 +49,7 @@ export const transformTimeIn = time => {
   return [hh, mm, aa];
 };
 
-export const transformTimeOut = (hh, mm, aa) => {
+export const transformDialValuesToTime = (hh, mm, aa) => {
   if (!hh || !mm || !aa) {
     return null;
   }
@@ -62,17 +68,17 @@ export const transformTimeOut = (hh, mm, aa) => {
   return `${HH}:${mm}`;
 };
 
-export const hhOptions = Array(12)
+export const hoursDialOptions = Array(12)
   .fill()
   .map((_, idx) => String(1 + idx).padStart(2, "0"));
 
-export const mmOptions = Array(60)
+export const minutesDialOptions = Array(60)
   .fill()
   .map((_, idx) => String(0 + idx).padStart(2, "0"));
 
-export const aaOptions = ["AM", "PM"];
+export const meridiemDialOptions = ["AM", "PM"];
 
-export const getNextOption = (options, current) => {
+export const getNextDialOption = (options, current) => {
   const currentIdx = options.indexOf(current);
 
   if (currentIdx < options.length - 1) {
@@ -82,7 +88,7 @@ export const getNextOption = (options, current) => {
   return options[0];
 };
 
-export const getPreviousOption = (options, current) => {
+export const getPreviousDialOption = (options, current) => {
   const currentIdx = options.indexOf(current);
 
   if (currentIdx !== 0) {
