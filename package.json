@@ -23,7 +23,7 @@
     "build:commonjs:analyze": "RUN_WEBPACK_BUNDLE_ANALYZER=true npm run build:commonjs",
     "prebuild:es": "rimraf dist/es",
     "build:es": "BABEL_ENV=es babel src -d dist/es",
-    "postbuild:es": "rimraf dist/es/components/__tests__",
+    "postbuild:es": "rimraf dist/es/components/__tests__ dist/es/components/utils",
     "prebuild": "npm run validate",
     "build": "npm-run-all build:commonjs build:es",
     "start": "start-storybook -p 8080 -c .storybook"

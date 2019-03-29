@@ -7,7 +7,7 @@ import { version } from "../package.json";
 */
 addParameters({
   options: {
-    name: `Brown University React Dates ${version}`
+    name: `Brown University React Times ${version}`
   }
 });
 
