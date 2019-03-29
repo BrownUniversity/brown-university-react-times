@@ -6,11 +6,12 @@ import Dial from "./Dial";
 import {
   getInputIsDirty,
   getInputValueIsValid,
-  mungeTimeIn,
-  mungeTimeOut,
+  transformInputValueForOutput,
+  transformTimeIn,
+  transformTimeOut,
   hhOptions,
   mmOptions,
-  AOptions,
+  aaOptions,
   getNextOption,
   getPreviousOption
 } from "./utils";
@@ -94,7 +95,9 @@ class DesktopTimePicker extends Component {
     const { inputValue } = this.state;
 
     if (getInputIsDirty(inputValue) && getInputValueIsValid(inputValue)) {
-      this.props.onTimeChange(mungeTimeOut(...inputValue.trim().split(/:| /)));
+      this.props.onTimeChange(
+        transformTimeOut(...transformInputValueForOutput(inputValue))
+      );
       this.handleInputValueReset();
     } else if (prevProps.time !== this.props.time) {
       this.handleInputValueReset();
@@ -132,19 +135,20 @@ class DesktopTimePicker extends Component {
       time,
       onTimeChange,
       focused,
-      onFocusChange
+      onFocusChange,
+      ...restProps
     } = this.props;
     const { inputValue } = this.state;
     const inputIsDirty = getInputIsDirty(inputValue);
     const inputValueIsValid = getInputValueIsValid(inputValue);
-    const [hh, mm, A] = mungeTimeIn(time);
+    const [hh, mm, aa] = transformTimeIn(time);
     const hhDialValue = hh === "--" ? "12" : hh;
     const mmDialValue = mm === "--" ? "00" : mm;
-    const ADialValue = A === "--" ? "PM" : A;
+    const aaDialValue = aa === "--" ? "PM" : aa;
     const shouldShowDialValues = !inputIsDirty || inputValueIsValid;
 
     return (
-      <div ref={this.wrapper}>
+      <div ref={this.wrapper} {...restProps}>
         <Manager>
           <Reference>
             {({ ref }) => (
@@ -152,7 +156,7 @@ class DesktopTimePicker extends Component {
                 ref={ref}
                 type="text"
                 id={id}
-                value={inputIsDirty ? inputValue : `${hh}:${mm} ${A}`}
+                value={inputIsDirty ? inputValue : `${hh}:${mm} ${aa}`}
                 onFocus={() => onFocusChange({ focused: true })}
                 onChange={this.handleInputValueChange}
               />
@@ -172,19 +176,19 @@ class DesktopTimePicker extends Component {
                       value={shouldShowDialValues ? hhDialValue : "--"}
                       increment={() =>
                         onTimeChange(
-                          mungeTimeOut(
+                          transformTimeOut(
                             getNextOption(hhOptions, hhDialValue),
                             mmDialValue,
-                            ADialValue
+                            aaDialValue
                           )
                         )
                       }
                       decrement={() =>
                         onTimeChange(
-                          mungeTimeOut(
+                          transformTimeOut(
                             getPreviousOption(hhOptions, hhDialValue),
                             mmDialValue,
-                            ADialValue
+                            aaDialValue
                           )
                         )
                       }
@@ -194,41 +198,41 @@ class DesktopTimePicker extends Component {
                       value={shouldShowDialValues ? mmDialValue : "--"}
                       increment={() =>
                         onTimeChange(
-                          mungeTimeOut(
+                          transformTimeOut(
                             hhDialValue,
                             getNextOption(mmOptions, mmDialValue),
-                            ADialValue
+                            aaDialValue
                           )
                         )
                       }
                       decrement={() =>
                         onTimeChange(
-                          mungeTimeOut(
+                          transformTimeOut(
                             hhDialValue,
                             getPreviousOption(mmOptions, mmDialValue),
-                            ADialValue
+                            aaDialValue
                           )
                         )
                       }
                     />
                     <Dial
                       color={color}
-                      value={shouldShowDialValues ? ADialValue : "--"}
+                      value={shouldShowDialValues ? aaDialValue : "--"}
                       increment={() =>
                         onTimeChange(
-                          mungeTimeOut(
+                          transformTimeOut(
                             hhDialValue,
                             mmDialValue,
-                            getNextOption(AOptions, ADialValue)
+                            getNextOption(aaOptions, aaDialValue)
                           )
                         )
                       }
                       decrement={() =>
                         onTimeChange(
-                          mungeTimeOut(
+                          transformTimeOut(
                             hhDialValue,
                             mmDialValue,
-                            getPreviousOption(AOptions, ADialValue)
+                            getPreviousOption(aaOptions, aaDialValue)
                           )
                         )
                       }

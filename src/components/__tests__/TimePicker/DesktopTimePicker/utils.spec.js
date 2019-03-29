@@ -1,8 +1,9 @@
 import {
   getInputIsDirty,
   getInputValueIsValid,
-  mungeTimeIn,
-  mungeTimeOut,
+  transformInputValueForOutput,
+  transformTimeIn,
+  transformTimeOut,
   getNextOption,
   getPreviousOption
 } from "../../../TimePicker/DesktopTimePicker/utils";
@@ -19,12 +20,17 @@ describe("DesktopTimePicker utils", () => {
       expect(getInputIsDirty(null)).toBe(false);
     });
   });
+
   describe("getInputValueIsValid", () => {
     it("returns true for valid times", () => {
       expect(getInputValueIsValid("01:30 AM")).toBe(true);
+      expect(getInputValueIsValid("01:30 am")).toBe(true);
       expect(getInputValueIsValid("11:59 PM")).toBe(true);
+      expect(getInputValueIsValid("11:59 pm")).toBe(true);
       expect(getInputValueIsValid("12:00 AM")).toBe(true);
       expect(getInputValueIsValid("12:00 PM")).toBe(true);
+      expect(getInputValueIsValid("09:41am")).toBe(true);
+      expect(getInputValueIsValid("09:41pm")).toBe(true);
     });
 
     it("returns false for invalid times", () => {
@@ -34,55 +40,102 @@ describe("DesktopTimePicker utils", () => {
       expect(getInputValueIsValid("01: AM")).toBe(false);
       expect(getInputValueIsValid("01:30")).toBe(false);
       expect(getInputValueIsValid("Ol:3o PM")).toBe(false);
-      expect(getInputValueIsValid("12:00 am")).toBe(false);
-      expect(getInputValueIsValid("12:00 pm")).toBe(false);
       expect(getInputValueIsValid("13:00")).toBe(false);
       expect(getInputValueIsValid("23:59 PM")).toBe(false);
+      expect(getInputValueIsValid("23:59 PM 11:59 PM")).toBe(false);
       expect(getInputValueIsValid("Invalid Date")).toBe(false);
     });
   });
 
-  describe("mungeTimeIn", () => {
-    it("should handle missing time", () => {
-      expect(mungeTimeIn(null)).toEqual(["--", "--", "--"]);
+  describe("transformInputValueForOutput", () => {
+    it("handles present space between mm and aa", () => {
+      expect(transformInputValueForOutput("09:41 AM")).toEqual([
+        "09",
+        "41",
+        "AM"
+      ]);
+      expect(transformInputValueForOutput("09:41 am")).toEqual([
+        "09",
+        "41",
+        "AM"
+      ]);
+      expect(transformInputValueForOutput("09:41 PM")).toEqual([
+        "09",
+        "41",
+        "PM"
+      ]);
+      expect(transformInputValueForOutput("09:41 pm")).toEqual([
+        "09",
+        "41",
+        "PM"
+      ]);
     });
 
-    it("should handle AM time", () => {
-      expect(mungeTimeIn("01:30")).toEqual(["01", "30", "AM"]);
-    });
-
-    it("should handle PM time", () => {
-      expect(mungeTimeIn("23:59")).toEqual(["11", "59", "PM"]);
-    });
-
-    it("should handle midnignt", () => {
-      expect(mungeTimeIn("00:00")).toEqual(["12", "00", "AM"]);
-    });
-
-    it("should handle noon", () => {
-      expect(mungeTimeIn("12:00")).toEqual(["12", "00", "PM"]);
+    it("handles absent space between mm and aa", () => {
+      expect(transformInputValueForOutput("09:41AM")).toEqual([
+        "09",
+        "41",
+        "AM"
+      ]);
+      expect(transformInputValueForOutput("09:41am")).toEqual([
+        "09",
+        "41",
+        "AM"
+      ]);
+      expect(transformInputValueForOutput("09:41PM")).toEqual([
+        "09",
+        "41",
+        "PM"
+      ]);
+      expect(transformInputValueForOutput("09:41pm")).toEqual([
+        "09",
+        "41",
+        "PM"
+      ]);
     });
   });
 
-  describe("mungeTimeOut", () => {
+  describe("transformTimeIn", () => {
     it("should handle missing time", () => {
-      expect(mungeTimeOut(null)).toEqual(null);
+      expect(transformTimeIn(null)).toEqual(["--", "--", "--"]);
     });
 
     it("should handle AM time", () => {
-      expect(mungeTimeOut("01", "30", "AM")).toBe("01:30");
+      expect(transformTimeIn("01:30")).toEqual(["01", "30", "AM"]);
     });
 
     it("should handle PM time", () => {
-      expect(mungeTimeOut("11", "59", "PM")).toBe("23:59");
+      expect(transformTimeIn("23:59")).toEqual(["11", "59", "PM"]);
     });
 
     it("should handle midnignt", () => {
-      expect(mungeTimeOut("12", "00", "AM")).toBe("00:00");
+      expect(transformTimeIn("00:00")).toEqual(["12", "00", "AM"]);
     });
 
     it("should handle noon", () => {
-      expect(mungeTimeOut("12", "00", "PM")).toBe("12:00");
+      expect(transformTimeIn("12:00")).toEqual(["12", "00", "PM"]);
+    });
+  });
+
+  describe("transformTimeOut", () => {
+    it("should handle missing time", () => {
+      expect(transformTimeOut(null)).toEqual(null);
+    });
+
+    it("should handle AM time", () => {
+      expect(transformTimeOut("01", "30", "AM")).toBe("01:30");
+    });
+
+    it("should handle PM time", () => {
+      expect(transformTimeOut("11", "59", "PM")).toBe("23:59");
+    });
+
+    it("should handle midnignt", () => {
+      expect(transformTimeOut("12", "00", "AM")).toBe("00:00");
+    });
+
+    it("should handle noon", () => {
+      expect(transformTimeOut("12", "00", "PM")).toBe("12:00");
     });
   });
 
