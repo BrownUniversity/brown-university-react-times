@@ -54,50 +54,29 @@ describe("DesktopTimePicker utils", () => {
   });
 
   describe("transformInputValueForOutput", () => {
+    const expectedAM = ["09", "41", "AM"];
+    const expectedPM = ["09", "41", "PM"];
+
     it("handles present space between mm and aa", () => {
-      expect(transformInputValueForOutput("09:41 AM")).toEqual([
-        "09",
-        "41",
-        "AM"
-      ]);
-      expect(transformInputValueForOutput("09:41 am")).toEqual([
-        "09",
-        "41",
-        "AM"
-      ]);
-      expect(transformInputValueForOutput("09:41 PM")).toEqual([
-        "09",
-        "41",
-        "PM"
-      ]);
-      expect(transformInputValueForOutput("09:41 pm")).toEqual([
-        "09",
-        "41",
-        "PM"
-      ]);
+      expect(transformInputValueForOutput("09:41 am")).toEqual(expectedAM);
+      expect(transformInputValueForOutput("09:41 aM")).toEqual(expectedAM);
+      expect(transformInputValueForOutput("09:41 Am")).toEqual(expectedAM);
+      expect(transformInputValueForOutput("09:41 AM")).toEqual(expectedAM);
+      expect(transformInputValueForOutput("09:41 pm")).toEqual(expectedPM);
+      expect(transformInputValueForOutput("09:41 Pm")).toEqual(expectedPM);
+      expect(transformInputValueForOutput("09:41 pM")).toEqual(expectedPM);
+      expect(transformInputValueForOutput("09:41 PM")).toEqual(expectedPM);
     });
 
     it("handles absent space between mm and aa", () => {
-      expect(transformInputValueForOutput("09:41AM")).toEqual([
-        "09",
-        "41",
-        "AM"
-      ]);
-      expect(transformInputValueForOutput("09:41am")).toEqual([
-        "09",
-        "41",
-        "AM"
-      ]);
-      expect(transformInputValueForOutput("09:41PM")).toEqual([
-        "09",
-        "41",
-        "PM"
-      ]);
-      expect(transformInputValueForOutput("09:41pm")).toEqual([
-        "09",
-        "41",
-        "PM"
-      ]);
+      expect(transformInputValueForOutput("09:41am")).toEqual(expectedAM);
+      expect(transformInputValueForOutput("09:41aM")).toEqual(expectedAM);
+      expect(transformInputValueForOutput("09:41Am")).toEqual(expectedAM);
+      expect(transformInputValueForOutput("09:41AM")).toEqual(expectedAM);
+      expect(transformInputValueForOutput("09:41pm")).toEqual(expectedPM);
+      expect(transformInputValueForOutput("09:41Pm")).toEqual(expectedPM);
+      expect(transformInputValueForOutput("09:41pM")).toEqual(expectedPM);
+      expect(transformInputValueForOutput("09:41PM")).toEqual(expectedPM);
     });
   });
 

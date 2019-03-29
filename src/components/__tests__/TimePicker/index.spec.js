@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control, jsx-a11y/label-has-for */
 import React from "react";
-import { render, fireEvent, within } from "react-testing-library";
+import { render, fireEvent } from "react-testing-library";
 import { triggerWindowResize, resetWindowSize } from "window-test-utils";
 import { breakpoints } from "brown-university-styles";
 import TimePickerContainer from "../../utils/TimePickerContainer";
@@ -21,9 +21,14 @@ const renderTimePicker = props => {
 };
 
 const validateClockDialValues = (rtlUtils, expectedValues) => {
-  const clockElement = rtlUtils.getByLabelText("Clock");
-  const { getByText } = within(clockElement);
-  expectedValues.forEach(val => expect(getByText(val)));
+  const { getByTestId } = rtlUtils;
+  expect(getByTestId("hours-value")).toHaveTextContent(expectedValues.hours);
+  expect(getByTestId("minutes-value")).toHaveTextContent(
+    expectedValues.minutes
+  );
+  expect(getByTestId("meridiem-value")).toHaveTextContent(
+    expectedValues.meridiem
+  );
 };
 
 describe("TimePicker", () => {
@@ -52,26 +57,38 @@ describe("TimePicker", () => {
         inputElement.focus();
 
         expect(inputElement.value).toBe("--:-- --");
-        validateClockDialValues(rtlUtils, ["12", "00", "PM"]);
+        validateClockDialValues(rtlUtils, {
+          hours: "12",
+          minutes: "00",
+          meridiem: "PM"
+        });
       });
 
       it("updates clock values when a valid time is set", () => {
         setupAndValidateInputChange({
           nextInputValue: "09:41 AM",
-          expectedClockDialValues: ["09", "41", "AM"]
+          expectedClockDialValues: {
+            hours: "09",
+            minutes: "41",
+            meridiem: "AM"
+          }
         });
       });
 
       it("hides clock values when an invalid time is set", () => {
         setupAndValidateInputChange({
           nextInputValue: "09:4",
-          expectedClockDialValues: ["--", "--", "--"]
+          expectedClockDialValues: {
+            hours: "--",
+            minutes: "--",
+            meridiem: "--"
+          }
         });
       });
     });
 
     describe("with initial time", () => {
-      it("renders date and sets clock values", () => {
+      it("renders time and sets clock values", () => {
         const rtlUtils = renderTimePicker({
           time: "08:18"
         });
@@ -80,14 +97,22 @@ describe("TimePicker", () => {
         inputElement.focus();
 
         expect(inputElement.value).toBe("08:18 AM");
-        validateClockDialValues(rtlUtils, ["08", "18", "AM"]);
+        validateClockDialValues(rtlUtils, {
+          hours: "08",
+          minutes: "18",
+          meridiem: "AM"
+        });
       });
 
-      it("updates clock values accordingly when updated with a valid time", async () => {
+      it("updates clock values when updated with a valid time", () => {
         setupAndValidateInputChange({
           timePickerProps: { time: "08:18" },
           nextInputValue: "09:41 PM",
-          expectedClockDialValues: ["09", "41", "PM"]
+          expectedClockDialValues: {
+            hours: "09",
+            minutes: "41",
+            meridiem: "PM"
+          }
         });
       });
 
@@ -95,7 +120,11 @@ describe("TimePicker", () => {
         setupAndValidateInputChange({
           timePickerProps: { time: "08:18" },
           nextInputValue: "08:18 P",
-          expectedClockDialValues: ["--", "--", "--"]
+          expectedClockDialValues: {
+            hours: "--",
+            minutes: "--",
+            meridiem: "--"
+          }
         });
       });
     });
@@ -123,7 +152,11 @@ describe("TimePicker", () => {
         setupAndValidateClockDialChange({
           dialAriaLabelText: "Increment hours",
           expectedInputValue: "01:00 PM",
-          expectedClockDialValues: ["01", "00", "PM"]
+          expectedClockDialValues: {
+            hours: "01",
+            minutes: "00",
+            meridiem: "PM"
+          }
         });
       });
 
@@ -131,7 +164,11 @@ describe("TimePicker", () => {
         setupAndValidateClockDialChange({
           dialAriaLabelText: "Decrement hours",
           expectedInputValue: "11:00 PM",
-          expectedClockDialValues: ["11", "00", "PM"]
+          expectedClockDialValues: {
+            hours: "11",
+            minutes: "00",
+            meridiem: "PM"
+          }
         });
       });
 
@@ -139,7 +176,11 @@ describe("TimePicker", () => {
         setupAndValidateClockDialChange({
           dialAriaLabelText: "Increment minutes",
           expectedInputValue: "12:01 PM",
-          expectedClockDialValues: ["12", "01", "PM"]
+          expectedClockDialValues: {
+            hours: "12",
+            minutes: "01",
+            meridiem: "PM"
+          }
         });
       });
 
@@ -147,7 +188,11 @@ describe("TimePicker", () => {
         setupAndValidateClockDialChange({
           dialAriaLabelText: "Decrement minutes",
           expectedInputValue: "12:59 PM",
-          expectedClockDialValues: ["12", "59", "PM"]
+          expectedClockDialValues: {
+            hours: "12",
+            minutes: "59",
+            meridiem: "PM"
+          }
         });
       });
 
@@ -155,7 +200,11 @@ describe("TimePicker", () => {
         setupAndValidateClockDialChange({
           dialAriaLabelText: "Increment meridiem",
           expectedInputValue: "12:00 AM",
-          expectedClockDialValues: ["12", "00", "AM"]
+          expectedClockDialValues: {
+            hours: "12",
+            minutes: "00",
+            meridiem: "AM"
+          }
         });
       });
 
@@ -163,7 +212,11 @@ describe("TimePicker", () => {
         setupAndValidateClockDialChange({
           dialAriaLabelText: "Decrement meridiem",
           expectedInputValue: "12:00 AM",
-          expectedClockDialValues: ["12", "00", "AM"]
+          expectedClockDialValues: {
+            hours: "12",
+            minutes: "00",
+            meridiem: "AM"
+          }
         });
       });
     });
@@ -174,7 +227,11 @@ describe("TimePicker", () => {
           timePickerProps: { time: "01:00" },
           dialAriaLabelText: "Increment hours",
           expectedInputValue: "02:00 AM",
-          expectedClockDialValues: ["02", "00", "AM"]
+          expectedClockDialValues: {
+            hours: "02",
+            minutes: "00",
+            meridiem: "AM"
+          }
         });
       });
 
@@ -183,7 +240,11 @@ describe("TimePicker", () => {
           timePickerProps: { time: "01:00" },
           dialAriaLabelText: "Decrement hours",
           expectedInputValue: "12:00 AM",
-          expectedClockDialValues: ["12", "00", "AM"]
+          expectedClockDialValues: {
+            hours: "12",
+            minutes: "00",
+            meridiem: "AM"
+          }
         });
       });
 
@@ -192,7 +253,11 @@ describe("TimePicker", () => {
           timePickerProps: { time: "12:59" },
           dialAriaLabelText: "Increment minutes",
           expectedInputValue: "12:00 PM",
-          expectedClockDialValues: ["12", "00", "PM"]
+          expectedClockDialValues: {
+            hours: "12",
+            minutes: "00",
+            meridiem: "PM"
+          }
         });
       });
 
@@ -201,7 +266,11 @@ describe("TimePicker", () => {
           timePickerProps: { time: "12:59" },
           dialAriaLabelText: "Decrement minutes",
           expectedInputValue: "12:58 PM",
-          expectedClockDialValues: ["12", "58", "PM"]
+          expectedClockDialValues: {
+            hours: "12",
+            minutes: "58",
+            meridiem: "PM"
+          }
         });
       });
 
@@ -210,7 +279,11 @@ describe("TimePicker", () => {
           timePickerProps: { time: "00:00" },
           dialAriaLabelText: "Increment meridiem",
           expectedInputValue: "12:00 PM",
-          expectedClockDialValues: ["12", "00", "PM"]
+          expectedClockDialValues: {
+            hours: "12",
+            minutes: "00",
+            meridiem: "PM"
+          }
         });
       });
 
@@ -219,7 +292,11 @@ describe("TimePicker", () => {
           timePickerProps: { time: "00:00" },
           dialAriaLabelText: "Decrement meridiem",
           expectedInputValue: "12:00 PM",
-          expectedClockDialValues: ["12", "00", "PM"]
+          expectedClockDialValues: {
+            hours: "12",
+            minutes: "00",
+            meridiem: "PM"
+          }
         });
       });
     });

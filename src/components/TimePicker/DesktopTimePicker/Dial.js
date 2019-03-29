@@ -47,7 +47,7 @@ const Dial = ({ color, name, value, increment, decrement }) => (
     >
       <ChevronUpSVG />
     </Button>
-    <Value>{value}</Value>
+    <Value data-testid={`${name}-value`}>{value}</Value>
     <Button
       type="button"
       color={color}

@@ -9,7 +9,11 @@ export const transformInputValueForOutput = val => {
   const cleanedVal = val
     .trim()
     .replace("am", "AM")
-    .replace("pm", "PM");
+    .replace("aM", "AM")
+    .replace("Am", "AM")
+    .replace("pm", "PM")
+    .replace("pM", "PM")
+    .replace("Pm", "PM");
 
   if (cleanedVal.includes(" ")) {
     return [...cleanedVal.split(/:| /)];
