@@ -135,8 +135,7 @@ class DesktopTimePicker extends Component {
       time,
       onTimeChange,
       focused,
-      onFocusChange,
-      ...restProps
+      onFocusChange
     } = this.props;
     const { inputValue } = this.state;
     const inputIsDirty = getInputIsDirty(inputValue);
@@ -148,13 +147,14 @@ class DesktopTimePicker extends Component {
     const shouldShowDialValues = !inputIsDirty || inputValueIsValid;
 
     return (
-      <div ref={this.wrapper} {...restProps}>
+      <div ref={this.wrapper}>
         <Manager>
           <Reference>
             {({ ref }) => (
               <DesktopInput
-                ref={ref}
+                aria-label="hh:mm aa"
                 type="text"
+                ref={ref}
                 id={id}
                 value={inputIsDirty ? inputValue : `${hh}:${mm} ${aa}`}
                 onFocus={() => onFocusChange({ focused: true })}
@@ -170,10 +170,11 @@ class DesktopTimePicker extends Component {
                   style={style}
                   data-placement={placement}
                 >
-                  <TimePickerDialsWrapper>
+                  <TimePickerDialsWrapper aria-label="Clock">
                     <Dial
                       color={color}
                       value={shouldShowDialValues ? hhDialValue : "--"}
+                      incrementAriaLabel="Increment hours"
                       increment={() =>
                         onTimeChange(
                           transformTimeOut(
@@ -183,6 +184,7 @@ class DesktopTimePicker extends Component {
                           )
                         )
                       }
+                      decrementAriaLabel="Decrement hours"
                       decrement={() =>
                         onTimeChange(
                           transformTimeOut(
@@ -196,6 +198,7 @@ class DesktopTimePicker extends Component {
                     <Dial
                       color={color}
                       value={shouldShowDialValues ? mmDialValue : "--"}
+                      incrementAriaLabel="Increment minutes"
                       increment={() =>
                         onTimeChange(
                           transformTimeOut(
@@ -205,6 +208,7 @@ class DesktopTimePicker extends Component {
                           )
                         )
                       }
+                      decrementAriaLabel="Decrement minutes"
                       decrement={() =>
                         onTimeChange(
                           transformTimeOut(
@@ -218,6 +222,7 @@ class DesktopTimePicker extends Component {
                     <Dial
                       color={color}
                       value={shouldShowDialValues ? aaDialValue : "--"}
+                      incrementAriaLabel="Increment meridiem"
                       increment={() =>
                         onTimeChange(
                           transformTimeOut(
@@ -227,6 +232,7 @@ class DesktopTimePicker extends Component {
                           )
                         )
                       }
+                      decrementAriaLabel="Decrement meridiem"
                       decrement={() =>
                         onTimeChange(
                           transformTimeOut(

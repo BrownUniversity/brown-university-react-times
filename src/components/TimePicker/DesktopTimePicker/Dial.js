@@ -5,6 +5,9 @@ import { colors, typography } from "brown-university-styles";
 import ChevronUpSVG from "../../../svg/chevron-up.svg";
 import ChevronDownSVG from "../../../svg/chevron-down.svg";
 
+/*
+  inner components
+*/
 const Wrapper = styled.div`
   text-align: center;
 `;
@@ -31,13 +34,33 @@ const Value = styled.div`
   padding: 10px 0;
 `;
 
-const Dial = ({ color, value, increment, decrement }) => (
+/*
+  outer Dial component
+*/
+const Dial = ({
+  color,
+  value,
+  incrementAriaLabel,
+  increment,
+  decrementAriaLabel,
+  decrement
+}) => (
   <Wrapper>
-    <Button color={color} type="button" onClick={increment}>
+    <Button
+      type="button"
+      color={color}
+      aria-label={incrementAriaLabel}
+      onClick={increment}
+    >
       <ChevronUpSVG />
     </Button>
     <Value>{value}</Value>
-    <Button color={color} type="button" onClick={decrement}>
+    <Button
+      type="button"
+      color={color}
+      aria-label={decrementAriaLabel}
+      onClick={decrement}
+    >
       <ChevronDownSVG />
     </Button>
   </Wrapper>
@@ -53,7 +76,9 @@ Dial.propTypes = {
     "idRed"
   ]).isRequired,
   value: PropTypes.string.isRequired,
+  incrementAriaLabel: PropTypes.string.isRequired,
   increment: PropTypes.func.isRequired,
+  decrementAriaLabel: PropTypes.string.isRequired,
   decrement: PropTypes.func.isRequired
 };
 
