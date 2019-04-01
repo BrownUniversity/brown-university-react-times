@@ -304,6 +304,67 @@ describe("TimePicker", () => {
     });
   });
 
+  describe("invalid time handling", () => {
+    it("triggers a time change and resets the input value when it becomes valid", () => {
+      const rtlUtils = renderTimePicker();
+      const inputElement = rtlUtils.getByLabelText("Time");
+
+      inputElement.focus();
+      fireEvent.change(inputElement, {
+        target: { value: "08:18am" }
+      });
+
+      expect(inputElement.value).toBe("08:18 AM");
+      validateDialValues(rtlUtils, {
+        hours: "08",
+        minutes: "18",
+        meridiem: "AM"
+      });
+    });
+
+    it("resets the input value when a valid time is set via the clock", () => {
+      const rtlUtils = renderTimePicker();
+      const inputElement = rtlUtils.getByLabelText("Time");
+
+      inputElement.focus();
+      fireEvent.change(inputElement, {
+        target: { value: "" }
+      });
+      fireEvent.click(rtlUtils.getByLabelText("Increment minutes"));
+
+      expect(inputElement.value).toBe("12:01 PM");
+      validateDialValues(rtlUtils, {
+        hours: "12",
+        minutes: "01",
+        meridiem: "PM"
+      });
+    });
+
+    it("trigger a time change when the input value becomes empty", () => {
+      const onTimeChange = jest.fn();
+      const { getByLabelText } = renderTimePicker({ onTimeChange });
+
+      fireEvent.change(getByLabelText("Time"), {
+        target: { value: "" }
+      });
+
+      expect(onTimeChange).toHaveBeenCalledTimes(1);
+      expect(onTimeChange).toHaveBeenCalledWith("");
+    });
+
+    it("trigger a time change when the input value becomes invalid", () => {
+      const onTimeChange = jest.fn();
+      const { getByLabelText } = renderTimePicker({ onTimeChange });
+
+      fireEvent.change(getByLabelText("Time"), {
+        target: { value: "08:1" }
+      });
+
+      expect(onTimeChange).toHaveBeenCalledTimes(1);
+      expect(onTimeChange).toHaveBeenCalledWith("Invalid Time");
+    });
+  });
+
   describe("focus management", () => {
     it("calls `onFocusChange` with `{ focused: true }` if input value changes and `focused` is false", () => {
       const onFocusChange = jest.fn();

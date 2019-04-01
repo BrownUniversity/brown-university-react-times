@@ -94,7 +94,7 @@ class DesktopTimePicker extends PureComponent {
     const { inputIsDirty, inputValue, inputValueIsValid } = this.state;
 
     if (inputValueIsValid) {
-      // trigger time change and reset input value if it becomes valid
+      // trigger a time change and reset the input value when it becomes valid
       this.props.onTimeChange(
         transformDialValuesToTime(
           ...transformInputValueToDialValues(inputValue)
@@ -102,10 +102,10 @@ class DesktopTimePicker extends PureComponent {
       );
       this.handleInputValueReset();
     } else if (timeChanged && !["", "Invalid Time"].includes(this.props.time)) {
-      // reset input value if time becomes valid
+      // reset the input value when a valid time is set via the clock
       this.handleInputValueReset();
     } else if (inputValueChanged && inputIsDirty && !inputValueIsValid) {
-      // trigger time change if input value changes to an empty or invalid value
+      // trigger a time change when the input value becomes empty or invalid
       this.props.onTimeChange(inputValue === "" ? "" : "Invalid Time");
     }
   }
