@@ -1,6 +1,6 @@
 # Brown University React Times
 
-A time picker modled after Airbnb's `react-dates` plus some test utils for use in React-based applications at Brown University.
+A time picker modeled after Airbnb's `react-dates` plus some test utils for use in React-based applications at Brown University.
 
 ---
 

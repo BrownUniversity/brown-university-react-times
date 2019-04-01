@@ -1,6 +1,6 @@
 {
   "name": "brown-university-react-times",
-  "description": "A time picker modled after Airbnb's react-dates for use in React-based applications at Brown University",
+  "description": "A time picker modeled after Airbnb's react-dates for use in React-based applications at Brown University",
   "author": "Colin Cummings <colin_cummings@brown.edu>",
   "version": "0.1.0",
   "private": true,
