@@ -2,9 +2,8 @@ import React from "react";
 import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import TimePickerContainer from "../../src/components/utils/TimePickerContainer";
-import { TimePicker } from "../../src";
 
-const TimePickerWithValidation = (children, commonProps) => (
+const TimePickerContainerWithValidation = props => (
   <Formik
     initialValues={{ time: "" }}
     validationSchema={Yup.object().shape({
@@ -27,10 +26,8 @@ const TimePickerWithValidation = (children, commonProps) => (
               setFieldTouched("time");
             }
           }}
-          {...commonProps}
-        >
-          <TimePicker />
-        </TimePickerContainer>
+          {...props}
+        />
         <ErrorMessage
           name="time"
           component="div"
@@ -41,4 +38,4 @@ const TimePickerWithValidation = (children, commonProps) => (
   </Formik>
 );
 
-export default TimePickerWithValidation;
+export default TimePickerContainerWithValidation;

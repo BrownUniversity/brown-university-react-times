@@ -5,6 +5,7 @@ import { triggerWindowResize, resetWindowSize } from "window-test-utils";
 import { breakpoints } from "brown-university-styles";
 import TimePickerContainer from "../../utils/TimePickerContainer";
 import TimePicker from "../../TimePicker";
+import timePickerTestUtils from "../../../test-utils/time-picker";
 
 const renderTimePicker = props => {
   const id = "time-picker-test";
@@ -21,7 +22,8 @@ const renderTimePicker = props => {
 };
 
 const validateDialValues = (rtlUtils, expectedValues) => {
-  const { getByTestId } = rtlUtils;
+  const { getByLabelText, getByTestId } = rtlUtils;
+  expect(getByLabelText("Clock")).toBeInTheDocument();
   expect(getByTestId("hours-value")).toHaveTextContent(expectedValues.hours);
   expect(getByTestId("minutes-value")).toHaveTextContent(
     expectedValues.minutes
@@ -312,8 +314,11 @@ describe("TimePicker", () => {
     });
 
     it("falls back to native time input", () => {
-      const { getByLabelText } = renderTimePicker();
-      expect(getByLabelText("Time")).toHaveAttribute("type", "time");
+      const { getByLabelText, queryByLabelText } = renderTimePicker();
+      const inputElement = getByLabelText("Time");
+      expect(inputElement).toHaveAttribute("type", "time");
+      inputElement.focus();
+      expect(queryByLabelText("Clock")).not.toBeInTheDocument();
     });
 
     it("handles time change", () => {
@@ -326,6 +331,77 @@ describe("TimePicker", () => {
       });
 
       expect(inputElement.value).toBe(nextValue);
+    });
+  });
+});
+
+describe("timePickerTestUtils", () => {
+  it("handles empty selection", () => {
+    const rtlUtils = renderTimePicker({ time: "08:18" });
+    const element = rtlUtils.getByLabelText("Time");
+
+    timePickerTestUtils.makeSelection({
+      element,
+      time: null
+    });
+
+    expect(element.value).toBe("");
+    validateDialValues(rtlUtils, {
+      hours: "--",
+      minutes: "--",
+      meridiem: "--"
+    });
+  });
+
+  it("handles time selection", () => {
+    const rtlUtils = renderTimePicker();
+    const element = rtlUtils.getByLabelText("Time");
+
+    timePickerTestUtils.makeSelection({
+      element,
+      time: "08:18"
+    });
+
+    expect(element.value).toBe("08:18 AM");
+    validateDialValues(rtlUtils, {
+      hours: "08",
+      minutes: "18",
+      meridiem: "AM"
+    });
+  });
+
+  describe("mobile", () => {
+    beforeAll(() => {
+      triggerWindowResize({ width: breakpoints.md - 1 });
+    });
+
+    afterAll(() => {
+      resetWindowSize();
+    });
+
+    it("handles empty selection", () => {
+      const rtlUtils = renderTimePicker({ time: "08:18" });
+      const element = rtlUtils.getByLabelText("Time");
+
+      timePickerTestUtils.makeSelection({
+        element,
+        time: null
+      });
+
+      expect(element.value).toBe("");
+    });
+
+    it("handles time selection", () => {
+      const rtlUtils = renderTimePicker();
+      const element = rtlUtils.getByLabelText("Time");
+      const time = "08:18";
+
+      timePickerTestUtils.makeSelection({
+        element,
+        time
+      });
+
+      expect(element.value).toBe(time);
     });
   });
 });
