@@ -1,6 +1,6 @@
 # Brown University React Times
 
-A time picker modled after Airbnb's `react-dates` for use in React-based applications at Brown University.
+A time picker modled after Airbnb's `react-dates` plus some test utils for use in React-based applications at Brown University.
 
 ---
 
@@ -27,6 +27,14 @@ These libraries are not bundled with Brown University React Times and are requir
 - [**brown-university-styles**](https://bitbucket.brown.edu/projects/REACT/repos/brown-university-styles)
 - [**react**](https://www.npmjs.com/package/react)
 - [**styled-components**](https://www.npmjs.com/package/styled-components)
+
+#### Optipnal Peer Dependencies
+
+These libraries are not bundled with Brown University React Times, but are required to use the test utils:
+
+- [**react-testing-library**](https://www.npmjs.com/package/styled-components)
+
+### 2. Import styles from Brown University Styles
 
 ---
 
