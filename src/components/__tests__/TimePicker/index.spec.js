@@ -304,6 +304,81 @@ describe("TimePicker", () => {
     });
   });
 
+  describe("focus management", () => {
+    it("calls `onFocusChange` with `{ focused: true }` if input value changes and `focused` is false", () => {
+      const onFocusChange = jest.fn();
+      const { getByLabelText } = renderTimePicker({
+        onFocusChange
+      });
+
+      fireEvent.change(getByLabelText("Time"), {
+        target: { value: "08:18" }
+      });
+
+      expect(onFocusChange).toHaveBeenCalledTimes(1);
+      expect(onFocusChange).toHaveBeenCalledWith({ focused: true });
+    });
+
+    it("does not call `onFocusChange` if input value changes and `focused` is true", () => {
+      const onFocusChange = jest.fn();
+      const { getByLabelText } = renderTimePicker({
+        focused: true,
+        onFocusChange
+      });
+
+      fireEvent.change(getByLabelText("Time"), {
+        target: { value: "08:18" }
+      });
+
+      expect(onFocusChange).not.toHaveBeenCalled();
+    });
+
+    it("calls `onFocusChange` with `{ focused: false }` on click outside time picker", () => {
+      const onFocusChange = jest.fn();
+      const { container } = renderTimePicker({
+        onFocusChange
+      });
+
+      container.click();
+
+      expect(onFocusChange).toHaveBeenCalledTimes(1);
+      expect(onFocusChange).toHaveBeenCalledWith({ focused: false });
+    });
+
+    it("calls `onFocusChange` with `{ focused: false }` on shift + tab from first element", () => {
+      const onFocusChange = jest.fn();
+      const { getByLabelText } = renderTimePicker({
+        onFocusChange
+      });
+
+      fireEvent.keyDown(getByLabelText("hours:minutes meridiem"), {
+        shiftKey: true,
+        keyCode: 9
+      });
+
+      expect(onFocusChange).toHaveBeenCalledTimes(1);
+      expect(onFocusChange).toHaveBeenCalledWith({ focused: false });
+    });
+
+    it("calls `onFocusChange` with `{ focused: false }` on tab from last element", () => {
+      const onFocusChange = jest.fn();
+      const { getByLabelText } = renderTimePicker({
+        onFocusChange
+      });
+
+      getByLabelText("Time").focus();
+      onFocusChange.mockReset();
+      fireEvent.keyDown(getByLabelText("Decrement meridiem"), {
+        keyCode: 9
+      });
+
+      expect(onFocusChange).toHaveBeenCalledTimes(1);
+      expect(onFocusChange).toHaveBeenCalledWith({
+        focused: false
+      });
+    });
+  });
+
   describe("mobile", () => {
     beforeAll(() => {
       triggerWindowResize({ width: breakpoints.md - 1 });
@@ -331,6 +406,16 @@ describe("TimePicker", () => {
       });
 
       expect(inputElement.value).toBe(nextValue);
+    });
+
+    it("calls `onFocusChange` with `{ focused: false }` on blur", () => {
+      const onFocusChange = jest.fn();
+      const { getByLabelText } = renderTimePicker({ onFocusChange });
+
+      fireEvent.blur(getByLabelText("Time"));
+
+      expect(onFocusChange).toHaveBeenCalledTimes(1);
+      expect(onFocusChange).toHaveBeenCalledWith({ focused: false });
     });
   });
 });

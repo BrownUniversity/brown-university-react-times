@@ -49,7 +49,7 @@ describe("DesktopTimePicker utils", () => {
       expect(getInputValueIsValid("13:00")).toBe(false);
       expect(getInputValueIsValid("23:59 PM")).toBe(false);
       expect(getInputValueIsValid("23:59 PM 11:59 PM")).toBe(false);
-      expect(getInputValueIsValid("Invalid Date")).toBe(false);
+      expect(getInputValueIsValid("Invalid Time")).toBe(false);
     });
   });
 
