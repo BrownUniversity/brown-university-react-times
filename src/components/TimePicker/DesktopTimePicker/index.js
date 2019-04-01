@@ -84,7 +84,8 @@ class DesktopTimePicker extends PureComponent {
   wrapper = React.createRef();
 
   componentDidMount() {
-    document.addEventListener("click", this.handleOutsideClick);
+    document.addEventListener("click", this.handleClick);
+    document.addEventListener("keydown", this.handleKeydown);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -110,7 +111,8 @@ class DesktopTimePicker extends PureComponent {
   }
 
   componentWillUnmount() {
-    document.removeEventListener("click", this.handleOutsideClick);
+    document.removeEventListener("click", this.handleClick);
+    document.removeEventListener("keyDown", this.handleKeydown);
   }
 
   handleInputValueChange = e => {
@@ -123,7 +125,7 @@ class DesktopTimePicker extends PureComponent {
     });
 
     if (!this.props.focused) {
-      this.props.onFocusChange({ focused: true });
+      this.handleFocusChange(true);
     }
   };
 
@@ -131,21 +133,40 @@ class DesktopTimePicker extends PureComponent {
     this.setState(this.initialState);
   };
 
-  handleOutsideClick = e => {
+  handleFocusChange = focused => {
+    this.props.onFocusChange({ focused });
+  };
+
+  handleClick = e => {
+    // click outside of time picker
     if (!this.wrapper.current.contains(e.target)) {
-      this.props.onFocusChange({ focused: false });
+      this.handleFocusChange(false);
+    }
+  };
+
+  handleKeydown = e => {
+    // tab key
+    if (this.wrapper.current && e.keyCode === 9) {
+      // close time picker on shift + tab from first element
+      if (
+        e.shiftKey &&
+        e.target.getAttribute("aria-label") === "hours:minutes meridiem"
+      ) {
+        this.handleFocusChange(false);
+      }
+
+      // close time picker on tab from last element
+      if (
+        !e.shiftKey &&
+        e.target.getAttribute("aria-label") === "Decrement meridiem"
+      ) {
+        this.handleFocusChange(false);
+      }
     }
   };
 
   render() {
-    const {
-      color,
-      id,
-      time,
-      onTimeChange,
-      focused,
-      onFocusChange
-    } = this.props;
+    const { color, id, time, onTimeChange, focused } = this.props;
     const { inputIsDirty, inputValue, inputValueIsValid } = this.state;
     const [hh, mm, aa] = transformTimeToDialValues(time);
     const hoursDialValue = hh === "--" ? "12" : hh;
@@ -164,7 +185,7 @@ class DesktopTimePicker extends PureComponent {
                 ref={ref}
                 id={id}
                 value={inputIsDirty ? inputValue : `${hh}:${mm} ${aa}`}
-                onFocus={() => onFocusChange({ focused: true })}
+                onFocus={() => this.handleFocusChange(true)}
                 onChange={this.handleInputValueChange}
               />
             )}

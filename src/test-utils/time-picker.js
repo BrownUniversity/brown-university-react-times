@@ -30,6 +30,9 @@ function makeSelection({ element: inputElement, time: nextSelectionTime }) {
       value: `${hh}:${mm} ${aa}`
     }
   });
+
+  // close time picker via shift + tab from first element
+  fireEvent.keyDown(inputElement, { shiftKey: true, keyCode: 9 });
 }
 
 export default { makeSelection };

@@ -363,6 +363,7 @@ describe("timePickerTestUtils", () => {
     });
 
     expect(element.value).toBe("08:18 AM");
+    element.focus();
     validateDialValues(rtlUtils, {
       hours: "08",
       minutes: "18",
