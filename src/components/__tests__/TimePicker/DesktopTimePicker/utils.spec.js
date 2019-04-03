@@ -39,6 +39,7 @@ describe("DesktopTimePicker utils", () => {
       expect(getInputValueIsValid("0130 AM")).toBe(false);
       expect(getInputValueIsValid("01: AM")).toBe(false);
       expect(getInputValueIsValid("01:30")).toBe(false);
+      expect(getInputValueIsValid("1:30 AM")).toBe(false);
       expect(getInputValueIsValid("01 :30 PM")).toBe(false);
       expect(getInputValueIsValid("01: 30 PM")).toBe(false);
       expect(getInputValueIsValid("01 : 30 PM")).toBe(false);

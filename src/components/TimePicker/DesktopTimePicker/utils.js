@@ -6,6 +6,7 @@ export const getInputIsDirty = val => val !== null;
 export const getInputValueIsValid = val =>
   !!val &&
   val.trim().length < 9 &&
+  val.split(":")[0].length === 2 &&
   /\b((1[0-2]|0?[1-9]):([0-5][0-9]) ?([AaPp][Mm]))/.test(val);
 
 export const transformInputValueToDialValues = val => {
