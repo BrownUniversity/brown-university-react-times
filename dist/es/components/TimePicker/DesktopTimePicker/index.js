@@ -40,6 +40,7 @@ import styled from "styled-components";
 import { Manager, Reference, Popper } from "react-popper";
 import Dial from "./Dial";
 import { getInputIsDirty, getInputValueIsValid, transformInputValueToDialValues, transformTimeToDialValues, transformDialValuesToTime, hoursDialOptions, minutesDialOptions, meridiemDialOptions, getNextDialOption, getPreviousDialOption } from "./utils";
+import { INVALID_TIME } from "../../../constants";
 import { inputCSS } from "../../../styles";
 /*
   inner components
@@ -162,12 +163,12 @@ function (_PureComponent) {
         // trigger a time change and reset the input value when it becomes valid
         this.props.onTimeChange(transformDialValuesToTime.apply(void 0, _toConsumableArray(transformInputValueToDialValues(inputValue))));
         this.handleInputValueReset();
-      } else if (timeChanged && !["", "Invalid Time"].includes(this.props.time)) {
+      } else if (timeChanged && !["", INVALID_TIME].includes(this.props.time)) {
         // reset the input value when a valid time is set via the clock
         this.handleInputValueReset();
       } else if (inputValueChanged && inputIsDirty && !inputValueIsValid) {
         // trigger a time change when the input value becomes empty or invalid
-        this.props.onTimeChange(inputValue === "" ? "" : "Invalid Time");
+        this.props.onTimeChange(inputValue === "" ? "" : INVALID_TIME);
       }
     }
   }, {

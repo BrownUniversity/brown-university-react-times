@@ -1,4 +1,4 @@
-/*! brown-university-react-times v0.1.0 */
+/*! brown-university-react-times v0.1.1 */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory(require("prop-types"), require("react"), require("brown-university-styles"), require("styled-components"));
@@ -104,7 +104,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_TimePicker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "TimePicker", function() { return _components_TimePicker__WEBPACK_IMPORTED_MODULE_0__["default"]; });
 
-/* harmony import */ var _test_utils_time_picker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(39);
+/* harmony import */ var _test_utils_time_picker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(40);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "timePickerTestUtils", function() { return _test_utils_time_picker__WEBPACK_IMPORTED_MODULE_1__["default"]; });
 
 
@@ -1087,7 +1087,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_popper__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(17);
 /* harmony import */ var _Dial__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(35);
 /* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(38);
-/* harmony import */ var _styles__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(15);
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(39);
+/* harmony import */ var _styles__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(15);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
@@ -1131,6 +1132,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
 /*
   inner components
 */
@@ -1138,7 +1140,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var DesktopInput = styled_components__WEBPACK_IMPORTED_MODULE_2___default.a.input.withConfig({
   displayName: "DesktopTimePicker__DesktopInput",
   componentId: "wn6wad-0"
-})(["", " padding:10px;&:focus{outline:0;}"], _styles__WEBPACK_IMPORTED_MODULE_6__["inputCSS"]);
+})(["", " padding:10px;&:focus{outline:0;}"], _styles__WEBPACK_IMPORTED_MODULE_7__["inputCSS"]);
 var PopperWrapper = styled_components__WEBPACK_IMPORTED_MODULE_2___default.a.div.withConfig({
   displayName: "DesktopTimePicker__PopperWrapper",
   componentId: "wn6wad-1"
@@ -1252,12 +1254,12 @@ function (_PureComponent) {
         // trigger a time change and reset the input value when it becomes valid
         this.props.onTimeChange(_utils__WEBPACK_IMPORTED_MODULE_5__["transformDialValuesToTime"].apply(void 0, _toConsumableArray(Object(_utils__WEBPACK_IMPORTED_MODULE_5__["transformInputValueToDialValues"])(inputValue))));
         this.handleInputValueReset();
-      } else if (timeChanged && !["", "Invalid Time"].includes(this.props.time)) {
+      } else if (timeChanged && !["", _constants__WEBPACK_IMPORTED_MODULE_6__["INVALID_TIME"]].includes(this.props.time)) {
         // reset the input value when a valid time is set via the clock
         this.handleInputValueReset();
       } else if (inputValueChanged && inputIsDirty && !inputValueIsValid) {
         // trigger a time change when the input value becomes empty or invalid
-        this.props.onTimeChange(inputValue === "" ? "" : "Invalid Time");
+        this.props.onTimeChange(inputValue === "" ? "" : _constants__WEBPACK_IMPORTED_MODULE_6__["INVALID_TIME"]);
       }
     }
   }, {
@@ -5077,6 +5079,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "meridiemDialOptions", function() { return meridiemDialOptions; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getNextDialOption", function() { return getNextDialOption; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getPreviousDialOption", function() { return getPreviousDialOption; });
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(39);
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
@@ -5093,14 +5096,16 @@ function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.
 
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
+
 /*
   input
 */
+
 var getInputIsDirty = function getInputIsDirty(val) {
   return val !== null;
 };
 var getInputValueIsValid = function getInputValueIsValid(val) {
-  return !!val && val.trim().length < 9 && /\b((1[0-2]|0?[1-9]):([0-5][0-9]) ?([AaPp][Mm]))/.test(val);
+  return !!val && val.trim().length < 9 && /\b((1[0-2]|0[1-9]):([0-5][0-9]) ?([AaPp][Mm]))/.test(val);
 };
 var transformInputValueToDialValues = function transformInputValueToDialValues(val) {
   var cleanedVal = val.trim().replace("am", "AM").replace("aM", "AM").replace("Am", "AM").replace("pm", "PM").replace("pM", "PM").replace("Pm", "PM");
@@ -5116,7 +5121,7 @@ var transformInputValueToDialValues = function transformInputValueToDialValues(v
 */
 
 var transformTimeToDialValues = function transformTimeToDialValues(time) {
-  if (!time || time === "" || time === "Invalid Time") {
+  if (!time || time === "" || time === _constants__WEBPACK_IMPORTED_MODULE_0__["INVALID_TIME"]) {
     return ["--", "--", "--"];
   }
 
@@ -5189,7 +5194,17 @@ var getPreviousDialOption = function getPreviousDialOption(options, current) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react_testing_library__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(40);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "INVALID_TIME", function() { return INVALID_TIME; });
+// eslint-disable-next-line import/prefer-default-export
+var INVALID_TIME = "Invalid time";
+
+/***/ }),
+/* 40 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_testing_library__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(41);
 /* harmony import */ var _components_TimePicker_DesktopTimePicker_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(38);
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
@@ -5257,7 +5272,7 @@ function makeSelection(_ref) {
 });
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5266,8 +5281,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "cleanup", function() { return cleanup; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fireEvent", function() { return fireEvent$1; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "act", function() { return rtlAct; });
-/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(41);
-/* harmony import */ var dom_testing_library__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(42);
+/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(42);
+/* harmony import */ var dom_testing_library__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(43);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "bindElementToQueries", function() { return dom_testing_library__WEBPACK_IMPORTED_MODULE_1__["bindElementToQueries"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "within", function() { return dom_testing_library__WEBPACK_IMPORTED_MODULE_1__["within"]; });
@@ -5384,9 +5399,9 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(3);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(50);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(51);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var react_dom_test_utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(59);
+/* harmony import */ var react_dom_test_utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(60);
 /* harmony import */ var react_dom_test_utils__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_dom_test_utils__WEBPACK_IMPORTED_MODULE_4__);
 
 
@@ -5549,7 +5564,7 @@ fireEvent$1.select = function (node, init) {
 
 
 /***/ }),
-/* 41 */
+/* 42 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5574,7 +5589,7 @@ function _extends() {
 }
 
 /***/ }),
-/* 42 */
+/* 43 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5637,14 +5652,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "queryAllByAttribute", function() { return queryAllByAttribute; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "queryByAttribute", function() { return queryByAttribute; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "prettyDOM", function() { return prettyDOM; });
-/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(41);
-/* harmony import */ var pretty_format__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(46);
+/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(42);
+/* harmony import */ var pretty_format__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(47);
 /* harmony import */ var pretty_format__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(pretty_format__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var wait_for_expect__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(47);
+/* harmony import */ var wait_for_expect__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(48);
 /* harmony import */ var wait_for_expect__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(wait_for_expect__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _sheerun_mutationobserver_shim__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(48);
+/* harmony import */ var _sheerun_mutationobserver_shim__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(49);
 /* harmony import */ var _sheerun_mutationobserver_shim__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_sheerun_mutationobserver_shim__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _babel_runtime_helpers_esm_objectWithoutPropertiesLoose__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(49);
+/* harmony import */ var _babel_runtime_helpers_esm_objectWithoutPropertiesLoose__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(50);
 
 
 
@@ -7172,10 +7187,10 @@ Object.keys(eventAliasMap).forEach(function (aliasKey) {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(43), __webpack_require__(25), __webpack_require__(44).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(44), __webpack_require__(25), __webpack_require__(45).setImmediate))
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -7365,7 +7380,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
@@ -7421,7 +7436,7 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(45);
+__webpack_require__(46);
 // On some exotic environments, it's not clear which object `setimmediate` was
 // able to install onto.  Search each possibility in the same order as the
 // `setimmediate` library.
@@ -7435,7 +7450,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(25)))
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -7625,10 +7640,10 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(25), __webpack_require__(43)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(25), __webpack_require__(44)))
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -10879,7 +10894,7 @@ exports.printElementAsLeaf = printElementAsLeaf;
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10944,7 +10959,7 @@ module.exports = exports["default"];
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(25)))
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports) {
 
 // mutationobserver-shim v0.3.2 (github.com/megawac/MutationObserver.js)
@@ -10960,7 +10975,7 @@ a:!(!b.characterData&&!b.characterDataOldValue)},d=this.i,f=0;f<d.length;f++)d[f
 
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -10982,7 +10997,7 @@ function _objectWithoutPropertiesLoose(source, excluded) {
 }
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11017,12 +11032,12 @@ function checkDCE() {
 }
 
 if (false) {} else {
-  module.exports = __webpack_require__(51);
+  module.exports = __webpack_require__(52);
 }
 
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11044,10 +11059,10 @@ if (true) {
 'use strict';
 
 var React = __webpack_require__(3);
-var _assign = __webpack_require__(52);
-var checkPropTypes = __webpack_require__(53);
-var scheduler = __webpack_require__(55);
-var tracing = __webpack_require__(57);
+var _assign = __webpack_require__(53);
+var checkPropTypes = __webpack_require__(54);
+var scheduler = __webpack_require__(56);
+var tracing = __webpack_require__(58);
 
 /**
  * Use invariant() to assert state which your program assumes to be true.
@@ -32261,7 +32276,7 @@ module.exports = reactDom;
 
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32358,7 +32373,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32374,7 +32389,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 var printWarning = function() {};
 
 if (true) {
-  var ReactPropTypesSecret = __webpack_require__(54);
+  var ReactPropTypesSecret = __webpack_require__(55);
   var loggedTypeFailures = {};
   var has = Function.call.bind(Object.prototype.hasOwnProperty);
 
@@ -32467,7 +32482,7 @@ module.exports = checkPropTypes;
 
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32486,19 +32501,19 @@ module.exports = ReactPropTypesSecret;
 
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 if (false) {} else {
-  module.exports = __webpack_require__(56);
+  module.exports = __webpack_require__(57);
 }
 
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33205,19 +33220,19 @@ exports.unstable_getFirstCallbackNode = unstable_getFirstCallbackNode;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(25)))
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 if (false) {} else {
-  module.exports = __webpack_require__(58);
+  module.exports = __webpack_require__(59);
 }
 
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33647,19 +33662,19 @@ exports.unstable_unsubscribe = unstable_unsubscribe;
 
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 if (false) {} else {
-  module.exports = __webpack_require__(60);
+  module.exports = __webpack_require__(61);
 }
 
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33680,9 +33695,9 @@ if (true) {
   (function() {
 'use strict';
 
-var _assign = __webpack_require__(52);
+var _assign = __webpack_require__(53);
 var React = __webpack_require__(3);
-var ReactDOM = __webpack_require__(50);
+var ReactDOM = __webpack_require__(51);
 
 /**
  * Use invariant() to assert state which your program assumes to be true.
