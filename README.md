@@ -38,6 +38,12 @@ These libraries are not bundled with Brown University React Times, but are requi
 
 ---
 
+## Documentation
+
+[View on VPN](https://design.cis.brown.edu/brown-university-react-times/)
+
+---
+
 ## Development
 
 Install dependencies:
