@@ -1,3 +1,5 @@
+import { INVALID_TIME } from "../../../constants";
+
 /*
   input
 */
@@ -30,7 +32,7 @@ export const transformInputValueToDialValues = val => {
   dials
 */
 export const transformTimeToDialValues = time => {
-  if (!time || time === "" || time === "Invalid Time") {
+  if (!time || time === "" || time === INVALID_TIME) {
     return ["--", "--", "--"];
   }
 
