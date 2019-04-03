@@ -6,6 +6,7 @@ import { breakpoints } from "brown-university-styles";
 import TimePickerContainer from "../../utils/TimePickerContainer";
 import TimePicker from "../../TimePicker";
 import timePickerTestUtils from "../../../test-utils/time-picker";
+import { INVALID_TIME } from "../../../constants";
 
 const renderTimePicker = props => {
   const id = "time-picker-test";
@@ -361,7 +362,7 @@ describe("TimePicker", () => {
       });
 
       expect(onTimeChange).toHaveBeenCalledTimes(1);
-      expect(onTimeChange).toHaveBeenCalledWith("Invalid Time");
+      expect(onTimeChange).toHaveBeenCalledWith(INVALID_TIME);
     });
   });
 

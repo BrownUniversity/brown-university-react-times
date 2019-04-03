@@ -15,6 +15,7 @@ import {
   getNextDialOption,
   getPreviousDialOption
 } from "./utils";
+import { INVALID_TIME } from "../../../constants";
 import { inputCSS } from "../../../styles";
 
 /*
@@ -101,12 +102,12 @@ class DesktopTimePicker extends PureComponent {
         )
       );
       this.handleInputValueReset();
-    } else if (timeChanged && !["", "Invalid Time"].includes(this.props.time)) {
+    } else if (timeChanged && !["", INVALID_TIME].includes(this.props.time)) {
       // reset the input value when a valid time is set via the clock
       this.handleInputValueReset();
     } else if (inputValueChanged && inputIsDirty && !inputValueIsValid) {
       // trigger a time change when the input value becomes empty or invalid
-      this.props.onTimeChange(inputValue === "" ? "" : "Invalid Time");
+      this.props.onTimeChange(inputValue === "" ? "" : INVALID_TIME);
     }
   }
 

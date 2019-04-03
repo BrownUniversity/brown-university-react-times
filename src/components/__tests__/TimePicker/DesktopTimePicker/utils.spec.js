@@ -7,6 +7,7 @@ import {
   getNextDialOption,
   getPreviousDialOption
 } from "../../../TimePicker/DesktopTimePicker/utils";
+import { INVALID_TIME } from "../../../../constants";
 
 describe("DesktopTimePicker utils", () => {
   describe("getInputIsDirty", () => {
@@ -39,6 +40,7 @@ describe("DesktopTimePicker utils", () => {
       expect(getInputValueIsValid("0130 AM")).toBe(false);
       expect(getInputValueIsValid("01: AM")).toBe(false);
       expect(getInputValueIsValid("01:30")).toBe(false);
+      expect(getInputValueIsValid("1:30 AM")).toBe(false);
       expect(getInputValueIsValid("01 :30 PM")).toBe(false);
       expect(getInputValueIsValid("01: 30 PM")).toBe(false);
       expect(getInputValueIsValid("01 : 30 PM")).toBe(false);
@@ -49,7 +51,7 @@ describe("DesktopTimePicker utils", () => {
       expect(getInputValueIsValid("13:00")).toBe(false);
       expect(getInputValueIsValid("23:59 PM")).toBe(false);
       expect(getInputValueIsValid("23:59 PM 11:59 PM")).toBe(false);
-      expect(getInputValueIsValid("Invalid Time")).toBe(false);
+      expect(getInputValueIsValid(INVALID_TIME)).toBe(false);
     });
   });
 
@@ -90,7 +92,7 @@ describe("DesktopTimePicker utils", () => {
     });
 
     it("handles invalid time", () => {
-      expect(transformTimeToDialValues("Invalid Time")).toEqual([
+      expect(transformTimeToDialValues(INVALID_TIME)).toEqual([
         "--",
         "--",
         "--"

@@ -1,3 +1,5 @@
+import { INVALID_TIME } from "../../../constants";
+
 /*
   input
 */
@@ -6,7 +8,7 @@ export const getInputIsDirty = val => val !== null;
 export const getInputValueIsValid = val =>
   !!val &&
   val.trim().length < 9 &&
-  /\b((1[0-2]|0?[1-9]):([0-5][0-9]) ?([AaPp][Mm]))/.test(val);
+  /\b((1[0-2]|0[1-9]):([0-5][0-9]) ?([AaPp][Mm]))/.test(val);
 
 export const transformInputValueToDialValues = val => {
   const cleanedVal = val
@@ -29,7 +31,7 @@ export const transformInputValueToDialValues = val => {
   dials
 */
 export const transformTimeToDialValues = time => {
-  if (!time || time === "" || time === "Invalid Time") {
+  if (!time || time === "" || time === INVALID_TIME) {
     return ["--", "--", "--"];
   }
 
