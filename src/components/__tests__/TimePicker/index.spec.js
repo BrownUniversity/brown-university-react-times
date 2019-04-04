@@ -59,6 +59,7 @@ describe("TimePicker", () => {
 
         inputElement.focus();
 
+        expect(rtlUtils.getByPlaceholderText("--:-- --")).toBeInTheDocument();
         expect(inputElement.value).toBe("");
         validateDialValues(rtlUtils, {
           hours: "12",
@@ -341,7 +342,7 @@ describe("TimePicker", () => {
       });
     });
 
-    it("trigger a time change when the input value becomes empty", () => {
+    it("triggers a time change when the input value becomes empty", () => {
       const onTimeChange = jest.fn();
       const { getByLabelText } = renderTimePicker({
         time: "08:18",
@@ -356,7 +357,7 @@ describe("TimePicker", () => {
       expect(onTimeChange).toHaveBeenCalledWith("");
     });
 
-    it("trigger a time change when the input value becomes invalid", () => {
+    it("triggers a time change when the input value becomes invalid", () => {
       const onTimeChange = jest.fn();
       const { getByLabelText } = renderTimePicker({ onTimeChange });
 
