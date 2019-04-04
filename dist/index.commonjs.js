@@ -1,4 +1,4 @@
-/*! brown-university-react-times v0.1.1 */
+/*! brown-university-react-times v0.1.2 */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory(require("prop-types"), require("react"), require("brown-university-styles"), require("styled-components"));
@@ -1301,9 +1301,10 @@ function (_PureComponent) {
         return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(DesktopInput, {
           "aria-label": "hours:minutes meridiem",
           type: "text",
+          placeholder: "--:-- --",
           ref: ref,
           id: id,
-          value: inputIsDirty ? inputValue : "".concat(hh, ":").concat(mm, " ").concat(aa),
+          value: Object(_utils__WEBPACK_IMPORTED_MODULE_5__["deriveInputValue"])(inputIsDirty, inputValue, [hh, mm, aa]),
           onFocus: function onFocus() {
             return _this2.handleFocusChange(true);
           },
@@ -5072,6 +5073,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getInputIsDirty", function() { return getInputIsDirty; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getInputValueIsValid", function() { return getInputValueIsValid; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "transformInputValueToDialValues", function() { return transformInputValueToDialValues; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deriveInputValue", function() { return deriveInputValue; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "transformTimeToDialValues", function() { return transformTimeToDialValues; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "transformDialValuesToTime", function() { return transformDialValuesToTime; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hoursDialOptions", function() { return hoursDialOptions; });
@@ -5115,6 +5117,22 @@ var transformInputValueToDialValues = function transformInputValueToDialValues(v
   }
 
   return _toConsumableArray(cleanedVal.replace(/[AP]/, " $&").split(/:| /));
+};
+var deriveInputValue = function deriveInputValue(inputIsDirty, inputValue, dialValues) {
+  if (inputIsDirty) {
+    return inputValue;
+  }
+
+  var _dialValues = _slicedToArray(dialValues, 3),
+      hh = _dialValues[0],
+      mm = _dialValues[1],
+      aa = _dialValues[2];
+
+  if (hh === "--" && mm === "--" && aa === "--") {
+    return "";
+  }
+
+  return "".concat(hh, ":").concat(mm, " ").concat(aa);
 };
 /*
   dials

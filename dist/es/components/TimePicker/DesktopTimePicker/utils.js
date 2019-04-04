@@ -34,6 +34,22 @@ export var transformInputValueToDialValues = function transformInputValueToDialV
 
   return _toConsumableArray(cleanedVal.replace(/[AP]/, " $&").split(/:| /));
 };
+export var deriveInputValue = function deriveInputValue(inputIsDirty, inputValue, dialValues) {
+  if (inputIsDirty) {
+    return inputValue;
+  }
+
+  var _dialValues = _slicedToArray(dialValues, 3),
+      hh = _dialValues[0],
+      mm = _dialValues[1],
+      aa = _dialValues[2];
+
+  if (hh === "--" && mm === "--" && aa === "--") {
+    return "";
+  }
+
+  return "".concat(hh, ":").concat(mm, " ").concat(aa);
+};
 /*
   dials
 */

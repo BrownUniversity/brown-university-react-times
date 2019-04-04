@@ -39,7 +39,7 @@ import React, { PureComponent } from "react";
 import styled from "styled-components";
 import { Manager, Reference, Popper } from "react-popper";
 import Dial from "./Dial";
-import { getInputIsDirty, getInputValueIsValid, transformInputValueToDialValues, transformTimeToDialValues, transformDialValuesToTime, hoursDialOptions, minutesDialOptions, meridiemDialOptions, getNextDialOption, getPreviousDialOption } from "./utils";
+import { getInputIsDirty, getInputValueIsValid, transformInputValueToDialValues, deriveInputValue, transformTimeToDialValues, transformDialValuesToTime, hoursDialOptions, minutesDialOptions, meridiemDialOptions, getNextDialOption, getPreviousDialOption } from "./utils";
 import { INVALID_TIME } from "../../../constants";
 import { inputCSS } from "../../../styles";
 /*
@@ -210,9 +210,10 @@ function (_PureComponent) {
         return React.createElement(DesktopInput, {
           "aria-label": "hours:minutes meridiem",
           type: "text",
+          placeholder: "--:-- --",
           ref: ref,
           id: id,
-          value: inputIsDirty ? inputValue : "".concat(hh, ":").concat(mm, " ").concat(aa),
+          value: deriveInputValue(inputIsDirty, inputValue, [hh, mm, aa]),
           onFocus: function onFocus() {
             return _this2.handleFocusChange(true);
           },
