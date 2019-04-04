@@ -1,4 +1,4 @@
-/*! brown-university-react-times v0.1.2 */
+/*! brown-university-react-times v0.1.3 */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory(require("prop-types"), require("react"), require("brown-university-styles"), require("styled-components"));
@@ -1212,7 +1212,10 @@ function (_PureComponent) {
     _defineProperty(_assertThisInitialized(_this), "handleClick", function (e) {
       // click outside of time picker
       if (!_this.wrapper.current.contains(e.target)) {
-        _this.handleFocusChange(false);
+        if (_this.props.focused) {
+          // close time picker if it is focused
+          _this.handleFocusChange(false);
+        }
       }
     });
 

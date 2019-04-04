@@ -121,7 +121,10 @@ function (_PureComponent) {
     _defineProperty(_assertThisInitialized(_this), "handleClick", function (e) {
       // click outside of time picker
       if (!_this.wrapper.current.contains(e.target)) {
-        _this.handleFocusChange(false);
+        if (_this.props.focused) {
+          // close time picker if it is focused
+          _this.handleFocusChange(false);
+        }
       }
     });
 
