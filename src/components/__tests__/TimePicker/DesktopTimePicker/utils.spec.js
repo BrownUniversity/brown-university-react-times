@@ -2,6 +2,7 @@ import {
   getInputIsDirty,
   getInputValueIsValid,
   transformInputValueToDialValues,
+  deriveInputValue,
   transformTimeToDialValues,
   transformDialValuesToTime,
   getNextDialOption,
@@ -79,6 +80,26 @@ describe("DesktopTimePicker utils", () => {
       expect(transformInputValueToDialValues("09:41Pm")).toEqual(expectedPM);
       expect(transformInputValueToDialValues("09:41pM")).toEqual(expectedPM);
       expect(transformInputValueToDialValues("09:41PM")).toEqual(expectedPM);
+    });
+  });
+
+  describe("deriveInputValue", () => {
+    describe("when inputIsDirty equals true", () => {
+      it("returns inputValue", () => {
+        expect(deriveInputValue(true, "08:1", ["--", "--", "--"])).toBe("08:1");
+      });
+    });
+
+    describe("when inputIsDirty equals false", () => {
+      it("returns an empty string if dialValues are not displayed", () => {
+        expect(deriveInputValue(false, "", ["--", "--", "--"])).toBe("");
+      });
+
+      it("returns dialValues in 'hh:mm aa' format if dialValues are displayed", () => {
+        expect(deriveInputValue(false, "", ["08", "18", "AM"])).toBe(
+          "08:18 AM"
+        );
+      });
     });
   });
 
