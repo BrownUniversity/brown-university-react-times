@@ -27,6 +27,20 @@ export const transformInputValueToDialValues = val => {
   return [...cleanedVal.replace(/[AP]/, " $&").split(/:| /)];
 };
 
+export const deriveInputValue = (inputIsDirty, inputValue, dialValues) => {
+  if (inputIsDirty) {
+    return inputValue;
+  }
+
+  const [hh, mm, aa] = dialValues;
+
+  if (hh === "--" && mm === "--" && aa === "--") {
+    return "";
+  }
+
+  return `${hh}:${mm} ${aa}`;
+};
+
 /*
   dials
 */

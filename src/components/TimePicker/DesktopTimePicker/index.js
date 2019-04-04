@@ -7,6 +7,7 @@ import {
   getInputIsDirty,
   getInputValueIsValid,
   transformInputValueToDialValues,
+  deriveInputValue,
   transformTimeToDialValues,
   transformDialValuesToTime,
   hoursDialOptions,
@@ -183,9 +184,10 @@ class DesktopTimePicker extends PureComponent {
               <DesktopInput
                 aria-label="hours:minutes meridiem"
                 type="text"
+                placeholder="--:-- --"
                 ref={ref}
                 id={id}
-                value={inputIsDirty ? inputValue : `${hh}:${mm} ${aa}`}
+                value={deriveInputValue(inputIsDirty, inputValue, [hh, mm, aa])}
                 onFocus={() => this.handleFocusChange(true)}
                 onChange={this.handleInputValueChange}
               />
