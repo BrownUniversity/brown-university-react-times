@@ -142,7 +142,10 @@ class DesktopTimePicker extends PureComponent {
   handleClick = e => {
     // click outside of time picker
     if (!this.wrapper.current.contains(e.target)) {
-      this.handleFocusChange(false);
+      if (this.props.focused) {
+        // close time picker if it is focused
+        this.handleFocusChange(false);
+      }
     }
   };
 

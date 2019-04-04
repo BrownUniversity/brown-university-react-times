@@ -371,7 +371,7 @@ describe("TimePicker", () => {
   });
 
   describe("focus management", () => {
-    it("calls `onFocusChange` with `{ focused: true }` if input value changes and `focused` is false", () => {
+    it("calls onFocusChange with `{ focused: true }` if input value changes and focused is false", () => {
       const onFocusChange = jest.fn();
       const { getByLabelText } = renderTimePicker({
         onFocusChange
@@ -385,7 +385,7 @@ describe("TimePicker", () => {
       expect(onFocusChange).toHaveBeenCalledWith({ focused: true });
     });
 
-    it("does not call `onFocusChange` if input value changes and `focused` is true", () => {
+    it("does not call onFocusChange if input value changes and focused is true", () => {
       const onFocusChange = jest.fn();
       const { getByLabelText } = renderTimePicker({
         focused: true,
@@ -399,9 +399,10 @@ describe("TimePicker", () => {
       expect(onFocusChange).not.toHaveBeenCalled();
     });
 
-    it("calls `onFocusChange` with `{ focused: false }` on click outside time picker", () => {
+    it("calls onFocusChange with `{ focused: false }` on click outside time picker if focused is true", () => {
       const onFocusChange = jest.fn();
       const { container } = renderTimePicker({
+        focused: true,
         onFocusChange
       });
 
@@ -411,7 +412,18 @@ describe("TimePicker", () => {
       expect(onFocusChange).toHaveBeenCalledWith({ focused: false });
     });
 
-    it("calls `onFocusChange` with `{ focused: false }` on shift + tab from first element", () => {
+    it("does not call onFocusChange on click outside time picker if focused is false", () => {
+      const onFocusChange = jest.fn();
+      const { container } = renderTimePicker({
+        onFocusChange
+      });
+
+      container.click();
+
+      expect(onFocusChange).not.toHaveBeenCalled();
+    });
+
+    it("calls onFocusChange with `{ focused: false }` on shift + tab from first element", () => {
       const onFocusChange = jest.fn();
       const { getByLabelText } = renderTimePicker({
         onFocusChange
@@ -426,7 +438,7 @@ describe("TimePicker", () => {
       expect(onFocusChange).toHaveBeenCalledWith({ focused: false });
     });
 
-    it("calls `onFocusChange` with `{ focused: false }` on tab from last element", () => {
+    it("calls onFocusChange with `{ focused: false }` on tab from last element", () => {
       const onFocusChange = jest.fn();
       const { getByLabelText } = renderTimePicker({
         onFocusChange
