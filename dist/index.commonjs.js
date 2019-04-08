@@ -1,4 +1,4 @@
-/*! brown-university-react-times v0.1.3 */
+/*! brown-university-react-times v0.1.4 */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory(require("prop-types"), require("react"), require("brown-university-styles"), require("styled-components"));
@@ -5237,6 +5237,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
+var timeFormat = "hh:mm A";
 
 function makeSelection(_ref) {
   var inputElement = _ref.element,
@@ -5289,6 +5290,7 @@ function makeSelection(_ref) {
 }
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  timeFormat: timeFormat,
   makeSelection: makeSelection
 });
 

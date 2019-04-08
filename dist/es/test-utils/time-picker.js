@@ -8,6 +8,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 import { fireEvent } from "react-testing-library";
 import { transformTimeToDialValues } from "../components/TimePicker/DesktopTimePicker/utils";
+var timeFormat = "hh:mm A";
 
 function makeSelection(_ref) {
   var inputElement = _ref.element,
@@ -60,5 +61,6 @@ function makeSelection(_ref) {
 }
 
 export default {
+  timeFormat: timeFormat,
   makeSelection: makeSelection
 };
