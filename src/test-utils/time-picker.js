@@ -1,6 +1,8 @@
 import { fireEvent } from "react-testing-library";
 import { transformTimeToDialValues } from "../components/TimePicker/DesktopTimePicker/utils";
 
+const timeFormat = "hh:mm A";
+
 function makeSelection({ element: inputElement, time: nextSelectionTime }) {
   /*
     handle empty time selection
@@ -37,4 +39,4 @@ function makeSelection({ element: inputElement, time: nextSelectionTime }) {
   return undefined;
 }
 
-export default { makeSelection };
+export default { timeFormat, makeSelection };
