@@ -1,4 +1,4 @@
-/*! brown-university-react-times v0.1.4 */
+/*! brown-university-react-times v0.1.5 */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory(require("prop-types"), require("react"), require("brown-university-styles"), require("styled-components"));
@@ -5217,7 +5217,7 @@ var getPreviousDialOption = function getPreviousDialOption(options, current) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "INVALID_TIME", function() { return INVALID_TIME; });
 // eslint-disable-next-line import/prefer-default-export
-var INVALID_TIME = "Invalid time";
+var INVALID_TIME = "Invalid Time";
 
 /***/ }),
 /* 40 */
