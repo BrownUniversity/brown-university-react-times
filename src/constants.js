@@ -1,2 +1,2 @@
 // eslint-disable-next-line import/prefer-default-export
-export const INVALID_TIME = "Invalid time";
+export const INVALID_TIME = "Invalid Time";
