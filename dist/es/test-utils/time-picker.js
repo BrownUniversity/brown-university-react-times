@@ -13,23 +13,39 @@ var timeFormat = "hh:mm A";
 function makeSelection(_ref) {
   var inputElement = _ref.element,
       nextSelectionTime = _ref.time;
+  var isMobile = inputElement.type === "time";
 
+  var closeDesktopClock = function closeDesktopClock() {
+    // shift + tab from first element
+    fireEvent.keyDown(inputElement, {
+      shiftKey: true,
+      keyCode: 9
+    });
+  };
   /*
     handle empty time selection
   */
+
+
   if (!nextSelectionTime) {
-    return fireEvent.change(inputElement, {
+    fireEvent.change(inputElement, {
       target: {
         value: ""
       }
     });
+
+    if (!isMobile) {
+      return closeDesktopClock();
+    }
+
+    return undefined;
   }
   /*
     handle mobile time selection
   */
 
 
-  if (inputElement.type === "time") {
+  if (isMobile) {
     return fireEvent.change(inputElement, {
       target: {
         value: nextSelectionTime
@@ -51,12 +67,8 @@ function makeSelection(_ref) {
     target: {
       value: "".concat(hh, ":").concat(mm, " ").concat(aa)
     }
-  }); // close time picker via shift + tab from first element
-
-  fireEvent.keyDown(inputElement, {
-    shiftKey: true,
-    keyCode: 9
   });
+  closeDesktopClock();
   return undefined;
 }
 

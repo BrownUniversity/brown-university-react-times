@@ -1,4 +1,4 @@
-/*! brown-university-react-times v0.1.5 */
+/*! brown-university-react-times v0.1.6 */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory(require("prop-types"), require("react"), require("brown-university-styles"), require("styled-components"));
@@ -1213,7 +1213,7 @@ function (_PureComponent) {
       // click outside of time picker
       if (!_this.wrapper.current.contains(e.target)) {
         if (_this.props.focused) {
-          // close time picker if it is focused
+          // close clock if time picker has focused
           _this.handleFocusChange(false);
         }
       }
@@ -1222,10 +1222,10 @@ function (_PureComponent) {
     _defineProperty(_assertThisInitialized(_this), "handleKeydown", function (e) {
       // tab key
       if (_this.wrapper.current && e.keyCode === 9) {
-        // close time picker on shift + tab from first element
+        // close clock on shift + tab from first element
         if (e.shiftKey && e.target.getAttribute("aria-label") === "hours:minutes meridiem") {
           _this.handleFocusChange(false);
-        } // close time picker on tab from last element
+        } // close clock on tab from last element
 
 
         if (!e.shiftKey && e.target.getAttribute("aria-label") === "Decrement meridiem") {
@@ -5242,23 +5242,39 @@ var timeFormat = "hh:mm A";
 function makeSelection(_ref) {
   var inputElement = _ref.element,
       nextSelectionTime = _ref.time;
+  var isMobile = inputElement.type === "time";
 
+  var closeDesktopClock = function closeDesktopClock() {
+    // shift + tab from first element
+    react_testing_library__WEBPACK_IMPORTED_MODULE_0__["fireEvent"].keyDown(inputElement, {
+      shiftKey: true,
+      keyCode: 9
+    });
+  };
   /*
     handle empty time selection
   */
+
+
   if (!nextSelectionTime) {
-    return react_testing_library__WEBPACK_IMPORTED_MODULE_0__["fireEvent"].change(inputElement, {
+    react_testing_library__WEBPACK_IMPORTED_MODULE_0__["fireEvent"].change(inputElement, {
       target: {
         value: ""
       }
     });
+
+    if (!isMobile) {
+      return closeDesktopClock();
+    }
+
+    return undefined;
   }
   /*
     handle mobile time selection
   */
 
 
-  if (inputElement.type === "time") {
+  if (isMobile) {
     return react_testing_library__WEBPACK_IMPORTED_MODULE_0__["fireEvent"].change(inputElement, {
       target: {
         value: nextSelectionTime
@@ -5280,12 +5296,8 @@ function makeSelection(_ref) {
     target: {
       value: "".concat(hh, ":").concat(mm, " ").concat(aa)
     }
-  }); // close time picker via shift + tab from first element
-
-  react_testing_library__WEBPACK_IMPORTED_MODULE_0__["fireEvent"].keyDown(inputElement, {
-    shiftKey: true,
-    keyCode: 9
   });
+  closeDesktopClock();
   return undefined;
 }
 

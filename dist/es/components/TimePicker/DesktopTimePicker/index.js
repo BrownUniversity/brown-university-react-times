@@ -122,7 +122,7 @@ function (_PureComponent) {
       // click outside of time picker
       if (!_this.wrapper.current.contains(e.target)) {
         if (_this.props.focused) {
-          // close time picker if it is focused
+          // close clock if time picker has focused
           _this.handleFocusChange(false);
         }
       }
@@ -131,10 +131,10 @@ function (_PureComponent) {
     _defineProperty(_assertThisInitialized(_this), "handleKeydown", function (e) {
       // tab key
       if (_this.wrapper.current && e.keyCode === 9) {
-        // close time picker on shift + tab from first element
+        // close clock on shift + tab from first element
         if (e.shiftKey && e.target.getAttribute("aria-label") === "hours:minutes meridiem") {
           _this.handleFocusChange(false);
-        } // close time picker on tab from last element
+        } // close clock on tab from last element
 
 
         if (!e.shiftKey && e.target.getAttribute("aria-label") === "Decrement meridiem") {
