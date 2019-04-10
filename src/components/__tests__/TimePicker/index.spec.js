@@ -24,7 +24,7 @@ const renderTimePicker = props => {
 
 const validateDialValues = (rtlUtils, expectedValues) => {
   const { getByLabelText, getByTestId } = rtlUtils;
-  expect(getByLabelText("Clock")).toBeInTheDocument();
+  expect(getByLabelText("Clock")).toBeInTheDocument(); // clock needs to be open
   expect(getByTestId("hours-value")).toHaveTextContent(expectedValues.hours);
   expect(getByTestId("minutes-value")).toHaveTextContent(
     expectedValues.minutes
@@ -509,6 +509,7 @@ describe("timePickerTestUtils", () => {
     });
 
     expect(element.value).toBe("");
+    element.focus();
     validateDialValues(rtlUtils, {
       hours: "--",
       minutes: "--",
@@ -549,7 +550,7 @@ describe("timePickerTestUtils", () => {
 
       timePickerTestUtils.makeSelection({
         element,
-        time: null
+        time: ""
       });
 
       expect(element.value).toBe("");

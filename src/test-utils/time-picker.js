@@ -4,19 +4,29 @@ import { transformTimeToDialValues } from "../components/TimePicker/DesktopTimeP
 const timeFormat = "hh:mm A";
 
 function makeSelection({ element: inputElement, time: nextSelectionTime }) {
+  const isMobile = inputElement.type === "time";
+  const closeDesktopClock = () => {
+    // shift + tab from first element
+    fireEvent.keyDown(inputElement, { shiftKey: true, keyCode: 9 });
+  };
+
   /*
     handle empty time selection
   */
   if (!nextSelectionTime) {
-    return fireEvent.change(inputElement, {
+    fireEvent.change(inputElement, {
       target: { value: "" }
     });
+    if (!isMobile) {
+      return closeDesktopClock();
+    }
+    return undefined;
   }
 
   /*
     handle mobile time selection
   */
-  if (inputElement.type === "time") {
+  if (isMobile) {
     return fireEvent.change(inputElement, {
       target: { value: nextSelectionTime }
     });
@@ -26,16 +36,12 @@ function makeSelection({ element: inputElement, time: nextSelectionTime }) {
     handle desktop time selection
   */
   const [hh, mm, aa] = transformTimeToDialValues(nextSelectionTime);
-
   fireEvent.change(inputElement, {
     target: {
       value: `${hh}:${mm} ${aa}`
     }
   });
-
-  // close time picker via shift + tab from first element
-  fireEvent.keyDown(inputElement, { shiftKey: true, keyCode: 9 });
-
+  closeDesktopClock();
   return undefined;
 }
 
