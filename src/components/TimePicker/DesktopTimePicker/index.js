@@ -143,7 +143,7 @@ class DesktopTimePicker extends PureComponent {
     // click outside of time picker
     if (!this.wrapper.current.contains(e.target)) {
       if (this.props.focused) {
-        // close time picker if it is focused
+        // close clock if time picker has focused
         this.handleFocusChange(false);
       }
     }
@@ -152,7 +152,7 @@ class DesktopTimePicker extends PureComponent {
   handleKeydown = e => {
     // tab key
     if (this.wrapper.current && e.keyCode === 9) {
-      // close time picker on shift + tab from first element
+      // close clock on shift + tab from first element
       if (
         e.shiftKey &&
         e.target.getAttribute("aria-label") === "hours:minutes meridiem"
@@ -160,7 +160,7 @@ class DesktopTimePicker extends PureComponent {
         this.handleFocusChange(false);
       }
 
-      // close time picker on tab from last element
+      // close clock on tab from last element
       if (
         !e.shiftKey &&
         e.target.getAttribute("aria-label") === "Decrement meridiem"
