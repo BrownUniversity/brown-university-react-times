@@ -16,7 +16,11 @@ import {
   getNextDialOption,
   getPreviousDialOption
 } from "./utils";
-import { INVALID_TIME } from "../../../constants";
+import {
+  DESKTOP_PLACEHOLDER,
+  EMPTY_DIAL_VALUE,
+  INVALID_TIME
+} from "../../../constants";
 import { inputCSS } from "../../../styles";
 
 /*
@@ -174,9 +178,9 @@ class DesktopTimePicker extends PureComponent {
     const { color, id, time, onTimeChange, focused } = this.props;
     const { inputIsDirty, inputValue, inputValueIsValid } = this.state;
     const [hh, mm, aa] = transformTimeToDialValues(time);
-    const hoursDialValue = hh === "--" ? "12" : hh;
-    const minutesDialValue = mm === "--" ? "00" : mm;
-    const meridiemDialValue = aa === "--" ? "PM" : aa;
+    const hoursDialValue = hh === EMPTY_DIAL_VALUE ? "12" : hh;
+    const minutesDialValue = mm === EMPTY_DIAL_VALUE ? "00" : mm;
+    const meridiemDialValue = aa === EMPTY_DIAL_VALUE ? "PM" : aa;
     const shouldShowDialValues = !inputIsDirty || inputValueIsValid;
 
     return (
@@ -187,7 +191,7 @@ class DesktopTimePicker extends PureComponent {
               <DesktopInput
                 aria-label="hours:minutes meridiem"
                 type="text"
-                placeholder="--:-- --"
+                placeholder={DESKTOP_PLACEHOLDER}
                 ref={ref}
                 id={id}
                 value={deriveInputValue(inputIsDirty, inputValue, [hh, mm, aa])}
@@ -209,7 +213,9 @@ class DesktopTimePicker extends PureComponent {
                     <Dial
                       color={color}
                       name="hours"
-                      value={shouldShowDialValues ? hoursDialValue : "--"}
+                      value={
+                        shouldShowDialValues ? hoursDialValue : EMPTY_DIAL_VALUE
+                      }
                       increment={() =>
                         onTimeChange(
                           transformDialValuesToTime(
@@ -235,7 +241,11 @@ class DesktopTimePicker extends PureComponent {
                     <Dial
                       color={color}
                       name="minutes"
-                      value={shouldShowDialValues ? minutesDialValue : "--"}
+                      value={
+                        shouldShowDialValues
+                          ? minutesDialValue
+                          : EMPTY_DIAL_VALUE
+                      }
                       increment={() =>
                         onTimeChange(
                           transformDialValuesToTime(
@@ -264,7 +274,11 @@ class DesktopTimePicker extends PureComponent {
                     <Dial
                       color={color}
                       name="meridiem"
-                      value={shouldShowDialValues ? meridiemDialValue : "--"}
+                      value={
+                        shouldShowDialValues
+                          ? meridiemDialValue
+                          : EMPTY_DIAL_VALUE
+                      }
                       increment={() =>
                         onTimeChange(
                           transformDialValuesToTime(
