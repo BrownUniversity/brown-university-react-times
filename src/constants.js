@@ -1,2 +1,5 @@
-// eslint-disable-next-line import/prefer-default-export
+export const DESKTOP_PLACEHOLDER = "--:-- --";
+
+export const EMPTY_DIAL_VALUE = "--";
+
 export const INVALID_TIME = "Invalid Time";

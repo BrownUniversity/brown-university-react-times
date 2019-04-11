@@ -1,4 +1,4 @@
-import { INVALID_TIME } from "../../../constants";
+import { EMPTY_DIAL_VALUE, INVALID_TIME } from "../../../constants";
 
 /*
   input
@@ -34,7 +34,11 @@ export const deriveInputValue = (inputIsDirty, inputValue, dialValues) => {
 
   const [hh, mm, aa] = dialValues;
 
-  if (hh === "--" && mm === "--" && aa === "--") {
+  if (
+    hh === EMPTY_DIAL_VALUE &&
+    mm === EMPTY_DIAL_VALUE &&
+    aa === EMPTY_DIAL_VALUE
+  ) {
     return "";
   }
 
@@ -46,7 +50,7 @@ export const deriveInputValue = (inputIsDirty, inputValue, dialValues) => {
 */
 export const transformTimeToDialValues = time => {
   if (!time || time === "" || time === INVALID_TIME) {
-    return ["--", "--", "--"];
+    return [EMPTY_DIAL_VALUE, EMPTY_DIAL_VALUE, EMPTY_DIAL_VALUE];
   }
 
   const [HH, mm] = time.split(":");

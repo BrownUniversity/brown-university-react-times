@@ -6,7 +6,11 @@ import { breakpoints } from "brown-university-styles";
 import TimePickerContainer from "../../utils/TimePickerContainer";
 import TimePicker from "../../TimePicker";
 import timePickerTestUtils from "../../../test-utils/time-picker";
-import { INVALID_TIME } from "../../../constants";
+import {
+  DESKTOP_PLACEHOLDER,
+  EMPTY_DIAL_VALUE,
+  INVALID_TIME
+} from "../../../constants";
 
 const renderTimePicker = props => {
   const id = "time-picker-test";
@@ -59,7 +63,9 @@ describe("TimePicker", () => {
 
         inputElement.focus();
 
-        expect(rtlUtils.getByPlaceholderText("--:-- --")).toBeInTheDocument();
+        expect(
+          rtlUtils.getByPlaceholderText(DESKTOP_PLACEHOLDER)
+        ).toBeInTheDocument();
         expect(inputElement.value).toBe("");
         validateDialValues(rtlUtils, {
           hours: "12",
@@ -83,9 +89,9 @@ describe("TimePicker", () => {
         setupAndValidateInputChange({
           nextInputValue: "09:4",
           expectedDialValues: {
-            hours: "--",
-            minutes: "--",
-            meridiem: "--"
+            hours: EMPTY_DIAL_VALUE,
+            minutes: EMPTY_DIAL_VALUE,
+            meridiem: EMPTY_DIAL_VALUE
           }
         });
       });
@@ -125,9 +131,9 @@ describe("TimePicker", () => {
           timePickerProps: { time: "08:18" },
           nextInputValue: "08:18 P",
           expectedDialValues: {
-            hours: "--",
-            minutes: "--",
-            meridiem: "--"
+            hours: EMPTY_DIAL_VALUE,
+            minutes: EMPTY_DIAL_VALUE,
+            meridiem: EMPTY_DIAL_VALUE
           }
         });
       });
@@ -511,9 +517,9 @@ describe("timePickerTestUtils", () => {
     expect(element.value).toBe("");
     element.focus();
     validateDialValues(rtlUtils, {
-      hours: "--",
-      minutes: "--",
-      meridiem: "--"
+      hours: EMPTY_DIAL_VALUE,
+      minutes: EMPTY_DIAL_VALUE,
+      meridiem: EMPTY_DIAL_VALUE
     });
   });
 

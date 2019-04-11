@@ -8,7 +8,7 @@ import {
   getNextDialOption,
   getPreviousDialOption
 } from "../../../TimePicker/DesktopTimePicker/utils";
-import { INVALID_TIME } from "../../../../constants";
+import { EMPTY_DIAL_VALUE, INVALID_TIME } from "../../../../constants";
 
 describe("DesktopTimePicker utils", () => {
   describe("getInputIsDirty", () => {
@@ -86,13 +86,25 @@ describe("DesktopTimePicker utils", () => {
   describe("deriveInputValue", () => {
     describe("when inputIsDirty equals true", () => {
       it("returns inputValue", () => {
-        expect(deriveInputValue(true, "08:1", ["--", "--", "--"])).toBe("08:1");
+        expect(
+          deriveInputValue(true, "08:1", [
+            EMPTY_DIAL_VALUE,
+            EMPTY_DIAL_VALUE,
+            EMPTY_DIAL_VALUE
+          ])
+        ).toBe("08:1");
       });
     });
 
     describe("when inputIsDirty equals false", () => {
       it("returns an empty string if dialValues are not displayed", () => {
-        expect(deriveInputValue(false, "", ["--", "--", "--"])).toBe("");
+        expect(
+          deriveInputValue(false, "", [
+            EMPTY_DIAL_VALUE,
+            EMPTY_DIAL_VALUE,
+            EMPTY_DIAL_VALUE
+          ])
+        ).toBe("");
       });
 
       it("returns dialValues in 'hh:mm aa' format if dialValues are displayed", () => {
@@ -105,18 +117,26 @@ describe("DesktopTimePicker utils", () => {
 
   describe("transformTimeToDialValues", () => {
     it("handles missing time", () => {
-      expect(transformTimeToDialValues(null)).toEqual(["--", "--", "--"]);
+      expect(transformTimeToDialValues(null)).toEqual([
+        EMPTY_DIAL_VALUE,
+        EMPTY_DIAL_VALUE,
+        EMPTY_DIAL_VALUE
+      ]);
     });
 
     it("handles empty time", () => {
-      expect(transformTimeToDialValues("")).toEqual(["--", "--", "--"]);
+      expect(transformTimeToDialValues("")).toEqual([
+        EMPTY_DIAL_VALUE,
+        EMPTY_DIAL_VALUE,
+        EMPTY_DIAL_VALUE
+      ]);
     });
 
     it("handles invalid time", () => {
       expect(transformTimeToDialValues(INVALID_TIME)).toEqual([
-        "--",
-        "--",
-        "--"
+        EMPTY_DIAL_VALUE,
+        EMPTY_DIAL_VALUE,
+        EMPTY_DIAL_VALUE
       ]);
     });
 
