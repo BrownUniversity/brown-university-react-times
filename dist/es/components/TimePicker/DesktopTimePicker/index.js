@@ -40,7 +40,7 @@ import styled from "styled-components";
 import { Manager, Reference, Popper } from "react-popper";
 import Dial from "./Dial";
 import { getInputIsDirty, getInputValueIsValid, transformInputValueToDialValues, deriveInputValue, transformTimeToDialValues, transformDialValuesToTime, hoursDialOptions, minutesDialOptions, meridiemDialOptions, getNextDialOption, getPreviousDialOption } from "./utils";
-import { INVALID_TIME } from "../../../constants";
+import { DESKTOP_PLACEHOLDER, EMPTY_DIAL_VALUE, INVALID_TIME } from "../../../constants";
 import { inputCSS } from "../../../styles";
 /*
   inner components
@@ -53,11 +53,11 @@ var DesktopInput = styled.input.withConfig({
 var PopperWrapper = styled.div.withConfig({
   displayName: "DesktopTimePicker__PopperWrapper",
   componentId: "wn6wad-1"
-})(["background-color:#fff;box-shadow:0 2px 6px rgba(0,0,0,0.05),0 0 0 1px rgba(0,0,0,0.07);border-radius:3px;padding:22px;&[data-placement*=\"bottom-start\"]{margin-top:20px;}"]);
+})(["background-color:#fff;box-shadow:0 2px 6px rgba(0,0,0,0.05),0 0 0 1px rgba(0,0,0,0.07);border-radius:3px;padding:22px;&[data-placement*=\"bottom-start\"]{margin-top:20px;}&[data-placement*=\"top-start\"]{margin-bottom:20px;}"]);
 var Fang = styled.div.withConfig({
   displayName: "DesktopTimePicker__Fang",
   componentId: "wn6wad-2"
-})(["&[data-placement*=\"bottom-start\"]{position:absolute;border:8px solid transparent;border-bottom-color:#fff;border-top:none;margin-top:-8px;top:0;&::before{border:8px solid transparent;border-bottom-color:#dbdbdb;border-top:none;border-width:9px;content:\"\";left:-9px;position:absolute;top:-1px;z-index:-1;}}"]);
+})(["border:8px solid transparent;position:absolute;&::before{border:8px solid transparent;border-width:9px;content:\"\";left:-9px;position:absolute;z-index:-1;}&[data-placement*=\"bottom-start\"]{border-bottom-color:#fff;border-top:none;margin-top:-8px;top:0;&::before{border-bottom-color:#dbdbdb;border-top:none;top:-1px;}}&[data-placement*=\"top-start\"]{bottom:0;border-bottom:none;border-top-color:#fff;margin-bottom:-8px;&::before{bottom:-1px;border-bottom:none;border-top-color:#dbdbdb;}}"]);
 var ClockWrapper = styled.div.withConfig({
   displayName: "DesktopTimePicker__ClockWrapper",
   componentId: "wn6wad-3"
@@ -202,9 +202,9 @@ function (_PureComponent) {
           mm = _transformTimeToDialV2[1],
           aa = _transformTimeToDialV2[2];
 
-      var hoursDialValue = hh === "--" ? "12" : hh;
-      var minutesDialValue = mm === "--" ? "00" : mm;
-      var meridiemDialValue = aa === "--" ? "PM" : aa;
+      var hoursDialValue = hh === EMPTY_DIAL_VALUE ? "12" : hh;
+      var minutesDialValue = mm === EMPTY_DIAL_VALUE ? "00" : mm;
+      var meridiemDialValue = aa === EMPTY_DIAL_VALUE ? "PM" : aa;
       var shouldShowDialValues = !inputIsDirty || inputValueIsValid;
       return React.createElement("div", {
         ref: this.wrapper
@@ -213,7 +213,7 @@ function (_PureComponent) {
         return React.createElement(DesktopInput, {
           "aria-label": "hours:minutes meridiem",
           type: "text",
-          placeholder: "--:-- --",
+          placeholder: DESKTOP_PLACEHOLDER,
           ref: ref,
           id: id,
           value: deriveInputValue(inputIsDirty, inputValue, [hh, mm, aa]),
@@ -239,7 +239,7 @@ function (_PureComponent) {
         }, React.createElement(Dial, {
           color: color,
           name: "hours",
-          value: shouldShowDialValues ? hoursDialValue : "--",
+          value: shouldShowDialValues ? hoursDialValue : EMPTY_DIAL_VALUE,
           increment: function increment() {
             return onTimeChange(transformDialValuesToTime(getNextDialOption(hoursDialOptions, hoursDialValue), minutesDialValue, meridiemDialValue));
           },
@@ -249,7 +249,7 @@ function (_PureComponent) {
         }), React.createElement(Dial, {
           color: color,
           name: "minutes",
-          value: shouldShowDialValues ? minutesDialValue : "--",
+          value: shouldShowDialValues ? minutesDialValue : EMPTY_DIAL_VALUE,
           increment: function increment() {
             return onTimeChange(transformDialValuesToTime(hoursDialValue, getNextDialOption(minutesDialOptions, minutesDialValue), meridiemDialValue));
           },
@@ -259,7 +259,7 @@ function (_PureComponent) {
         }), React.createElement(Dial, {
           color: color,
           name: "meridiem",
-          value: shouldShowDialValues ? meridiemDialValue : "--",
+          value: shouldShowDialValues ? meridiemDialValue : EMPTY_DIAL_VALUE,
           increment: function increment() {
             return onTimeChange(transformDialValuesToTime(hoursDialValue, minutesDialValue, getNextDialOption(meridiemDialOptions, meridiemDialValue)));
           },

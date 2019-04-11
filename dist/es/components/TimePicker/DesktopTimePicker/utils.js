@@ -14,7 +14,7 @@ function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.
 
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
-import { INVALID_TIME } from "../../../constants";
+import { EMPTY_DIAL_VALUE, INVALID_TIME } from "../../../constants";
 /*
   input
 */
@@ -44,7 +44,7 @@ export var deriveInputValue = function deriveInputValue(inputIsDirty, inputValue
       mm = _dialValues[1],
       aa = _dialValues[2];
 
-  if (hh === "--" && mm === "--" && aa === "--") {
+  if (hh === EMPTY_DIAL_VALUE && mm === EMPTY_DIAL_VALUE && aa === EMPTY_DIAL_VALUE) {
     return "";
   }
 
@@ -56,7 +56,7 @@ export var deriveInputValue = function deriveInputValue(inputIsDirty, inputValue
 
 export var transformTimeToDialValues = function transformTimeToDialValues(time) {
   if (!time || time === "" || time === INVALID_TIME) {
-    return ["--", "--", "--"];
+    return [EMPTY_DIAL_VALUE, EMPTY_DIAL_VALUE, EMPTY_DIAL_VALUE];
   }
 
   var _time$split = time.split(":"),

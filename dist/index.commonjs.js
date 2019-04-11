@@ -1,4 +1,4 @@
-/*! brown-university-react-times v0.1.6 */
+/*! brown-university-react-times v0.1.7 */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory(require("prop-types"), require("react"), require("brown-university-styles"), require("styled-components"));
@@ -1144,11 +1144,11 @@ var DesktopInput = styled_components__WEBPACK_IMPORTED_MODULE_2___default.a.inpu
 var PopperWrapper = styled_components__WEBPACK_IMPORTED_MODULE_2___default.a.div.withConfig({
   displayName: "DesktopTimePicker__PopperWrapper",
   componentId: "wn6wad-1"
-})(["background-color:#fff;box-shadow:0 2px 6px rgba(0,0,0,0.05),0 0 0 1px rgba(0,0,0,0.07);border-radius:3px;padding:22px;&[data-placement*=\"bottom-start\"]{margin-top:20px;}"]);
+})(["background-color:#fff;box-shadow:0 2px 6px rgba(0,0,0,0.05),0 0 0 1px rgba(0,0,0,0.07);border-radius:3px;padding:22px;&[data-placement*=\"bottom-start\"]{margin-top:20px;}&[data-placement*=\"top-start\"]{margin-bottom:20px;}"]);
 var Fang = styled_components__WEBPACK_IMPORTED_MODULE_2___default.a.div.withConfig({
   displayName: "DesktopTimePicker__Fang",
   componentId: "wn6wad-2"
-})(["&[data-placement*=\"bottom-start\"]{position:absolute;border:8px solid transparent;border-bottom-color:#fff;border-top:none;margin-top:-8px;top:0;&::before{border:8px solid transparent;border-bottom-color:#dbdbdb;border-top:none;border-width:9px;content:\"\";left:-9px;position:absolute;top:-1px;z-index:-1;}}"]);
+})(["border:8px solid transparent;position:absolute;&::before{border:8px solid transparent;border-width:9px;content:\"\";left:-9px;position:absolute;z-index:-1;}&[data-placement*=\"bottom-start\"]{border-bottom-color:#fff;border-top:none;margin-top:-8px;top:0;&::before{border-bottom-color:#dbdbdb;border-top:none;top:-1px;}}&[data-placement*=\"top-start\"]{bottom:0;border-bottom:none;border-top-color:#fff;margin-bottom:-8px;&::before{bottom:-1px;border-bottom:none;border-top-color:#dbdbdb;}}"]);
 var ClockWrapper = styled_components__WEBPACK_IMPORTED_MODULE_2___default.a.div.withConfig({
   displayName: "DesktopTimePicker__ClockWrapper",
   componentId: "wn6wad-3"
@@ -1293,9 +1293,9 @@ function (_PureComponent) {
           mm = _transformTimeToDialV2[1],
           aa = _transformTimeToDialV2[2];
 
-      var hoursDialValue = hh === "--" ? "12" : hh;
-      var minutesDialValue = mm === "--" ? "00" : mm;
-      var meridiemDialValue = aa === "--" ? "PM" : aa;
+      var hoursDialValue = hh === _constants__WEBPACK_IMPORTED_MODULE_6__["EMPTY_DIAL_VALUE"] ? "12" : hh;
+      var minutesDialValue = mm === _constants__WEBPACK_IMPORTED_MODULE_6__["EMPTY_DIAL_VALUE"] ? "00" : mm;
+      var meridiemDialValue = aa === _constants__WEBPACK_IMPORTED_MODULE_6__["EMPTY_DIAL_VALUE"] ? "PM" : aa;
       var shouldShowDialValues = !inputIsDirty || inputValueIsValid;
       return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         ref: this.wrapper
@@ -1304,7 +1304,7 @@ function (_PureComponent) {
         return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(DesktopInput, {
           "aria-label": "hours:minutes meridiem",
           type: "text",
-          placeholder: "--:-- --",
+          placeholder: _constants__WEBPACK_IMPORTED_MODULE_6__["DESKTOP_PLACEHOLDER"],
           ref: ref,
           id: id,
           value: Object(_utils__WEBPACK_IMPORTED_MODULE_5__["deriveInputValue"])(inputIsDirty, inputValue, [hh, mm, aa]),
@@ -1330,7 +1330,7 @@ function (_PureComponent) {
         }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Dial__WEBPACK_IMPORTED_MODULE_4__["default"], {
           color: color,
           name: "hours",
-          value: shouldShowDialValues ? hoursDialValue : "--",
+          value: shouldShowDialValues ? hoursDialValue : _constants__WEBPACK_IMPORTED_MODULE_6__["EMPTY_DIAL_VALUE"],
           increment: function increment() {
             return onTimeChange(Object(_utils__WEBPACK_IMPORTED_MODULE_5__["transformDialValuesToTime"])(Object(_utils__WEBPACK_IMPORTED_MODULE_5__["getNextDialOption"])(_utils__WEBPACK_IMPORTED_MODULE_5__["hoursDialOptions"], hoursDialValue), minutesDialValue, meridiemDialValue));
           },
@@ -1340,7 +1340,7 @@ function (_PureComponent) {
         }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Dial__WEBPACK_IMPORTED_MODULE_4__["default"], {
           color: color,
           name: "minutes",
-          value: shouldShowDialValues ? minutesDialValue : "--",
+          value: shouldShowDialValues ? minutesDialValue : _constants__WEBPACK_IMPORTED_MODULE_6__["EMPTY_DIAL_VALUE"],
           increment: function increment() {
             return onTimeChange(Object(_utils__WEBPACK_IMPORTED_MODULE_5__["transformDialValuesToTime"])(hoursDialValue, Object(_utils__WEBPACK_IMPORTED_MODULE_5__["getNextDialOption"])(_utils__WEBPACK_IMPORTED_MODULE_5__["minutesDialOptions"], minutesDialValue), meridiemDialValue));
           },
@@ -1350,7 +1350,7 @@ function (_PureComponent) {
         }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Dial__WEBPACK_IMPORTED_MODULE_4__["default"], {
           color: color,
           name: "meridiem",
-          value: shouldShowDialValues ? meridiemDialValue : "--",
+          value: shouldShowDialValues ? meridiemDialValue : _constants__WEBPACK_IMPORTED_MODULE_6__["EMPTY_DIAL_VALUE"],
           increment: function increment() {
             return onTimeChange(Object(_utils__WEBPACK_IMPORTED_MODULE_5__["transformDialValuesToTime"])(hoursDialValue, minutesDialValue, Object(_utils__WEBPACK_IMPORTED_MODULE_5__["getNextDialOption"])(_utils__WEBPACK_IMPORTED_MODULE_5__["meridiemDialOptions"], meridiemDialValue)));
           },
@@ -5131,7 +5131,7 @@ var deriveInputValue = function deriveInputValue(inputIsDirty, inputValue, dialV
       mm = _dialValues[1],
       aa = _dialValues[2];
 
-  if (hh === "--" && mm === "--" && aa === "--") {
+  if (hh === _constants__WEBPACK_IMPORTED_MODULE_0__["EMPTY_DIAL_VALUE"] && mm === _constants__WEBPACK_IMPORTED_MODULE_0__["EMPTY_DIAL_VALUE"] && aa === _constants__WEBPACK_IMPORTED_MODULE_0__["EMPTY_DIAL_VALUE"]) {
     return "";
   }
 
@@ -5143,7 +5143,7 @@ var deriveInputValue = function deriveInputValue(inputIsDirty, inputValue, dialV
 
 var transformTimeToDialValues = function transformTimeToDialValues(time) {
   if (!time || time === "" || time === _constants__WEBPACK_IMPORTED_MODULE_0__["INVALID_TIME"]) {
-    return ["--", "--", "--"];
+    return [_constants__WEBPACK_IMPORTED_MODULE_0__["EMPTY_DIAL_VALUE"], _constants__WEBPACK_IMPORTED_MODULE_0__["EMPTY_DIAL_VALUE"], _constants__WEBPACK_IMPORTED_MODULE_0__["EMPTY_DIAL_VALUE"]];
   }
 
   var _time$split = time.split(":"),
@@ -5215,8 +5215,11 @@ var getPreviousDialOption = function getPreviousDialOption(options, current) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DESKTOP_PLACEHOLDER", function() { return DESKTOP_PLACEHOLDER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "EMPTY_DIAL_VALUE", function() { return EMPTY_DIAL_VALUE; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "INVALID_TIME", function() { return INVALID_TIME; });
-// eslint-disable-next-line import/prefer-default-export
+var DESKTOP_PLACEHOLDER = "--:-- --";
+var EMPTY_DIAL_VALUE = "--";
 var INVALID_TIME = "Invalid Time";
 
 /***/ }),
