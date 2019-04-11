@@ -44,27 +44,48 @@ const PopperWrapper = styled.div`
   &[data-placement*="bottom-start"] {
     margin-top: 20px;
   }
+
+  &[data-placement*="top-start"] {
+    margin-bottom: 20px;
+  }
 `;
 
 const Fang = styled.div`
-  &[data-placement*="bottom-start"] {
-    position: absolute;
+  border: 8px solid transparent;
+  position: absolute;
+
+  &::before {
     border: 8px solid transparent;
+    border-width: 9px;
+    content: "";
+    left: -9px;
+    position: absolute;
+    z-index: -1;
+  }
+
+  &[data-placement*="bottom-start"] {
     border-bottom-color: #fff;
     border-top: none;
     margin-top: -8px;
     top: 0;
 
     &::before {
-      border: 8px solid transparent;
       border-bottom-color: #dbdbdb;
       border-top: none;
-      border-width: 9px;
-      content: "";
-      left: -9px;
-      position: absolute;
       top: -1px;
-      z-index: -1;
+    }
+  }
+
+  &[data-placement*="top-start"] {
+    bottom: 0;
+    border-bottom: none;
+    border-top-color: #fff;
+    margin-bottom: -8px;
+
+    &::before {
+      bottom: -1px;
+      border-bottom: none;
+      border-top-color: #dbdbdb;
     }
   }
 `;
