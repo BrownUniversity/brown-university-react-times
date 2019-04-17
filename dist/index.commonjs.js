@@ -1,4 +1,4 @@
-/*! brown-university-react-times v0.1.7 */
+/*! brown-university-react-times v0.1.8 */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory(require("prop-types"), require("react"), require("brown-university-styles"), require("styled-components"));
@@ -1144,7 +1144,7 @@ var DesktopInput = styled_components__WEBPACK_IMPORTED_MODULE_2___default.a.inpu
 var PopperWrapper = styled_components__WEBPACK_IMPORTED_MODULE_2___default.a.div.withConfig({
   displayName: "DesktopTimePicker__PopperWrapper",
   componentId: "wn6wad-1"
-})(["background-color:#fff;box-shadow:0 2px 6px rgba(0,0,0,0.05),0 0 0 1px rgba(0,0,0,0.07);border-radius:3px;padding:22px;&[data-placement*=\"bottom-start\"]{margin-top:20px;}&[data-placement*=\"top-start\"]{margin-bottom:20px;}"]);
+})(["background-color:#fff;box-shadow:0 2px 6px rgba(0,0,0,0.05),0 0 0 1px rgba(0,0,0,0.07);border-radius:3px;padding:22px;z-index:1;&[data-placement*=\"bottom-start\"]{margin-top:20px;}&[data-placement*=\"top-start\"]{margin-bottom:20px;}"]);
 var Fang = styled_components__WEBPACK_IMPORTED_MODULE_2___default.a.div.withConfig({
   displayName: "DesktopTimePicker__Fang",
   componentId: "wn6wad-2"

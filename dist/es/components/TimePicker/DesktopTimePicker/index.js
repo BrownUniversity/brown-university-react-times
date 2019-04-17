@@ -53,7 +53,7 @@ var DesktopInput = styled.input.withConfig({
 var PopperWrapper = styled.div.withConfig({
   displayName: "DesktopTimePicker__PopperWrapper",
   componentId: "wn6wad-1"
-})(["background-color:#fff;box-shadow:0 2px 6px rgba(0,0,0,0.05),0 0 0 1px rgba(0,0,0,0.07);border-radius:3px;padding:22px;&[data-placement*=\"bottom-start\"]{margin-top:20px;}&[data-placement*=\"top-start\"]{margin-bottom:20px;}"]);
+})(["background-color:#fff;box-shadow:0 2px 6px rgba(0,0,0,0.05),0 0 0 1px rgba(0,0,0,0.07);border-radius:3px;padding:22px;z-index:1;&[data-placement*=\"bottom-start\"]{margin-top:20px;}&[data-placement*=\"top-start\"]{margin-bottom:20px;}"]);
 var Fang = styled.div.withConfig({
   displayName: "DesktopTimePicker__Fang",
   componentId: "wn6wad-2"
