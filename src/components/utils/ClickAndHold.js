@@ -32,10 +32,7 @@ class ClickAndHold extends Component {
   };
 
   render() {
-    const { children, ...restProps } = this.props;
-
-    return children({
-      ...restProps,
+    return this.props.children({
       onMouseDown: this.handleButtonPress,
       onMouseUp: this.handleButtonRelease,
       onMouseLeave: this.handleButtonRelease
@@ -45,7 +42,7 @@ class ClickAndHold extends Component {
 
 ClickAndHold.propTypes = {
   onClick: PropTypes.func.isRequired,
-  children: PropTypes.node.isRequired
+  children: PropTypes.func.isRequired
 };
 
 export default ClickAndHold;
