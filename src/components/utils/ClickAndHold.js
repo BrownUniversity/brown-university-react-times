@@ -19,9 +19,9 @@ class ClickAndHold extends Component {
     );
   };
 
-  handleButtonRelease = ({ click }) => {
+  handleButtonRelease = ({ clicked }) => {
     clearTimeout(this.buttonPressTimeout);
-    if (click && this.state.onClickCallCount < 1) {
+    if (clicked && this.state.onClickCallCount < 1) {
       this.props.onClick();
     }
     this.handleOnClickIntervalEnd();
@@ -44,11 +44,11 @@ class ClickAndHold extends Component {
   render() {
     return this.props.children({
       onMouseDown: this.handleButtonPress,
-      onMouseUp: () => this.handleButtonRelease({ click: true }),
-      onMouseLeave: () => this.handleButtonRelease({ click: false }),
+      onMouseUp: () => this.handleButtonRelease({ clicked: true }),
+      onMouseLeave: () => this.handleButtonRelease({ clicked: false }),
       onKeyPress: e => {
         if ([" ", "Enter"].includes(e.key)) {
-          this.handleButtonRelease({ click: true });
+          this.handleButtonRelease({ clicked: true });
         }
       }
     });
