@@ -34,6 +34,19 @@ These libraries are not bundled with Brown University React Times, but are requi
 
 - [**react-testing-library**](https://www.npmjs.com/package/styled-components)
 
+Add the following to your `jest` `setupFilesAfterEnv` file to prevent `UnhandledPromiseRejectionWarning`s from `popper.js`:
+
+```
+document.createRange = () => ({
+  setStart: () => {},
+  setEnd: () => {},
+  commonAncestorContainer: {
+    nodeName: "BODY",
+    ownerDocument: document
+  }
+});
+```
+
 ### 2. Import styles from Brown University Styles
 
 ---
