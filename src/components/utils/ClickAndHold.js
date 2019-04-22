@@ -1,41 +1,56 @@
 import PropTypes from "prop-types";
 import { Component } from "react";
 
-class ClickAndHold extends Component {
-  milliseconds = 125;
+export const CLICK_AND_HOLD_MILLISECONDS = 125;
 
-  buttonPressTimer = null;
+class ClickAndHold extends Component {
+  buttonPressTimeout = null;
 
   onClickInterval = null;
 
+  state = {
+    onClickCallCount: 0
+  };
+
   handleButtonPress = () => {
-    this.buttonPressTimer = setTimeout(
+    this.buttonPressTimeout = setTimeout(
       this.handleOnClickIntervalStart,
-      this.milliseconds
+      CLICK_AND_HOLD_MILLISECONDS
     );
   };
 
-  handleButtonRelease = () => {
-    clearTimeout(this.buttonPressTimer);
+  handleButtonRelease = ({ click }) => {
+    clearTimeout(this.buttonPressTimeout);
+    if (click && this.state.onClickCallCount < 1) {
+      this.props.onClick();
+    }
     this.handleOnClickIntervalEnd();
   };
 
   handleOnClickIntervalStart = () => {
-    this.onClickInterval = setInterval(
-      () => this.props.onClick(),
-      this.milliseconds
-    );
+    this.onClickInterval = setInterval(() => {
+      this.props.onClick();
+      this.setState(prevState => ({
+        onClickCallCount: prevState.onClickCallCount + 1
+      }));
+    }, CLICK_AND_HOLD_MILLISECONDS);
   };
 
   handleOnClickIntervalEnd = () => {
     clearInterval(this.onClickInterval);
+    this.setState({ onClickCallCount: 0 });
   };
 
   render() {
     return this.props.children({
       onMouseDown: this.handleButtonPress,
-      onMouseUp: this.handleButtonRelease,
-      onMouseLeave: this.handleButtonRelease
+      onMouseUp: () => this.handleButtonRelease({ click: true }),
+      onMouseLeave: () => this.handleButtonRelease({ click: false }),
+      onKeyPress: e => {
+        if ([" ", "Enter"].includes(e.key)) {
+          this.handleButtonRelease({ click: true });
+        }
+      }
     });
   }
 }

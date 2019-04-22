@@ -25,14 +25,13 @@ const Button = styled.button`
 /*
   outer DialButton component
 */
-const Dial = ({ color, ariaLabel, onClick, children }) => (
+const DialButton = ({ color, ariaLabel, onClick, children }) => (
   <ClickAndHold onClick={onClick}>
     {clickAndHoldProps => (
       <Button
         type="button"
         color={color}
         aria-label={ariaLabel}
-        onClick={onClick}
         {...clickAndHoldProps}
       >
         {children}
@@ -41,7 +40,7 @@ const Dial = ({ color, ariaLabel, onClick, children }) => (
   </ClickAndHold>
 );
 
-Dial.propTypes = {
+DialButton.propTypes = {
   color: PropTypes.oneOf([
     "red",
     "brown",
@@ -55,4 +54,4 @@ Dial.propTypes = {
   children: PropTypes.node.isRequired
 };
 
-export default Dial;
+export default DialButton;

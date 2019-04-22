@@ -151,7 +151,7 @@ describe("TimePicker", () => {
       const inputElement = rtlUtils.getByLabelText("Time");
 
       inputElement.focus();
-      fireEvent.click(rtlUtils.getByLabelText(dialAriaLabelText));
+      fireEvent.mouseUp(rtlUtils.getByLabelText(dialAriaLabelText));
 
       expect(inputElement.value).toBe(expectedInputValue);
       validateDialValues(rtlUtils, expectedDialValues);
@@ -338,7 +338,7 @@ describe("TimePicker", () => {
       fireEvent.change(inputElement, {
         target: { value: "" }
       });
-      fireEvent.click(rtlUtils.getByLabelText("Increment minutes"));
+      fireEvent.mouseUp(rtlUtils.getByLabelText("Increment minutes"));
 
       expect(inputElement.value).toBe("12:01 PM");
       validateDialValues(rtlUtils, {
