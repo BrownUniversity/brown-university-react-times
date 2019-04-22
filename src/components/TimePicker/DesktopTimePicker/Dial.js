@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import styled from "styled-components";
 import { colors, typography } from "brown-university-styles";
+import DialButton from "./DialButton";
 import ChevronUpSVG from "../../../svg/chevron-up.svg";
 import ChevronDownSVG from "../../../svg/chevron-down.svg";
 
@@ -10,20 +11,6 @@ import ChevronDownSVG from "../../../svg/chevron-down.svg";
 */
 const Wrapper = styled.div`
   text-align: center;
-`;
-
-const Button = styled.button`
-  border: 1px solid ${colors.lightGray};
-  border-radius: 3px;
-  color: ${({ color }) => colors[color]};
-  cursor: pointer;
-  line-height: 0.78;
-  padding: 9px 6px;
-
-  #chevron-up,
-  #chevron-down {
-    fill: ${({ color }) => colors[color]};
-  }
 `;
 
 const Value = styled.div`
@@ -39,23 +26,21 @@ const Value = styled.div`
 */
 const Dial = ({ color, name, value, increment, decrement }) => (
   <Wrapper>
-    <Button
-      type="button"
+    <DialButton
       color={color}
-      aria-label={`Increment ${name}`}
+      ariaLabel={`Increment ${name}`}
       onClick={increment}
     >
       <ChevronUpSVG />
-    </Button>
+    </DialButton>
     <Value data-testid={`${name}-value`}>{value}</Value>
-    <Button
-      type="button"
+    <DialButton
       color={color}
-      aria-label={`Decrement ${name}`}
+      ariaLabel={`Decrement ${name}`}
       onClick={decrement}
     >
       <ChevronDownSVG />
-    </Button>
+    </DialButton>
   </Wrapper>
 );
 
