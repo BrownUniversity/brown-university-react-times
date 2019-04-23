@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import styled from "styled-components";
 import { colors, typography } from "brown-university-styles";
+import DialButton from "./DialButton";
 
 var ChevronUpSVG = function ChevronUpSVG(props) {
   return React.createElement("svg", props, React.createElement("g", {
@@ -51,41 +52,29 @@ var Wrapper = styled.div.withConfig({
   displayName: "Dial__Wrapper",
   componentId: "sc-6o91f6-0"
 })(["text-align:center;"]);
-var Button = styled.button.withConfig({
-  displayName: "Dial__Button",
-  componentId: "sc-6o91f6-1"
-})(["border:1px solid ", ";border-radius:3px;color:", ";cursor:pointer;line-height:0.78;padding:9px 6px;#chevron-up,#chevron-down{fill:", ";}"], colors.lightGray, function (_ref) {
-  var color = _ref.color;
-  return colors[color];
-}, function (_ref2) {
-  var color = _ref2.color;
-  return colors[color];
-});
 var Value = styled.div.withConfig({
   displayName: "Dial__Value",
-  componentId: "sc-6o91f6-2"
+  componentId: "sc-6o91f6-1"
 })(["color:", ";font-family:", ";font-size:14px;font-weight:bold;padding:10px 0;"], colors.black, typography.sans);
 /*
   outer Dial component
 */
 
-var Dial = function Dial(_ref3) {
-  var color = _ref3.color,
-      name = _ref3.name,
-      value = _ref3.value,
-      increment = _ref3.increment,
-      decrement = _ref3.decrement;
-  return React.createElement(Wrapper, null, React.createElement(Button, {
-    type: "button",
+var Dial = function Dial(_ref) {
+  var color = _ref.color,
+      name = _ref.name,
+      value = _ref.value,
+      increment = _ref.increment,
+      decrement = _ref.decrement;
+  return React.createElement(Wrapper, null, React.createElement(DialButton, {
     color: color,
-    "aria-label": "Increment ".concat(name),
+    ariaLabel: "Increment ".concat(name),
     onClick: increment
   }, React.createElement(ChevronUpSVG, null)), React.createElement(Value, {
     "data-testid": "".concat(name, "-value")
-  }, value), React.createElement(Button, {
-    type: "button",
+  }, value), React.createElement(DialButton, {
     color: color,
-    "aria-label": "Decrement ".concat(name),
+    ariaLabel: "Decrement ".concat(name),
     onClick: decrement
   }, React.createElement(ChevronDownSVG, null)));
 };
