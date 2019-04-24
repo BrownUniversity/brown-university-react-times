@@ -43,6 +43,7 @@ describe("TimePicker", () => {
     const setupAndValidateInputChange = ({
       timePickerProps = null,
       nextInputValue,
+      expectedInputValue = null,
       expectedDialValues
     }) => {
       const rtlUtils = renderTimePicker(timePickerProps);
@@ -52,7 +53,7 @@ describe("TimePicker", () => {
         target: { value: nextInputValue }
       });
 
-      expect(inputElement.value).toBe(nextInputValue);
+      expect(inputElement.value).toBe(expectedInputValue || nextInputValue);
       validateDialValues(rtlUtils, expectedDialValues);
     };
 
@@ -74,9 +75,21 @@ describe("TimePicker", () => {
         });
       });
 
-      it("updates dial values when a valid time is set", () => {
+      it("updates dial values when a valid time is set with a leading zero", () => {
         setupAndValidateInputChange({
           nextInputValue: "09:41 AM",
+          expectedDialValues: {
+            hours: "09",
+            minutes: "41",
+            meridiem: "AM"
+          }
+        });
+      });
+
+      it("updates dial values when a valid time is set without a leading zero", () => {
+        setupAndValidateInputChange({
+          nextInputValue: "9:41 AM",
+          expectedInputValue: "09:41 AM",
           expectedDialValues: {
             hours: "09",
             minutes: "41",
@@ -117,10 +130,10 @@ describe("TimePicker", () => {
       it("updates dial values when updated with a valid time", () => {
         setupAndValidateInputChange({
           timePickerProps: { time: "08:18" },
-          nextInputValue: "09:41 PM",
+          nextInputValue: "11:15 PM",
           expectedDialValues: {
-            hours: "09",
-            minutes: "41",
+            hours: "11",
+            minutes: "15",
             meridiem: "PM"
           }
         });
