@@ -16,6 +16,7 @@ import {
   getNextDialOption,
   getPreviousDialOption
 } from "./utils";
+import debounce from "../../../utils/debounce";
 import {
   DESKTOP_PLACEHOLDER,
   EMPTY_DIAL_VALUE,
@@ -148,14 +149,20 @@ class DesktopTimePicker extends PureComponent {
 
     this.setState({
       inputIsDirty: getInputIsDirty(inputValue),
-      inputValue,
-      inputValueIsValid: getInputValueIsValid(inputValue)
+      inputValue
     });
+
+    this.handleInputValueValidation(inputValue);
 
     if (!this.props.focused) {
       this.handleFocusChange(true);
     }
   };
+
+  handleInputValueValidation = debounce(
+    value => this.setState({ inputValueIsValid: getInputValueIsValid(value) }),
+    250
+  );
 
   handleInputValueReset = () => {
     this.setState(this.initialState);

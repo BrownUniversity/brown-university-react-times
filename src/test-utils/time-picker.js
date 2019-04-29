@@ -4,6 +4,7 @@ import { transformTimeToDialValues } from "../components/TimePicker/DesktopTimeP
 const timeFormat = "hh:mm A";
 
 function makeSelection({ element: inputElement, time: nextSelectionTime }) {
+  jest.useFakeTimers();
   const isMobile = inputElement.type === "time";
   const closeDesktopClock = () => {
     // shift + tab from first element
@@ -41,6 +42,7 @@ function makeSelection({ element: inputElement, time: nextSelectionTime }) {
       value: `${hh}:${mm} ${aa}`
     }
   });
+  jest.runAllTimers();
   closeDesktopClock();
   return undefined;
 }
