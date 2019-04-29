@@ -38,6 +38,10 @@ const validateDialValues = (rtlUtils, expectedValues) => {
   );
 };
 
+jest.useFakeTimers();
+
+const waitForDebounce = () => jest.runAllTimers();
+
 describe("TimePicker", () => {
   describe("input-driven behavior", () => {
     const setupAndValidateInputChange = ({
@@ -52,6 +56,7 @@ describe("TimePicker", () => {
       fireEvent.change(inputElement, {
         target: { value: nextInputValue }
       });
+      waitForDebounce();
 
       expect(inputElement.value).toBe(expectedInputValue || nextInputValue);
       validateDialValues(rtlUtils, expectedDialValues);
@@ -334,6 +339,7 @@ describe("TimePicker", () => {
       fireEvent.change(inputElement, {
         target: { value: "08:18am" }
       });
+      waitForDebounce();
 
       expect(inputElement.value).toBe("08:18 AM");
       validateDialValues(rtlUtils, {
