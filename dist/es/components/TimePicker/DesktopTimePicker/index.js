@@ -40,6 +40,7 @@ import styled from "styled-components";
 import { Manager, Reference, Popper } from "react-popper";
 import Dial from "./Dial";
 import { getInputIsDirty, getInputValueIsValid, transformInputValueToDialValues, deriveInputValue, transformTimeToDialValues, transformDialValuesToTime, hoursDialOptions, minutesDialOptions, meridiemDialOptions, getNextDialOption, getPreviousDialOption } from "./utils";
+import debounce from "../../../utils/debounce";
 import { DESKTOP_PLACEHOLDER, EMPTY_DIAL_VALUE, INVALID_TIME } from "../../../constants";
 import { inputCSS } from "../../../styles";
 /*
@@ -99,14 +100,21 @@ function (_PureComponent) {
 
       _this.setState({
         inputIsDirty: getInputIsDirty(inputValue),
-        inputValue: inputValue,
-        inputValueIsValid: getInputValueIsValid(inputValue)
+        inputValue: inputValue
       });
+
+      _this.handleInputValueValidation(inputValue);
 
       if (!_this.props.focused) {
         _this.handleFocusChange(true);
       }
     });
+
+    _defineProperty(_assertThisInitialized(_this), "handleInputValueValidation", debounce(function (value) {
+      return _this.setState({
+        inputValueIsValid: getInputValueIsValid(value)
+      });
+    }, 250));
 
     _defineProperty(_assertThisInitialized(_this), "handleInputValueReset", function () {
       _this.setState(_this.initialState);

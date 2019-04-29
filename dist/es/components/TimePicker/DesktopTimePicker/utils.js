@@ -23,7 +23,7 @@ export var getInputIsDirty = function getInputIsDirty(val) {
   return val !== null;
 };
 export var getInputValueIsValid = function getInputValueIsValid(val) {
-  return !!val && val.trim().length < 9 && /\b((1[0-2]|0[1-9]):([0-5][0-9]) ?([AaPp][Mm]))/.test(val);
+  return !!val && val.trim().length < 9 && /\b((1[0-2]|0?[1-9]):([0-5][0-9]) ?([AaPp][Mm]))/.test(val);
 };
 export var transformInputValueToDialValues = function transformInputValueToDialValues(val) {
   var cleanedVal = val.trim().replace("am", "AM").replace("aM", "AM").replace("Am", "AM").replace("pm", "PM").replace("pM", "PM").replace("Pm", "PM");

@@ -2,7 +2,7 @@
   "name": "brown-university-react-times",
   "description": "A time picker modeled after Airbnb's react-dates for use in React-based applications at Brown University",
   "author": "Colin Cummings <colin_cummings@brown.edu>",
-  "version": "0.1.9",
+  "version": "0.2.0",
   "private": true,
   "homepage": "https://bitbucket.brown.edu/projects/react/repos/brown-university-react-times",
   "main": "dist/index.commonjs.js",

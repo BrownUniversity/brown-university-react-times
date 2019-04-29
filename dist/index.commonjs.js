@@ -1,4 +1,4 @@
-/*! brown-university-react-times v0.1.9 */
+/*! brown-university-react-times v0.2.0 */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory(require("prop-types"), require("react"), require("brown-university-styles"), require("styled-components"));
@@ -104,7 +104,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_TimePicker__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(1);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "TimePicker", function() { return _components_TimePicker__WEBPACK_IMPORTED_MODULE_0__["default"]; });
 
-/* harmony import */ var _test_utils_time_picker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(42);
+/* harmony import */ var _test_utils_time_picker__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(43);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "timePickerTestUtils", function() { return _test_utils_time_picker__WEBPACK_IMPORTED_MODULE_1__["default"]; });
 
 
@@ -1087,8 +1087,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_popper__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(17);
 /* harmony import */ var _Dial__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(35);
 /* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(40);
-/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(41);
-/* harmony import */ var _styles__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(15);
+/* harmony import */ var _utils_debounce__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(42);
+/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(41);
+/* harmony import */ var _styles__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(15);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
@@ -1133,6 +1134,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
 /*
   inner components
 */
@@ -1140,7 +1142,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var DesktopInput = styled_components__WEBPACK_IMPORTED_MODULE_2___default.a.input.withConfig({
   displayName: "DesktopTimePicker__DesktopInput",
   componentId: "wn6wad-0"
-})(["", " padding:10px;&:focus{outline:0;}"], _styles__WEBPACK_IMPORTED_MODULE_7__["inputCSS"]);
+})(["", " padding:10px;&:focus{outline:0;}"], _styles__WEBPACK_IMPORTED_MODULE_8__["inputCSS"]);
 var PopperWrapper = styled_components__WEBPACK_IMPORTED_MODULE_2___default.a.div.withConfig({
   displayName: "DesktopTimePicker__PopperWrapper",
   componentId: "wn6wad-1"
@@ -1190,14 +1192,21 @@ function (_PureComponent) {
 
       _this.setState({
         inputIsDirty: Object(_utils__WEBPACK_IMPORTED_MODULE_5__["getInputIsDirty"])(inputValue),
-        inputValue: inputValue,
-        inputValueIsValid: Object(_utils__WEBPACK_IMPORTED_MODULE_5__["getInputValueIsValid"])(inputValue)
+        inputValue: inputValue
       });
+
+      _this.handleInputValueValidation(inputValue);
 
       if (!_this.props.focused) {
         _this.handleFocusChange(true);
       }
     });
+
+    _defineProperty(_assertThisInitialized(_this), "handleInputValueValidation", Object(_utils_debounce__WEBPACK_IMPORTED_MODULE_6__["default"])(function (value) {
+      return _this.setState({
+        inputValueIsValid: Object(_utils__WEBPACK_IMPORTED_MODULE_5__["getInputValueIsValid"])(value)
+      });
+    }, 250));
 
     _defineProperty(_assertThisInitialized(_this), "handleInputValueReset", function () {
       _this.setState(_this.initialState);
@@ -1257,12 +1266,12 @@ function (_PureComponent) {
         // trigger a time change and reset the input value when it becomes valid
         this.props.onTimeChange(_utils__WEBPACK_IMPORTED_MODULE_5__["transformDialValuesToTime"].apply(void 0, _toConsumableArray(Object(_utils__WEBPACK_IMPORTED_MODULE_5__["transformInputValueToDialValues"])(inputValue))));
         this.handleInputValueReset();
-      } else if (timeChanged && !["", _constants__WEBPACK_IMPORTED_MODULE_6__["INVALID_TIME"]].includes(this.props.time)) {
+      } else if (timeChanged && !["", _constants__WEBPACK_IMPORTED_MODULE_7__["INVALID_TIME"]].includes(this.props.time)) {
         // reset the input value when a valid time is set via the clock
         this.handleInputValueReset();
       } else if (inputValueChanged && inputIsDirty && !inputValueIsValid) {
         // trigger a time change when the input value becomes empty or invalid
-        this.props.onTimeChange(inputValue === "" ? "" : _constants__WEBPACK_IMPORTED_MODULE_6__["INVALID_TIME"]);
+        this.props.onTimeChange(inputValue === "" ? "" : _constants__WEBPACK_IMPORTED_MODULE_7__["INVALID_TIME"]);
       }
     }
   }, {
@@ -1293,9 +1302,9 @@ function (_PureComponent) {
           mm = _transformTimeToDialV2[1],
           aa = _transformTimeToDialV2[2];
 
-      var hoursDialValue = hh === _constants__WEBPACK_IMPORTED_MODULE_6__["EMPTY_DIAL_VALUE"] ? "12" : hh;
-      var minutesDialValue = mm === _constants__WEBPACK_IMPORTED_MODULE_6__["EMPTY_DIAL_VALUE"] ? "00" : mm;
-      var meridiemDialValue = aa === _constants__WEBPACK_IMPORTED_MODULE_6__["EMPTY_DIAL_VALUE"] ? "PM" : aa;
+      var hoursDialValue = hh === _constants__WEBPACK_IMPORTED_MODULE_7__["EMPTY_DIAL_VALUE"] ? "12" : hh;
+      var minutesDialValue = mm === _constants__WEBPACK_IMPORTED_MODULE_7__["EMPTY_DIAL_VALUE"] ? "00" : mm;
+      var meridiemDialValue = aa === _constants__WEBPACK_IMPORTED_MODULE_7__["EMPTY_DIAL_VALUE"] ? "PM" : aa;
       var shouldShowDialValues = !inputIsDirty || inputValueIsValid;
       return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("div", {
         ref: this.wrapper
@@ -1304,7 +1313,7 @@ function (_PureComponent) {
         return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(DesktopInput, {
           "aria-label": "hours:minutes meridiem",
           type: "text",
-          placeholder: _constants__WEBPACK_IMPORTED_MODULE_6__["DESKTOP_PLACEHOLDER"],
+          placeholder: _constants__WEBPACK_IMPORTED_MODULE_7__["DESKTOP_PLACEHOLDER"],
           ref: ref,
           id: id,
           value: Object(_utils__WEBPACK_IMPORTED_MODULE_5__["deriveInputValue"])(inputIsDirty, inputValue, [hh, mm, aa]),
@@ -1330,7 +1339,7 @@ function (_PureComponent) {
         }, react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Dial__WEBPACK_IMPORTED_MODULE_4__["default"], {
           color: color,
           name: "hours",
-          value: shouldShowDialValues ? hoursDialValue : _constants__WEBPACK_IMPORTED_MODULE_6__["EMPTY_DIAL_VALUE"],
+          value: shouldShowDialValues ? hoursDialValue : _constants__WEBPACK_IMPORTED_MODULE_7__["EMPTY_DIAL_VALUE"],
           increment: function increment() {
             return onTimeChange(Object(_utils__WEBPACK_IMPORTED_MODULE_5__["transformDialValuesToTime"])(Object(_utils__WEBPACK_IMPORTED_MODULE_5__["getNextDialOption"])(_utils__WEBPACK_IMPORTED_MODULE_5__["hoursDialOptions"], hoursDialValue), minutesDialValue, meridiemDialValue));
           },
@@ -1340,7 +1349,7 @@ function (_PureComponent) {
         }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Dial__WEBPACK_IMPORTED_MODULE_4__["default"], {
           color: color,
           name: "minutes",
-          value: shouldShowDialValues ? minutesDialValue : _constants__WEBPACK_IMPORTED_MODULE_6__["EMPTY_DIAL_VALUE"],
+          value: shouldShowDialValues ? minutesDialValue : _constants__WEBPACK_IMPORTED_MODULE_7__["EMPTY_DIAL_VALUE"],
           increment: function increment() {
             return onTimeChange(Object(_utils__WEBPACK_IMPORTED_MODULE_5__["transformDialValuesToTime"])(hoursDialValue, Object(_utils__WEBPACK_IMPORTED_MODULE_5__["getNextDialOption"])(_utils__WEBPACK_IMPORTED_MODULE_5__["minutesDialOptions"], minutesDialValue), meridiemDialValue));
           },
@@ -1350,7 +1359,7 @@ function (_PureComponent) {
         }), react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_Dial__WEBPACK_IMPORTED_MODULE_4__["default"], {
           color: color,
           name: "meridiem",
-          value: shouldShowDialValues ? meridiemDialValue : _constants__WEBPACK_IMPORTED_MODULE_6__["EMPTY_DIAL_VALUE"],
+          value: shouldShowDialValues ? meridiemDialValue : _constants__WEBPACK_IMPORTED_MODULE_7__["EMPTY_DIAL_VALUE"],
           increment: function increment() {
             return onTimeChange(Object(_utils__WEBPACK_IMPORTED_MODULE_5__["transformDialValuesToTime"])(hoursDialValue, minutesDialValue, Object(_utils__WEBPACK_IMPORTED_MODULE_5__["getNextDialOption"])(_utils__WEBPACK_IMPORTED_MODULE_5__["meridiemDialOptions"], meridiemDialValue)));
           },
@@ -5300,7 +5309,7 @@ var getInputIsDirty = function getInputIsDirty(val) {
   return val !== null;
 };
 var getInputValueIsValid = function getInputValueIsValid(val) {
-  return !!val && val.trim().length < 9 && /\b((1[0-2]|0[1-9]):([0-5][0-9]) ?([AaPp][Mm]))/.test(val);
+  return !!val && val.trim().length < 9 && /\b((1[0-2]|0?[1-9]):([0-5][0-9]) ?([AaPp][Mm]))/.test(val);
 };
 var transformInputValueToDialValues = function transformInputValueToDialValues(val) {
   var cleanedVal = val.trim().replace("am", "AM").replace("aM", "AM").replace("Am", "AM").replace("pm", "PM").replace("pM", "PM").replace("Pm", "PM");
@@ -5418,7 +5427,34 @@ var INVALID_TIME = "Invalid Time";
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react_testing_library__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(43);
+/* eslint-disable */
+function debounce(func, wait, immediate) {
+  var timeout;
+  return function () {
+    var context = this,
+        args = arguments;
+
+    var later = function later() {
+      timeout = null;
+      if (!immediate) func.apply(context, args);
+    };
+
+    var callNow = immediate && !timeout;
+    clearTimeout(timeout);
+    timeout = setTimeout(later, wait);
+    if (callNow) func.apply(context, args);
+  };
+}
+
+/* harmony default export */ __webpack_exports__["default"] = (debounce);
+
+/***/ }),
+/* 43 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var react_testing_library__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(44);
 /* harmony import */ var _components_TimePicker_DesktopTimePicker_utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(40);
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
@@ -5435,6 +5471,7 @@ var timeFormat = "hh:mm A";
 function makeSelection(_ref) {
   var inputElement = _ref.element,
       nextSelectionTime = _ref.time;
+  jest.useFakeTimers();
   var isMobile = inputElement.type === "time";
 
   var closeDesktopClock = function closeDesktopClock() {
@@ -5490,6 +5527,7 @@ function makeSelection(_ref) {
       value: "".concat(hh, ":").concat(mm, " ").concat(aa)
     }
   });
+  jest.runAllTimers();
   closeDesktopClock();
   return undefined;
 }
@@ -5500,7 +5538,7 @@ function makeSelection(_ref) {
 });
 
 /***/ }),
-/* 43 */
+/* 44 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5509,8 +5547,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "cleanup", function() { return cleanup; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "fireEvent", function() { return fireEvent$1; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "act", function() { return rtlAct; });
-/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(44);
-/* harmony import */ var dom_testing_library__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(45);
+/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(45);
+/* harmony import */ var dom_testing_library__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(46);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "bindElementToQueries", function() { return dom_testing_library__WEBPACK_IMPORTED_MODULE_1__["bindElementToQueries"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "within", function() { return dom_testing_library__WEBPACK_IMPORTED_MODULE_1__["within"]; });
@@ -5627,9 +5665,9 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(3);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(53);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(54);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var react_dom_test_utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(62);
+/* harmony import */ var react_dom_test_utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(63);
 /* harmony import */ var react_dom_test_utils__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(react_dom_test_utils__WEBPACK_IMPORTED_MODULE_4__);
 
 
@@ -5792,7 +5830,7 @@ fireEvent$1.select = function (node, init) {
 
 
 /***/ }),
-/* 44 */
+/* 45 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5817,7 +5855,7 @@ function _extends() {
 }
 
 /***/ }),
-/* 45 */
+/* 46 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -5880,14 +5918,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "queryAllByAttribute", function() { return queryAllByAttribute; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "queryByAttribute", function() { return queryByAttribute; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "prettyDOM", function() { return prettyDOM; });
-/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(44);
-/* harmony import */ var pretty_format__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(49);
+/* harmony import */ var _babel_runtime_helpers_esm_extends__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(45);
+/* harmony import */ var pretty_format__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(50);
 /* harmony import */ var pretty_format__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(pretty_format__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var wait_for_expect__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(50);
+/* harmony import */ var wait_for_expect__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(51);
 /* harmony import */ var wait_for_expect__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(wait_for_expect__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _sheerun_mutationobserver_shim__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(51);
+/* harmony import */ var _sheerun_mutationobserver_shim__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(52);
 /* harmony import */ var _sheerun_mutationobserver_shim__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_sheerun_mutationobserver_shim__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _babel_runtime_helpers_esm_objectWithoutPropertiesLoose__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(52);
+/* harmony import */ var _babel_runtime_helpers_esm_objectWithoutPropertiesLoose__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(53);
 
 
 
@@ -7415,10 +7453,10 @@ Object.keys(eventAliasMap).forEach(function (aliasKey) {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(46), __webpack_require__(25), __webpack_require__(47).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(47), __webpack_require__(25), __webpack_require__(48).setImmediate))
 
 /***/ }),
-/* 46 */
+/* 47 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -7608,7 +7646,7 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 47 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
@@ -7664,7 +7702,7 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(48);
+__webpack_require__(49);
 // On some exotic environments, it's not clear which object `setimmediate` was
 // able to install onto.  Search each possibility in the same order as the
 // `setimmediate` library.
@@ -7678,7 +7716,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(25)))
 
 /***/ }),
-/* 48 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -7868,10 +7906,10 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(25), __webpack_require__(46)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(25), __webpack_require__(47)))
 
 /***/ }),
-/* 49 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -11122,7 +11160,7 @@ exports.printElementAsLeaf = printElementAsLeaf;
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 50 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11187,7 +11225,7 @@ module.exports = exports["default"];
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(25)))
 
 /***/ }),
-/* 51 */
+/* 52 */
 /***/ (function(module, exports) {
 
 // mutationobserver-shim v0.3.2 (github.com/megawac/MutationObserver.js)
@@ -11203,7 +11241,7 @@ a:!(!b.characterData&&!b.characterDataOldValue)},d=this.i,f=0;f<d.length;f++)d[f
 
 
 /***/ }),
-/* 52 */
+/* 53 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -11225,7 +11263,7 @@ function _objectWithoutPropertiesLoose(source, excluded) {
 }
 
 /***/ }),
-/* 53 */
+/* 54 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11260,12 +11298,12 @@ function checkDCE() {
 }
 
 if (false) {} else {
-  module.exports = __webpack_require__(54);
+  module.exports = __webpack_require__(55);
 }
 
 
 /***/ }),
-/* 54 */
+/* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11287,10 +11325,10 @@ if (true) {
 'use strict';
 
 var React = __webpack_require__(3);
-var _assign = __webpack_require__(55);
-var checkPropTypes = __webpack_require__(56);
-var scheduler = __webpack_require__(58);
-var tracing = __webpack_require__(60);
+var _assign = __webpack_require__(56);
+var checkPropTypes = __webpack_require__(57);
+var scheduler = __webpack_require__(59);
+var tracing = __webpack_require__(61);
 
 /**
  * Use invariant() to assert state which your program assumes to be true.
@@ -32504,7 +32542,7 @@ module.exports = reactDom;
 
 
 /***/ }),
-/* 55 */
+/* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32601,7 +32639,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 
 
 /***/ }),
-/* 56 */
+/* 57 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32617,7 +32655,7 @@ module.exports = shouldUseNative() ? Object.assign : function (target, source) {
 var printWarning = function() {};
 
 if (true) {
-  var ReactPropTypesSecret = __webpack_require__(57);
+  var ReactPropTypesSecret = __webpack_require__(58);
   var loggedTypeFailures = {};
   var has = Function.call.bind(Object.prototype.hasOwnProperty);
 
@@ -32710,7 +32748,7 @@ module.exports = checkPropTypes;
 
 
 /***/ }),
-/* 57 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32729,19 +32767,19 @@ module.exports = ReactPropTypesSecret;
 
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 if (false) {} else {
-  module.exports = __webpack_require__(59);
+  module.exports = __webpack_require__(60);
 }
 
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33448,19 +33486,19 @@ exports.unstable_getFirstCallbackNode = unstable_getFirstCallbackNode;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(25)))
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 if (false) {} else {
-  module.exports = __webpack_require__(61);
+  module.exports = __webpack_require__(62);
 }
 
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33890,19 +33928,19 @@ exports.unstable_unsubscribe = unstable_unsubscribe;
 
 
 /***/ }),
-/* 62 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 if (false) {} else {
-  module.exports = __webpack_require__(63);
+  module.exports = __webpack_require__(64);
 }
 
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -33923,9 +33961,9 @@ if (true) {
   (function() {
 'use strict';
 
-var _assign = __webpack_require__(55);
+var _assign = __webpack_require__(56);
 var React = __webpack_require__(3);
-var ReactDOM = __webpack_require__(53);
+var ReactDOM = __webpack_require__(54);
 
 /**
  * Use invariant() to assert state which your program assumes to be true.

@@ -13,6 +13,7 @@ var timeFormat = "hh:mm A";
 function makeSelection(_ref) {
   var inputElement = _ref.element,
       nextSelectionTime = _ref.time;
+  jest.useFakeTimers();
   var isMobile = inputElement.type === "time";
 
   var closeDesktopClock = function closeDesktopClock() {
@@ -68,6 +69,7 @@ function makeSelection(_ref) {
       value: "".concat(hh, ":").concat(mm, " ").concat(aa)
     }
   });
+  jest.runAllTimers();
   closeDesktopClock();
   return undefined;
 }
