@@ -1,5 +1,5 @@
 import React from "react";
-import { render, fireEvent } from "react-testing-library";
+import { render, fireEvent } from "@testing-library/react";
 import DialButton from "../../../TimePicker/DesktopTimePicker/DialButton";
 import { CLICK_AND_HOLD_MILLISECONDS } from "../../../utils/ClickAndHold";
 
