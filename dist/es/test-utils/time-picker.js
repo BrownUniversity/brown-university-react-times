@@ -6,7 +6,7 @@ function _iterableToArrayLimit(arr, i) { var _arr = []; var _n = true; var _d = 
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
-import { fireEvent } from "react-testing-library";
+import { fireEvent } from "@testing-library/react";
 import { transformTimeToDialValues } from "../components/TimePicker/DesktopTimePicker/utils";
 var timeFormat = "hh:mm A";
 
