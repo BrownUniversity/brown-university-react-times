@@ -1,4 +1,4 @@
-import { fireEvent } from "react-testing-library";
+import { fireEvent } from "@testing-library/react";
 import { transformTimeToDialValues } from "../components/TimePicker/DesktopTimePicker/utils";
 
 const timeFormat = "hh:mm A";

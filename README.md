@@ -32,7 +32,7 @@ These libraries are not bundled with Brown University React Times and are requir
 
 These libraries are not bundled with Brown University React Times, but are required to use the test utils:
 
-- [**react-testing-library**](https://www.npmjs.com/package/styled-components)
+- [**@testing-library/react**](https://www.npmjs.com/package/@testing-library/react)
 
 Add the following to your `jest` `setupFilesAfterEnv` file to prevent `UnhandledPromiseRejectionWarning`s from `popper.js`:
 
