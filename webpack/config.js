@@ -19,7 +19,10 @@ module.exports = {
     "brown-university-styles": "brown-university-styles",
     react: "react",
     "styled-components": "styled-components",
-    "prop-types": "prop-types"
+    "prop-types": "prop-types",
+    "react-fns": "react-fns",
+    "react-popper": "react-popper",
+    "@testing-library/react": "@testing-library/react"
   },
   module: {
     rules: [
