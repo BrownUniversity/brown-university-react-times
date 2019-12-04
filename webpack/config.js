@@ -20,7 +20,8 @@ module.exports = {
     react: "react",
     "styled-components": "styled-components",
     "prop-types": "prop-types",
-    "react-fns": "react-fns"
+    "react-fns": "react-fns",
+    "react-popper": "react-popper"
   },
   module: {
     rules: [
