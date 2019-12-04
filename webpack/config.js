@@ -19,7 +19,8 @@ module.exports = {
     "brown-university-styles": "brown-university-styles",
     react: "react",
     "styled-components": "styled-components",
-    "prop-types": "prop-types"
+    "prop-types": "prop-types",
+    "react-fns": "react-fns"
   },
   module: {
     rules: [
