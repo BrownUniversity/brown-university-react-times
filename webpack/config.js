@@ -21,7 +21,8 @@ module.exports = {
     "styled-components": "styled-components",
     "prop-types": "prop-types",
     "react-fns": "react-fns",
-    "react-popper": "react-popper"
+    "react-popper": "react-popper",
+    "@testing-library/react": "@testing-library/react"
   },
   module: {
     rules: [
