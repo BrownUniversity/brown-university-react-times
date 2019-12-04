@@ -19,6 +19,7 @@ function makeSelection({ element: inputElement, time: nextSelectionTime }) {
       target: { value: "" }
     });
     if (!isMobile) {
+      jest.runAllTimers();
       return closeDesktopClock();
     }
     return undefined;
