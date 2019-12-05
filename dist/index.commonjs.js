@@ -1,4 +1,4 @@
-/*! brown-university-react-times v1.0.1 */
+/*! brown-university-react-times v1.0.2 */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory(require("prop-types"), require("react"), require("react-fns"), require("brown-university-styles"), require("styled-components"), require("react-popper"), require("@testing-library/react"));
@@ -1127,7 +1127,21 @@ var timeFormat = "hh:mm A";
 function makeSelection(_ref) {
   var inputElement = _ref.element,
       nextSelectionTime = _ref.time;
-  jest.useFakeTimers();
+  // eslint-disable-next-line no-underscore-dangle
+  var usingFakeTimers = setTimeout._isMockFunction;
+
+  if (!usingFakeTimers) {
+    jest.useFakeTimers();
+  }
+
+  function restoreTimerState() {
+    jest.runAllTimers();
+
+    if (!usingFakeTimers) {
+      jest.useRealTimers();
+    }
+  }
+
   var isMobile = inputElement.type === "time";
 
   var closeDesktopClock = function closeDesktopClock() {
@@ -1150,9 +1164,11 @@ function makeSelection(_ref) {
     });
 
     if (!isMobile) {
+      restoreTimerState();
       return closeDesktopClock();
     }
 
+    restoreTimerState();
     return undefined;
   }
   /*
@@ -1161,6 +1177,7 @@ function makeSelection(_ref) {
 
 
   if (isMobile) {
+    restoreTimerState();
     return _testing_library_react__WEBPACK_IMPORTED_MODULE_0__["fireEvent"].change(inputElement, {
       target: {
         value: nextSelectionTime
@@ -1183,7 +1200,7 @@ function makeSelection(_ref) {
       value: "".concat(hh, ":").concat(mm, " ").concat(aa)
     }
   });
-  jest.runAllTimers();
+  restoreTimerState();
   closeDesktopClock();
   return undefined;
 }

@@ -13,7 +13,21 @@ var timeFormat = "hh:mm A";
 function makeSelection(_ref) {
   var inputElement = _ref.element,
       nextSelectionTime = _ref.time;
-  jest.useFakeTimers();
+  // eslint-disable-next-line no-underscore-dangle
+  var usingFakeTimers = setTimeout._isMockFunction;
+
+  if (!usingFakeTimers) {
+    jest.useFakeTimers();
+  }
+
+  function restoreTimerState() {
+    jest.runAllTimers();
+
+    if (!usingFakeTimers) {
+      jest.useRealTimers();
+    }
+  }
+
   var isMobile = inputElement.type === "time";
 
   var closeDesktopClock = function closeDesktopClock() {
@@ -36,9 +50,11 @@ function makeSelection(_ref) {
     });
 
     if (!isMobile) {
+      restoreTimerState();
       return closeDesktopClock();
     }
 
+    restoreTimerState();
     return undefined;
   }
   /*
@@ -47,6 +63,7 @@ function makeSelection(_ref) {
 
 
   if (isMobile) {
+    restoreTimerState();
     return fireEvent.change(inputElement, {
       target: {
         value: nextSelectionTime
@@ -69,7 +86,7 @@ function makeSelection(_ref) {
       value: "".concat(hh, ":").concat(mm, " ").concat(aa)
     }
   });
-  jest.runAllTimers();
+  restoreTimerState();
   closeDesktopClock();
   return undefined;
 }
