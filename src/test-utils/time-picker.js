@@ -4,7 +4,19 @@ import { transformTimeToDialValues } from "../components/TimePicker/DesktopTimeP
 const timeFormat = "hh:mm A";
 
 function makeSelection({ element: inputElement, time: nextSelectionTime }) {
-  jest.useFakeTimers();
+  // eslint-disable-next-line no-underscore-dangle
+  const usingFakeTimers = setTimeout._isMockFunction;
+  if (!usingFakeTimers) {
+    jest.useFakeTimers();
+  }
+
+  function restoreTimerState() {
+    jest.runAllTimers();
+    if (!usingFakeTimers) {
+      jest.useRealTimers();
+    }
+  }
+
   const isMobile = inputElement.type === "time";
   const closeDesktopClock = () => {
     // shift + tab from first element
@@ -19,8 +31,10 @@ function makeSelection({ element: inputElement, time: nextSelectionTime }) {
       target: { value: "" }
     });
     if (!isMobile) {
+      restoreTimerState();
       return closeDesktopClock();
     }
+    restoreTimerState();
     return undefined;
   }
 
@@ -28,6 +42,7 @@ function makeSelection({ element: inputElement, time: nextSelectionTime }) {
     handle mobile time selection
   */
   if (isMobile) {
+    restoreTimerState();
     return fireEvent.change(inputElement, {
       target: { value: nextSelectionTime }
     });
@@ -42,7 +57,7 @@ function makeSelection({ element: inputElement, time: nextSelectionTime }) {
       value: `${hh}:${mm} ${aa}`
     }
   });
-  jest.runAllTimers();
+  restoreTimerState();
   closeDesktopClock();
   return undefined;
 }
