@@ -575,7 +575,7 @@ function (_PureComponent) {
 }(react__WEBPACK_IMPORTED_MODULE_1__["PureComponent"]);
 
 DesktopTimePicker.propTypes = {
-  color: prop_types__WEBPACK_IMPORTED_MODULE_0___default.a.oneOf(["red", "brown", "emerald", "skyBlue", "navy", "idRed"]),
+  color: prop_types__WEBPACK_IMPORTED_MODULE_0___default.a.oneOf(["red", "brown", "emerald", "darkEmerald", "skyBlue", "navy", "idRed"]),
   id: prop_types__WEBPACK_IMPORTED_MODULE_0___default.a.string.isRequired,
   time: prop_types__WEBPACK_IMPORTED_MODULE_0___default.a.string,
   onTimeChange: prop_types__WEBPACK_IMPORTED_MODULE_0___default.a.func.isRequired,
@@ -654,7 +654,7 @@ var Dial = function Dial(_ref) {
 };
 
 Dial.propTypes = {
-  color: prop_types__WEBPACK_IMPORTED_MODULE_0___default.a.oneOf(["red", "brown", "emerald", "skyBlue", "navy", "idRed"]).isRequired,
+  color: prop_types__WEBPACK_IMPORTED_MODULE_0___default.a.oneOf(["red", "brown", "emerald", "darkEmerald", "skyBlue", "navy", "idRed"]).isRequired,
   name: prop_types__WEBPACK_IMPORTED_MODULE_0___default.a.string.isRequired,
   value: prop_types__WEBPACK_IMPORTED_MODULE_0___default.a.string.isRequired,
   increment: prop_types__WEBPACK_IMPORTED_MODULE_0___default.a.func.isRequired,
@@ -719,7 +719,7 @@ var DialButton = function DialButton(_ref3) {
 };
 
 DialButton.propTypes = {
-  color: prop_types__WEBPACK_IMPORTED_MODULE_0___default.a.oneOf(["red", "brown", "emerald", "skyBlue", "navy", "idRed"]).isRequired,
+  color: prop_types__WEBPACK_IMPORTED_MODULE_0___default.a.oneOf(["red", "brown", "emerald", "darkEmerald", "skyBlue", "navy", "idRed"]).isRequired,
   ariaLabel: prop_types__WEBPACK_IMPORTED_MODULE_0___default.a.string.isRequired,
   onClick: prop_types__WEBPACK_IMPORTED_MODULE_0___default.a.func.isRequired,
   children: prop_types__WEBPACK_IMPORTED_MODULE_0___default.a.node.isRequired

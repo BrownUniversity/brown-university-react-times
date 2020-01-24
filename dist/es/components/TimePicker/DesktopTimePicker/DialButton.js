@@ -40,7 +40,7 @@ var DialButton = function DialButton(_ref3) {
 };
 
 DialButton.propTypes = {
-  color: PropTypes.oneOf(["red", "brown", "emerald", "skyBlue", "navy", "idRed"]).isRequired,
+  color: PropTypes.oneOf(["red", "brown", "emerald", "darkEmerald", "skyBlue", "navy", "idRed"]).isRequired,
   ariaLabel: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired
