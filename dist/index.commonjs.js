@@ -1,4 +1,4 @@
-/*! brown-university-react-times v1.0.2 */
+/*! brown-university-react-times v1.1.0 */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory(require("prop-types"), require("react"), require("react-fns"), require("brown-university-styles"), require("styled-components"), require("react-popper"), require("@testing-library/react"));
