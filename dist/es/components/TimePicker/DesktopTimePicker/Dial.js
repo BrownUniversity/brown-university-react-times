@@ -80,7 +80,7 @@ var Dial = function Dial(_ref) {
 };
 
 Dial.propTypes = {
-  color: PropTypes.oneOf(["red", "brown", "emerald", "skyBlue", "navy", "idRed"]).isRequired,
+  color: PropTypes.oneOf(["red", "brown", "emerald", "darkEmerald", "skyBlue", "navy", "idRed"]).isRequired,
   name: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   increment: PropTypes.func.isRequired,

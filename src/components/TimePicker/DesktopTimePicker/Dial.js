@@ -49,6 +49,7 @@ Dial.propTypes = {
     "red",
     "brown",
     "emerald",
+    "darkEmerald",
     "skyBlue",
     "navy",
     "idRed"

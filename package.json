@@ -29,7 +29,7 @@
     "start": "start-storybook -p 8080 -c .storybook"
   },
   "peerDependencies": {
-    "brown-university-styles": "git+https://bitbucket.brown.edu/scm/react/brown-university-styles.git#semver:^0.6",
+    "brown-university-styles": "git+https://bitbucket.brown.edu/scm/react/brown-university-styles.git#semver:^0.12",
     "react": "^16.0.0",
     "styled-components": "^4.0.0"
   },
@@ -57,7 +57,7 @@
     "babel-plugin-inline-react-svg": "^1.1.0",
     "babel-plugin-styled-components": "^1.9.3",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.21",
-    "brown-university-styles": "git+https://bitbucket.brown.edu/scm/react/brown-university-styles.git#semver:^0.6",
+    "brown-university-styles": "git+https://bitbucket.brown.edu/scm/react/brown-university-styles.git#semver:^0.12",
     "clean-webpack-plugin": "^1.0.0",
     "css-loader": "^1.0.1",
     "eslint": "^5.16.0",

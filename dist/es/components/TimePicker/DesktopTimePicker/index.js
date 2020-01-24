@@ -283,7 +283,7 @@ function (_PureComponent) {
 }(PureComponent);
 
 DesktopTimePicker.propTypes = {
-  color: PropTypes.oneOf(["red", "brown", "emerald", "skyBlue", "navy", "idRed"]),
+  color: PropTypes.oneOf(["red", "brown", "emerald", "darkEmerald", "skyBlue", "navy", "idRed"]),
   id: PropTypes.string.isRequired,
   time: PropTypes.string,
   onTimeChange: PropTypes.func.isRequired,
