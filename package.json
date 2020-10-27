@@ -21,6 +21,8 @@
     "validate": "npm-run-all lint format:check test:coverage",
     "build:commonjs": "BABEL_ENV=commonjs webpack --config webpack/config.js",
     "build:commonjs:analyze": "RUN_WEBPACK_BUNDLE_ANALYZER=true npm run build:commonjs",
+    "prebuild:docs": "rimraf docs",
+    "build:docs": "build-storybook -o docs",
     "prebuild:es": "rimraf dist/es",
     "build:es": "BABEL_ENV=es babel src -d dist/es",
     "postbuild:es": "rimraf dist/es/components/__tests__ dist/es/components/utils/TimePickerContainer.js",
