@@ -53,7 +53,7 @@ document.createRange = () => ({
 
 ## Documentation
 
-[View on VPN](https://design.cis.brown.edu/brown-university-react-times/)
+The documentation is available at https://brownuniversity.github.io/brown-university-react-times/.
 
 ---
 
