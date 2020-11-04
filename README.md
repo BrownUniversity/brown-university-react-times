@@ -12,19 +12,17 @@ A time picker modeled after Airbnb's `react-dates` plus some test utils for use 
 
 ```sh
 // npm
-npm i git+https://bitbucket.brown.edu/scm/react/brown-university-react-times.git#semver:^1.1
+npm i BrownUniversity/brown-university-react-times#semver:^1.1
 
 // yarn
-yarn add git+https://bitbucket.brown.edu/scm/react/brown-university-react-times.git#^1.1
+yarn add BrownUniversity/brown-university-react-times#^1.1
 ```
-
-_Ensure you're on the network and that your SSH key has been added to the ssh-agent (`ssh-add ~/.ssh/id_rsa`) and uploaded to [bitbucket.brown.edu](https://bitbucket.brown.edu/plugins/servlet/ssh/account/keys)._
 
 #### Required Peer Dependencies
 
 These libraries are not bundled with Brown University React Times and are required at runtime:
 
-- [**brown-university-styles**](https://bitbucket.brown.edu/projects/REACT/repos/brown-university-styles)
+- [**brown-university-styles**](https://github.com/BrownUniversity/brown-university-styles)
 - [**react**](https://www.npmjs.com/package/react)
 - [**styled-components**](https://www.npmjs.com/package/styled-components)
 
