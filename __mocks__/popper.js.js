@@ -6,7 +6,7 @@ export default class {
   constructor() {
     return {
       destroy: () => {},
-      scheduleUpdate: () => {}
+      scheduleUpdate: () => {},
     };
   }
 }

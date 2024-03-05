@@ -28,7 +28,7 @@ function makeSelection({ element: inputElement, time: nextSelectionTime }) {
   */
   if (!nextSelectionTime) {
     fireEvent.change(inputElement, {
-      target: { value: "" }
+      target: { value: "" },
     });
     if (!isMobile) {
       restoreTimerState();
@@ -44,7 +44,7 @@ function makeSelection({ element: inputElement, time: nextSelectionTime }) {
   if (isMobile) {
     restoreTimerState();
     return fireEvent.change(inputElement, {
-      target: { value: nextSelectionTime }
+      target: { value: nextSelectionTime },
     });
   }
 
@@ -54,8 +54,8 @@ function makeSelection({ element: inputElement, time: nextSelectionTime }) {
   const [hh, mm, aa] = transformTimeToDialValues(nextSelectionTime);
   fireEvent.change(inputElement, {
     target: {
-      value: `${hh}:${mm} ${aa}`
-    }
+      value: `${hh}:${mm} ${aa}`,
+    },
   });
   restoreTimerState();
   closeDesktopClock();

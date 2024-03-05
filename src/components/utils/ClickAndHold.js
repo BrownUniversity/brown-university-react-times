@@ -8,14 +8,17 @@ class ClickAndHold extends Component {
 
   onClickInterval = null;
 
-  state = {
-    onClickCallCount: 0
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      onClickCallCount: 0,
+    };
+  }
 
   handleButtonPress = () => {
     this.buttonPressTimeout = setTimeout(
       this.handleOnClickIntervalStart,
-      CLICK_AND_HOLD_MILLISECONDS
+      CLICK_AND_HOLD_MILLISECONDS,
     );
   };
 
@@ -30,8 +33,8 @@ class ClickAndHold extends Component {
   handleOnClickIntervalStart = () => {
     this.onClickInterval = setInterval(() => {
       this.props.onClick();
-      this.setState(prevState => ({
-        onClickCallCount: prevState.onClickCallCount + 1
+      this.setState((prevState) => ({
+        onClickCallCount: prevState.onClickCallCount + 1,
       }));
     }, CLICK_AND_HOLD_MILLISECONDS);
   };
@@ -46,18 +49,18 @@ class ClickAndHold extends Component {
       onMouseDown: this.handleButtonPress,
       onMouseUp: () => this.handleButtonRelease({ clicked: true }),
       onMouseLeave: () => this.handleButtonRelease({ clicked: false }),
-      onKeyPress: e => {
+      onKeyPress: (e) => {
         if ([" ", "Enter"].includes(e.key)) {
           this.handleButtonRelease({ clicked: true });
         }
-      }
+      },
     });
   }
 }
 
 ClickAndHold.propTypes = {
   onClick: PropTypes.func.isRequired,
-  children: PropTypes.func.isRequired
+  children: PropTypes.func.isRequired,
 };
 
 export default ClickAndHold;

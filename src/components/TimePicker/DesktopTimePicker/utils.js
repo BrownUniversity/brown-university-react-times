@@ -3,14 +3,14 @@ import { EMPTY_DIAL_VALUE, INVALID_TIME } from "../../../constants";
 /*
   input
 */
-export const getInputIsDirty = val => val !== null;
+export const getInputIsDirty = (val) => val !== null;
 
-export const getInputValueIsValid = val =>
+export const getInputValueIsValid = (val) =>
   !!val &&
   val.trim().length < 9 &&
   /\b((1[0-2]|0?[1-9]):([0-5][0-9]) ?([AaPp][Mm]))/.test(val);
 
-export const transformInputValueToDialValues = val => {
+export const transformInputValueToDialValues = (val) => {
   const cleanedVal = val
     .trim()
     .replace("am", "AM")
@@ -48,7 +48,7 @@ export const deriveInputValue = (inputIsDirty, inputValue, dialValues) => {
 /*
   dials
 */
-export const transformTimeToDialValues = time => {
+export const transformTimeToDialValues = (time) => {
   if (!time || time === "" || time === INVALID_TIME) {
     return [EMPTY_DIAL_VALUE, EMPTY_DIAL_VALUE, EMPTY_DIAL_VALUE];
   }

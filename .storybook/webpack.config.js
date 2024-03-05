@@ -1,36 +1,39 @@
-const svgRule = require("../webpack/rules/svg");
-
 module.exports = ({ config }) => ({
   ...config,
   module: {
     ...config.module,
     rules: [
+      ...config.module.rules.map((rule) => {
+        if (/svg/.test(rule.test)) {
+          return { ...rule, exclude: /chevron-/ };
+        }
+
+        return rule;
+      }),
       {
-        test: /\.js(x)?$/,
+        test: /\.svg$/,
+        include: /chevron-/,
         use: [
           {
             loader: "babel-loader",
+          },
+          {
+            loader: "react-svg-loader",
             options: {
-              babelrc: false,
-              plugins: [
-                "@babel/plugin-proposal-class-properties",
-                "babel-plugin-styled-components"
-              ],
-              presets: ["@babel/preset-env", "@babel/preset-react"]
-            }
-          }
+              svgo: {
+                plugins: [
+                  {
+                    cleanupIDs: false,
+                  },
+                  {
+                    removeUnknownsAndDefaults: false,
+                  },
+                ],
+              },
+            },
+          },
         ],
-        exclude: /node_module/
       },
-      {
-        test: /\.css$/,
-        use: ["style-loader", "css-loader"]
-      },
-      svgRule,
-      {
-        test: /\.woff$/,
-        use: "file-loader?name=[name].[ext]"
-      }
-    ]
-  }
+    ],
+  },
 });

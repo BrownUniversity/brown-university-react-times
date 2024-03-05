@@ -6,7 +6,7 @@ import {
   transformTimeToDialValues,
   transformDialValuesToTime,
   getNextDialOption,
-  getPreviousDialOption
+  getPreviousDialOption,
 } from "../../../TimePicker/DesktopTimePicker/utils";
 import { EMPTY_DIAL_VALUE, INVALID_TIME } from "../../../../constants";
 
@@ -90,8 +90,8 @@ describe("DesktopTimePicker utils", () => {
           deriveInputValue(true, "08:1", [
             EMPTY_DIAL_VALUE,
             EMPTY_DIAL_VALUE,
-            EMPTY_DIAL_VALUE
-          ])
+            EMPTY_DIAL_VALUE,
+          ]),
         ).toBe("08:1");
       });
     });
@@ -102,14 +102,14 @@ describe("DesktopTimePicker utils", () => {
           deriveInputValue(false, "", [
             EMPTY_DIAL_VALUE,
             EMPTY_DIAL_VALUE,
-            EMPTY_DIAL_VALUE
-          ])
+            EMPTY_DIAL_VALUE,
+          ]),
         ).toBe("");
       });
 
       it("returns dialValues in 'hh:mm aa' format if dialValues are displayed", () => {
         expect(deriveInputValue(false, "", ["08", "18", "AM"])).toBe(
-          "08:18 AM"
+          "08:18 AM",
         );
       });
     });
@@ -120,7 +120,7 @@ describe("DesktopTimePicker utils", () => {
       expect(transformTimeToDialValues(null)).toEqual([
         EMPTY_DIAL_VALUE,
         EMPTY_DIAL_VALUE,
-        EMPTY_DIAL_VALUE
+        EMPTY_DIAL_VALUE,
       ]);
     });
 
@@ -128,7 +128,7 @@ describe("DesktopTimePicker utils", () => {
       expect(transformTimeToDialValues("")).toEqual([
         EMPTY_DIAL_VALUE,
         EMPTY_DIAL_VALUE,
-        EMPTY_DIAL_VALUE
+        EMPTY_DIAL_VALUE,
       ]);
     });
 
@@ -136,7 +136,7 @@ describe("DesktopTimePicker utils", () => {
       expect(transformTimeToDialValues(INVALID_TIME)).toEqual([
         EMPTY_DIAL_VALUE,
         EMPTY_DIAL_VALUE,
-        EMPTY_DIAL_VALUE
+        EMPTY_DIAL_VALUE,
       ]);
     });
 

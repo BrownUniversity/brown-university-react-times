@@ -24,25 +24,27 @@ const Value = styled.div`
 /*
   outer Dial component
 */
-const Dial = ({ color, name, value, increment, decrement }) => (
-  <Wrapper>
-    <DialButton
-      color={color}
-      ariaLabel={`Increment ${name}`}
-      onClick={increment}
-    >
-      <ChevronUpSVG />
-    </DialButton>
-    <Value data-testid={`${name}-value`}>{value}</Value>
-    <DialButton
-      color={color}
-      ariaLabel={`Decrement ${name}`}
-      onClick={decrement}
-    >
-      <ChevronDownSVG />
-    </DialButton>
-  </Wrapper>
-);
+export default function Dial({ color, name, value, increment, decrement }) {
+  return (
+    <Wrapper>
+      <DialButton
+        color={color}
+        ariaLabel={`Increment ${name}`}
+        onClick={increment}
+      >
+        <ChevronUpSVG />
+      </DialButton>
+      <Value data-testid={`${name}-value`}>{value}</Value>
+      <DialButton
+        color={color}
+        ariaLabel={`Decrement ${name}`}
+        onClick={decrement}
+      >
+        <ChevronDownSVG />
+      </DialButton>
+    </Wrapper>
+  );
+}
 
 Dial.propTypes = {
   color: PropTypes.oneOf([
@@ -52,12 +54,10 @@ Dial.propTypes = {
     "darkEmerald",
     "skyBlue",
     "navy",
-    "idRed"
+    "idRed",
   ]).isRequired,
   name: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   increment: PropTypes.func.isRequired,
-  decrement: PropTypes.func.isRequired
+  decrement: PropTypes.func.isRequired,
 };
-
-export default Dial;

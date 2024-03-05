@@ -9,10 +9,10 @@ const renderDialButton = ({ onClick }) => {
   const rtlUtils = render(
     <DialButton color="red" ariaLabel="Click me" onClick={onClick}>
       Click Me
-    </DialButton>
+    </DialButton>,
   );
 
-  const mouseClickAndHoldFor = milliseconds => {
+  const mouseClickAndHoldFor = (milliseconds) => {
     const buttonElement = rtlUtils.getByText("Click Me");
     fireEvent.mouseDown(buttonElement);
     jest.advanceTimersByTime(milliseconds);
@@ -63,7 +63,7 @@ describe("DesktopTimePicker > DialButton", () => {
     });
   });
 
-  describe("keyboard events ", () => {
+  describe("keyboard events", () => {
     const enterKey = { key: "Enter", code: 13, charCode: 13 };
     const spaceKey = { key: " ", code: 32, charCode: 32 };
 
