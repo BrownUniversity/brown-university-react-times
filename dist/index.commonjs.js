@@ -55,9 +55,9 @@ function TimePicker(_ref) {
     }
   });
 }
-TimePicker.propTypes = {
+TimePicker.propTypes = process.env.NODE_ENV !== "production" ? {
   mobileBreakpoint: (prop_types__WEBPACK_IMPORTED_MODULE_0___default().number)
-};
+} : {};
 TimePicker.defaultProps = {
   mobileBreakpoint: brown_university_styles__WEBPACK_IMPORTED_MODULE_3__.breakpoints.md
 };
@@ -136,12 +136,12 @@ function MobileTimePicker(_ref) {
     }
   });
 }
-MobileTimePicker.propTypes = {
+MobileTimePicker.propTypes = process.env.NODE_ENV !== "production" ? {
   id: (prop_types__WEBPACK_IMPORTED_MODULE_0___default().string).isRequired,
   time: (prop_types__WEBPACK_IMPORTED_MODULE_0___default().string),
   onTimeChange: (prop_types__WEBPACK_IMPORTED_MODULE_0___default().func).isRequired,
   onFocusChange: (prop_types__WEBPACK_IMPORTED_MODULE_0___default().func).isRequired
-};
+} : {};
 MobileTimePicker.defaultProps = {
   time: null
 };
@@ -432,14 +432,14 @@ var DesktopTimePicker = /*#__PURE__*/function (_PureComponent) {
   }]);
   return DesktopTimePicker;
 }(react__WEBPACK_IMPORTED_MODULE_1__.PureComponent);
-DesktopTimePicker.propTypes = {
+DesktopTimePicker.propTypes = process.env.NODE_ENV !== "production" ? {
   color: prop_types__WEBPACK_IMPORTED_MODULE_0___default().oneOf(["red", "brown", "emerald", "darkEmerald", "skyBlue", "navy", "idRed"]),
   id: (prop_types__WEBPACK_IMPORTED_MODULE_0___default().string).isRequired,
   time: (prop_types__WEBPACK_IMPORTED_MODULE_0___default().string),
   onTimeChange: (prop_types__WEBPACK_IMPORTED_MODULE_0___default().func).isRequired,
   focused: (prop_types__WEBPACK_IMPORTED_MODULE_0___default().bool).isRequired,
   onFocusChange: (prop_types__WEBPACK_IMPORTED_MODULE_0___default().func).isRequired
-};
+} : {};
 DesktopTimePicker.defaultProps = {
   color: "red",
   time: null
@@ -512,13 +512,13 @@ function Dial(_ref) {
     onClick: decrement
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default().createElement(_svg_chevron_down_svg__WEBPACK_IMPORTED_MODULE_6__["default"], null)));
 }
-Dial.propTypes = {
+Dial.propTypes = process.env.NODE_ENV !== "production" ? {
   color: prop_types__WEBPACK_IMPORTED_MODULE_0___default().oneOf(["red", "brown", "emerald", "darkEmerald", "skyBlue", "navy", "idRed"]).isRequired,
   name: (prop_types__WEBPACK_IMPORTED_MODULE_0___default().string).isRequired,
   value: (prop_types__WEBPACK_IMPORTED_MODULE_0___default().string).isRequired,
   increment: (prop_types__WEBPACK_IMPORTED_MODULE_0___default().func).isRequired,
   decrement: (prop_types__WEBPACK_IMPORTED_MODULE_0___default().func).isRequired
-};
+} : {};
 
 /***/ }),
 /* 12 */
@@ -576,12 +576,12 @@ function DialButton(_ref3) {
     }, clickAndHoldProps), children);
   });
 }
-DialButton.propTypes = {
+DialButton.propTypes = process.env.NODE_ENV !== "production" ? {
   color: prop_types__WEBPACK_IMPORTED_MODULE_0___default().oneOf(["red", "brown", "emerald", "darkEmerald", "skyBlue", "navy", "idRed"]).isRequired,
   ariaLabel: (prop_types__WEBPACK_IMPORTED_MODULE_0___default().string).isRequired,
   onClick: (prop_types__WEBPACK_IMPORTED_MODULE_0___default().func).isRequired,
   children: (prop_types__WEBPACK_IMPORTED_MODULE_0___default().node).isRequired
-};
+} : {};
 
 /***/ }),
 /* 13 */
@@ -681,10 +681,10 @@ var ClickAndHold = /*#__PURE__*/function (_Component) {
   }]);
   return ClickAndHold;
 }(react__WEBPACK_IMPORTED_MODULE_1__.Component);
-ClickAndHold.propTypes = {
+ClickAndHold.propTypes = process.env.NODE_ENV !== "production" ? {
   onClick: (prop_types__WEBPACK_IMPORTED_MODULE_0___default().func).isRequired,
   children: (prop_types__WEBPACK_IMPORTED_MODULE_0___default().func).isRequired
-};
+} : {};
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (ClickAndHold);
 
 /***/ }),

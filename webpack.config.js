@@ -33,6 +33,9 @@ module.exports = {
         exclude: /node_modules/,
         use: {
           loader: "babel-loader",
+          options: {
+            plugins: [["transform-react-remove-prop-types", { mode: "wrap" }]],
+          },
         },
       },
       {
