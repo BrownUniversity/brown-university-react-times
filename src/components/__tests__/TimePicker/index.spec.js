@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control, jsx-a11y/label-has-for */
 import React from "react";
-import { render, fireEvent } from "@testing-library/react";
+import { render, fireEvent, act } from "@testing-library/react";
 import { triggerWindowResize, resetWindowSize } from "window-test-utils";
 import { breakpoints } from "brown-university-styles";
 import TimePickerContainer from "../../utils/TimePickerContainer";
@@ -431,7 +431,9 @@ describe("TimePicker", () => {
         onFocusChange,
       });
 
-      container.click();
+      act(() => {
+        container.click();
+      });
 
       expect(onFocusChange).toHaveBeenCalledTimes(1);
       expect(onFocusChange).toHaveBeenCalledWith({ focused: false });
