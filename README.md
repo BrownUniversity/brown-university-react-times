@@ -12,10 +12,10 @@ A time picker modeled after Airbnb's `react-dates` plus some test utils for use 
 
 ```sh
 // npm
-npm i BrownUniversity/brown-university-react-times#semver:^1.1
+npm i BrownUniversity/brown-university-react-times#semver:^2.0.0
 
 // yarn
-yarn add BrownUniversity/brown-university-react-times#^1.1
+yarn add BrownUniversity/brown-university-react-times#^2.0.0
 ```
 
 #### Required Peer Dependencies
