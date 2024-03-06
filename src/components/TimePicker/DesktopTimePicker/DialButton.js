@@ -25,20 +25,22 @@ const Button = styled.button`
 /*
   outer DialButton component
 */
-const DialButton = ({ color, ariaLabel, onClick, children }) => (
-  <ClickAndHold onClick={onClick}>
-    {clickAndHoldProps => (
-      <Button
-        type="button"
-        color={color}
-        aria-label={ariaLabel}
-        {...clickAndHoldProps}
-      >
-        {children}
-      </Button>
-    )}
-  </ClickAndHold>
-);
+export default function DialButton({ color, ariaLabel, onClick, children }) {
+  return (
+    <ClickAndHold onClick={onClick}>
+      {(clickAndHoldProps) => (
+        <Button
+          type="button"
+          color={color}
+          aria-label={ariaLabel}
+          {...clickAndHoldProps}
+        >
+          {children}
+        </Button>
+      )}
+    </ClickAndHold>
+  );
+}
 
 DialButton.propTypes = {
   color: PropTypes.oneOf([
@@ -48,11 +50,9 @@ DialButton.propTypes = {
     "darkEmerald",
     "skyBlue",
     "navy",
-    "idRed"
+    "idRed",
   ]).isRequired,
   ariaLabel: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
 };
-
-export default DialButton;

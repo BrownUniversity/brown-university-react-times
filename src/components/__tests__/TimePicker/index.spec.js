@@ -9,10 +9,10 @@ import timePickerTestUtils from "../../../test-utils/time-picker";
 import {
   DESKTOP_PLACEHOLDER,
   EMPTY_DIAL_VALUE,
-  INVALID_TIME
+  INVALID_TIME,
 } from "../../../constants";
 
-const renderTimePicker = props => {
+const renderTimePicker = (props) => {
   const id = "time-picker-test";
   const rtlUtils = render(
     <>
@@ -20,7 +20,7 @@ const renderTimePicker = props => {
       <TimePickerContainer id={id} {...props}>
         <TimePicker />
       </TimePickerContainer>
-    </>
+    </>,
   );
 
   return rtlUtils;
@@ -31,10 +31,10 @@ const validateDialValues = (rtlUtils, expectedValues) => {
   expect(getByLabelText("Clock")).toBeInTheDocument(); // clock needs to be open
   expect(getByTestId("hours-value")).toHaveTextContent(expectedValues.hours);
   expect(getByTestId("minutes-value")).toHaveTextContent(
-    expectedValues.minutes
+    expectedValues.minutes,
   );
   expect(getByTestId("meridiem-value")).toHaveTextContent(
-    expectedValues.meridiem
+    expectedValues.meridiem,
   );
 };
 
@@ -48,13 +48,13 @@ describe("TimePicker", () => {
       timePickerProps = null,
       nextInputValue,
       expectedInputValue = null,
-      expectedDialValues
+      expectedDialValues,
     }) => {
       const rtlUtils = renderTimePicker(timePickerProps);
       const inputElement = rtlUtils.getByLabelText("Time");
 
       fireEvent.change(inputElement, {
-        target: { value: nextInputValue }
+        target: { value: nextInputValue },
       });
       waitForDebounce();
 
@@ -70,13 +70,13 @@ describe("TimePicker", () => {
         inputElement.focus();
 
         expect(
-          rtlUtils.getByPlaceholderText(DESKTOP_PLACEHOLDER)
+          rtlUtils.getByPlaceholderText(DESKTOP_PLACEHOLDER),
         ).toBeInTheDocument();
         expect(inputElement.value).toBe("");
         validateDialValues(rtlUtils, {
           hours: "12",
           minutes: "00",
-          meridiem: "PM"
+          meridiem: "PM",
         });
       });
 
@@ -86,8 +86,8 @@ describe("TimePicker", () => {
           expectedDialValues: {
             hours: "09",
             minutes: "41",
-            meridiem: "AM"
-          }
+            meridiem: "AM",
+          },
         });
       });
 
@@ -98,8 +98,8 @@ describe("TimePicker", () => {
           expectedDialValues: {
             hours: "09",
             minutes: "41",
-            meridiem: "AM"
-          }
+            meridiem: "AM",
+          },
         });
       });
 
@@ -109,8 +109,8 @@ describe("TimePicker", () => {
           expectedDialValues: {
             hours: EMPTY_DIAL_VALUE,
             minutes: EMPTY_DIAL_VALUE,
-            meridiem: EMPTY_DIAL_VALUE
-          }
+            meridiem: EMPTY_DIAL_VALUE,
+          },
         });
       });
     });
@@ -118,7 +118,7 @@ describe("TimePicker", () => {
     describe("with initial time", () => {
       it("renders time and sets dial values", () => {
         const rtlUtils = renderTimePicker({
-          time: "08:18"
+          time: "08:18",
         });
         const inputElement = rtlUtils.getByLabelText("Time");
 
@@ -128,7 +128,7 @@ describe("TimePicker", () => {
         validateDialValues(rtlUtils, {
           hours: "08",
           minutes: "18",
-          meridiem: "AM"
+          meridiem: "AM",
         });
       });
 
@@ -139,8 +139,8 @@ describe("TimePicker", () => {
           expectedDialValues: {
             hours: "11",
             minutes: "15",
-            meridiem: "PM"
-          }
+            meridiem: "PM",
+          },
         });
       });
 
@@ -151,8 +151,8 @@ describe("TimePicker", () => {
           expectedDialValues: {
             hours: EMPTY_DIAL_VALUE,
             minutes: EMPTY_DIAL_VALUE,
-            meridiem: EMPTY_DIAL_VALUE
-          }
+            meridiem: EMPTY_DIAL_VALUE,
+          },
         });
       });
     });
@@ -163,7 +163,7 @@ describe("TimePicker", () => {
       timePickerProps = null,
       dialAriaLabelText,
       expectedInputValue,
-      expectedDialValues
+      expectedDialValues,
     }) => {
       const rtlUtils = renderTimePicker(timePickerProps);
       const inputElement = rtlUtils.getByLabelText("Time");
@@ -183,8 +183,8 @@ describe("TimePicker", () => {
           expectedDialValues: {
             hours: "01",
             minutes: "00",
-            meridiem: "PM"
-          }
+            meridiem: "PM",
+          },
         });
       });
 
@@ -195,8 +195,8 @@ describe("TimePicker", () => {
           expectedDialValues: {
             hours: "11",
             minutes: "00",
-            meridiem: "PM"
-          }
+            meridiem: "PM",
+          },
         });
       });
 
@@ -207,8 +207,8 @@ describe("TimePicker", () => {
           expectedDialValues: {
             hours: "12",
             minutes: "01",
-            meridiem: "PM"
-          }
+            meridiem: "PM",
+          },
         });
       });
 
@@ -219,8 +219,8 @@ describe("TimePicker", () => {
           expectedDialValues: {
             hours: "12",
             minutes: "59",
-            meridiem: "PM"
-          }
+            meridiem: "PM",
+          },
         });
       });
 
@@ -231,8 +231,8 @@ describe("TimePicker", () => {
           expectedDialValues: {
             hours: "12",
             minutes: "00",
-            meridiem: "AM"
-          }
+            meridiem: "AM",
+          },
         });
       });
 
@@ -243,8 +243,8 @@ describe("TimePicker", () => {
           expectedDialValues: {
             hours: "12",
             minutes: "00",
-            meridiem: "AM"
-          }
+            meridiem: "AM",
+          },
         });
       });
     });
@@ -258,8 +258,8 @@ describe("TimePicker", () => {
           expectedDialValues: {
             hours: "02",
             minutes: "00",
-            meridiem: "AM"
-          }
+            meridiem: "AM",
+          },
         });
       });
 
@@ -271,8 +271,8 @@ describe("TimePicker", () => {
           expectedDialValues: {
             hours: "12",
             minutes: "00",
-            meridiem: "AM"
-          }
+            meridiem: "AM",
+          },
         });
       });
 
@@ -284,8 +284,8 @@ describe("TimePicker", () => {
           expectedDialValues: {
             hours: "12",
             minutes: "00",
-            meridiem: "PM"
-          }
+            meridiem: "PM",
+          },
         });
       });
 
@@ -297,8 +297,8 @@ describe("TimePicker", () => {
           expectedDialValues: {
             hours: "12",
             minutes: "58",
-            meridiem: "PM"
-          }
+            meridiem: "PM",
+          },
         });
       });
 
@@ -310,8 +310,8 @@ describe("TimePicker", () => {
           expectedDialValues: {
             hours: "12",
             minutes: "00",
-            meridiem: "PM"
-          }
+            meridiem: "PM",
+          },
         });
       });
 
@@ -323,8 +323,8 @@ describe("TimePicker", () => {
           expectedDialValues: {
             hours: "12",
             minutes: "00",
-            meridiem: "PM"
-          }
+            meridiem: "PM",
+          },
         });
       });
     });
@@ -337,7 +337,7 @@ describe("TimePicker", () => {
 
       inputElement.focus();
       fireEvent.change(inputElement, {
-        target: { value: "08:18am" }
+        target: { value: "08:18am" },
       });
       waitForDebounce();
 
@@ -345,7 +345,7 @@ describe("TimePicker", () => {
       validateDialValues(rtlUtils, {
         hours: "08",
         minutes: "18",
-        meridiem: "AM"
+        meridiem: "AM",
       });
     });
 
@@ -355,7 +355,7 @@ describe("TimePicker", () => {
 
       inputElement.focus();
       fireEvent.change(inputElement, {
-        target: { value: "" }
+        target: { value: "" },
       });
       fireEvent.mouseUp(rtlUtils.getByLabelText("Increment minutes"));
 
@@ -363,7 +363,7 @@ describe("TimePicker", () => {
       validateDialValues(rtlUtils, {
         hours: "12",
         minutes: "01",
-        meridiem: "PM"
+        meridiem: "PM",
       });
     });
 
@@ -371,11 +371,11 @@ describe("TimePicker", () => {
       const onTimeChange = jest.fn();
       const { getByLabelText } = renderTimePicker({
         time: "08:18",
-        onTimeChange
+        onTimeChange,
       });
 
       fireEvent.change(getByLabelText("Time"), {
-        target: { value: "" }
+        target: { value: "" },
       });
 
       expect(onTimeChange).toHaveBeenCalledTimes(1);
@@ -387,7 +387,7 @@ describe("TimePicker", () => {
       const { getByLabelText } = renderTimePicker({ onTimeChange });
 
       fireEvent.change(getByLabelText("Time"), {
-        target: { value: "08:1" }
+        target: { value: "08:1" },
       });
 
       expect(onTimeChange).toHaveBeenCalledTimes(1);
@@ -399,11 +399,11 @@ describe("TimePicker", () => {
     it("calls onFocusChange with `{ focused: true }` if input value changes and focused is false", () => {
       const onFocusChange = jest.fn();
       const { getByLabelText } = renderTimePicker({
-        onFocusChange
+        onFocusChange,
       });
 
       fireEvent.change(getByLabelText("Time"), {
-        target: { value: "08:18" }
+        target: { value: "08:18" },
       });
 
       expect(onFocusChange).toHaveBeenCalledTimes(1);
@@ -414,11 +414,11 @@ describe("TimePicker", () => {
       const onFocusChange = jest.fn();
       const { getByLabelText } = renderTimePicker({
         focused: true,
-        onFocusChange
+        onFocusChange,
       });
 
       fireEvent.change(getByLabelText("Time"), {
-        target: { value: "08:18" }
+        target: { value: "08:18" },
       });
 
       expect(onFocusChange).not.toHaveBeenCalled();
@@ -428,7 +428,7 @@ describe("TimePicker", () => {
       const onFocusChange = jest.fn();
       const { container } = renderTimePicker({
         focused: true,
-        onFocusChange
+        onFocusChange,
       });
 
       container.click();
@@ -440,7 +440,7 @@ describe("TimePicker", () => {
     it("does not call onFocusChange on click outside time picker if focused is false", () => {
       const onFocusChange = jest.fn();
       const { container } = renderTimePicker({
-        onFocusChange
+        onFocusChange,
       });
 
       container.click();
@@ -451,12 +451,12 @@ describe("TimePicker", () => {
     it("calls onFocusChange with `{ focused: false }` on shift + tab from first element", () => {
       const onFocusChange = jest.fn();
       const { getByLabelText } = renderTimePicker({
-        onFocusChange
+        onFocusChange,
       });
 
       fireEvent.keyDown(getByLabelText("hours:minutes meridiem"), {
         shiftKey: true,
-        keyCode: 9
+        keyCode: 9,
       });
 
       expect(onFocusChange).toHaveBeenCalledTimes(1);
@@ -466,18 +466,18 @@ describe("TimePicker", () => {
     it("calls onFocusChange with `{ focused: false }` on tab from last element", () => {
       const onFocusChange = jest.fn();
       const { getByLabelText } = renderTimePicker({
-        onFocusChange
+        onFocusChange,
       });
 
       getByLabelText("Time").focus();
       onFocusChange.mockReset();
       fireEvent.keyDown(getByLabelText("Decrement meridiem"), {
-        keyCode: 9
+        keyCode: 9,
       });
 
       expect(onFocusChange).toHaveBeenCalledTimes(1);
       expect(onFocusChange).toHaveBeenCalledWith({
-        focused: false
+        focused: false,
       });
     });
   });
@@ -505,7 +505,7 @@ describe("TimePicker", () => {
       const nextValue = "09:41";
 
       fireEvent.change(inputElement, {
-        target: { value: nextValue }
+        target: { value: nextValue },
       });
 
       expect(inputElement.value).toBe(nextValue);
@@ -530,7 +530,7 @@ describe("timePickerTestUtils", () => {
 
     timePickerTestUtils.makeSelection({
       element,
-      time: null
+      time: null,
     });
 
     expect(element.value).toBe("");
@@ -538,7 +538,7 @@ describe("timePickerTestUtils", () => {
     validateDialValues(rtlUtils, {
       hours: EMPTY_DIAL_VALUE,
       minutes: EMPTY_DIAL_VALUE,
-      meridiem: EMPTY_DIAL_VALUE
+      meridiem: EMPTY_DIAL_VALUE,
     });
   });
 
@@ -548,7 +548,7 @@ describe("timePickerTestUtils", () => {
 
     timePickerTestUtils.makeSelection({
       element,
-      time: "08:18"
+      time: "08:18",
     });
 
     expect(element.value).toBe("08:18 AM");
@@ -556,7 +556,7 @@ describe("timePickerTestUtils", () => {
     validateDialValues(rtlUtils, {
       hours: "08",
       minutes: "18",
-      meridiem: "AM"
+      meridiem: "AM",
     });
   });
 
@@ -575,7 +575,7 @@ describe("timePickerTestUtils", () => {
 
       timePickerTestUtils.makeSelection({
         element,
-        time: ""
+        time: "",
       });
 
       expect(element.value).toBe("");
@@ -588,7 +588,7 @@ describe("timePickerTestUtils", () => {
 
       timePickerTestUtils.makeSelection({
         element,
-        time
+        time,
       });
 
       expect(element.value).toBe(time);

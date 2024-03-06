@@ -1,10 +1,11 @@
 {
-  "extends": ["brown", "brown/jest", "brown/prettier", "brown/prettier/react"],
+  "extends": ["brown", "brown/jest", "brown/prettier"],
   "env": {
     "browser": true
   },
   "rules": {
-    "import/no-extraneous-dependencies": "off"
+    "import/no-extraneous-dependencies": "off",
+    "react/jsx-props-no-spreading": "off"
   },
   "settings": {
     "import/resolver": {

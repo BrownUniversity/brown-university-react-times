@@ -18,7 +18,7 @@ const TimePickerContainer = ({
   const [time, setTime] = useState(initialTime);
   const [focused, setFocused] = useState(initialFocused);
 
-  const handleTimeChange = nextTime => {
+  const handleTimeChange = (nextTime) => {
     setTime(nextTime);
     onTimeChange(nextTime);
   };
@@ -34,7 +34,7 @@ const TimePickerContainer = ({
     onTimeChange: handleTimeChange,
     focused,
     onFocusChange: handleFocusChange,
-    ...restProps
+    ...restProps,
   });
 };
 

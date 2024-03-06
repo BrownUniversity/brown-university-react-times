@@ -14,13 +14,13 @@ import {
   minutesDialOptions,
   meridiemDialOptions,
   getNextDialOption,
-  getPreviousDialOption
+  getPreviousDialOption,
 } from "./utils";
 import debounce from "../../../utils/debounce";
 import {
   DESKTOP_PLACEHOLDER,
   EMPTY_DIAL_VALUE,
-  INVALID_TIME
+  INVALID_TIME,
 } from "../../../constants";
 import { inputCSS } from "../../../styles";
 
@@ -38,7 +38,9 @@ const DesktopInput = styled.input`
 
 const PopperWrapper = styled.div`
   background-color: #fff;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.07);
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.05),
+    0 0 0 1px rgba(0, 0, 0, 0.07);
   border-radius: 3px;
   padding: 22px;
   z-index: 1;
@@ -102,13 +104,15 @@ const ClockWrapper = styled.div`
   outer DesktopTimePicker component
 */
 class DesktopTimePicker extends PureComponent {
-  state = {
-    inputIsDirty: false,
-    inputValue: null,
-    inputValueIsValid: false
-  };
-
-  initialState = this.state;
+  constructor(props) {
+    super(props);
+    this.state = {
+      inputIsDirty: false,
+      inputValue: null,
+      inputValueIsValid: false,
+    };
+    this.initialState = this.state;
+  }
 
   wrapper = React.createRef();
 
@@ -126,8 +130,8 @@ class DesktopTimePicker extends PureComponent {
       // trigger a time change and reset the input value when it becomes valid
       this.props.onTimeChange(
         transformDialValuesToTime(
-          ...transformInputValueToDialValues(inputValue)
-        )
+          ...transformInputValueToDialValues(inputValue),
+        ),
       );
       this.handleInputValueReset();
     } else if (timeChanged && !["", INVALID_TIME].includes(this.props.time)) {
@@ -144,12 +148,12 @@ class DesktopTimePicker extends PureComponent {
     document.removeEventListener("keyDown", this.handleKeydown);
   }
 
-  handleInputValueChange = e => {
+  handleInputValueChange = (e) => {
     const inputValue = e.target.value;
 
     this.setState({
       inputIsDirty: getInputIsDirty(inputValue),
-      inputValue
+      inputValue,
     });
 
     this.handleInputValueValidation(inputValue);
@@ -160,19 +164,20 @@ class DesktopTimePicker extends PureComponent {
   };
 
   handleInputValueValidation = debounce(
-    value => this.setState({ inputValueIsValid: getInputValueIsValid(value) }),
-    250
+    (value) =>
+      this.setState({ inputValueIsValid: getInputValueIsValid(value) }),
+    250,
   );
 
   handleInputValueReset = () => {
     this.setState(this.initialState);
   };
 
-  handleFocusChange = focused => {
+  handleFocusChange = (focused) => {
     this.props.onFocusChange({ focused });
   };
 
-  handleClick = e => {
+  handleClick = (e) => {
     // click outside of time picker
     if (!this.wrapper.current.contains(e.target)) {
       if (this.props.focused) {
@@ -182,7 +187,7 @@ class DesktopTimePicker extends PureComponent {
     }
   };
 
-  handleKeydown = e => {
+  handleKeydown = (e) => {
     // tab key
     if (this.wrapper.current && e.keyCode === 9) {
       // close clock on shift + tab from first element
@@ -250,8 +255,8 @@ class DesktopTimePicker extends PureComponent {
                           transformDialValuesToTime(
                             getNextDialOption(hoursDialOptions, hoursDialValue),
                             minutesDialValue,
-                            meridiemDialValue
-                          )
+                            meridiemDialValue,
+                          ),
                         )
                       }
                       decrement={() =>
@@ -259,11 +264,11 @@ class DesktopTimePicker extends PureComponent {
                           transformDialValuesToTime(
                             getPreviousDialOption(
                               hoursDialOptions,
-                              hoursDialValue
+                              hoursDialValue,
                             ),
                             minutesDialValue,
-                            meridiemDialValue
-                          )
+                            meridiemDialValue,
+                          ),
                         )
                       }
                     />
@@ -281,10 +286,10 @@ class DesktopTimePicker extends PureComponent {
                             hoursDialValue,
                             getNextDialOption(
                               minutesDialOptions,
-                              minutesDialValue
+                              minutesDialValue,
                             ),
-                            meridiemDialValue
-                          )
+                            meridiemDialValue,
+                          ),
                         )
                       }
                       decrement={() =>
@@ -293,10 +298,10 @@ class DesktopTimePicker extends PureComponent {
                             hoursDialValue,
                             getPreviousDialOption(
                               minutesDialOptions,
-                              minutesDialValue
+                              minutesDialValue,
                             ),
-                            meridiemDialValue
-                          )
+                            meridiemDialValue,
+                          ),
                         )
                       }
                     />
@@ -315,9 +320,9 @@ class DesktopTimePicker extends PureComponent {
                             minutesDialValue,
                             getNextDialOption(
                               meridiemDialOptions,
-                              meridiemDialValue
-                            )
-                          )
+                              meridiemDialValue,
+                            ),
+                          ),
                         )
                       }
                       decrement={() =>
@@ -327,9 +332,9 @@ class DesktopTimePicker extends PureComponent {
                             minutesDialValue,
                             getPreviousDialOption(
                               meridiemDialOptions,
-                              meridiemDialValue
-                            )
-                          )
+                              meridiemDialValue,
+                            ),
+                          ),
                         )
                       }
                     />
@@ -352,18 +357,18 @@ DesktopTimePicker.propTypes = {
     "darkEmerald",
     "skyBlue",
     "navy",
-    "idRed"
+    "idRed",
   ]),
   id: PropTypes.string.isRequired,
   time: PropTypes.string,
   onTimeChange: PropTypes.func.isRequired,
   focused: PropTypes.bool.isRequired,
-  onFocusChange: PropTypes.func.isRequired
+  onFocusChange: PropTypes.func.isRequired,
 };
 
 DesktopTimePicker.defaultProps = {
   color: "red",
-  time: null
+  time: null,
 };
 
 export default DesktopTimePicker;

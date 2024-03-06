@@ -1,6 +1,5 @@
 import React from "react";
 import { breakpoints } from "brown-university-styles";
-import { storiesOf } from "@storybook/react";
 import { withKnobs, select, number } from "@storybook/addon-knobs";
 import TimePickerContainer from "../src/components/utils/TimePickerContainer";
 import TimePickerContainerWithValidation from "./components/TimePickerContainerWithValidation";
@@ -14,23 +13,42 @@ const getCommonProps = () => ({
     "darkEmerald",
     "skyBlue",
     "navy",
-    "idRed"
+    "idRed",
   ]),
-  mobileBreakpoint: number("mobileBreakpoint", breakpoints.md)
+  mobileBreakpoint: number("mobileBreakpoint", breakpoints.md),
 });
 
-const renderTimePicker = additionalProps => (
+const renderTimePicker = (additionalProps) => (
   <TimePickerContainer {...additionalProps} {...getCommonProps()}>
     <TimePicker />
   </TimePickerContainer>
 );
 
-storiesOf("TimePicker", module)
-  .addDecorator(withKnobs)
-  .add("default", () => renderTimePicker())
-  .add("with initial time", () => renderTimePicker({ time: "09:41" }))
-  .add("with validation", () => (
+export default {
+  title: "TimePicker",
+  decorators: [withKnobs],
+};
+
+export const Default = () => renderTimePicker();
+
+Default.story = {
+  name: "default",
+};
+
+export const WithInitialTime = () => renderTimePicker({ time: "09:41" });
+
+WithInitialTime.story = {
+  name: "with initial time",
+};
+
+export function WithValidation() {
+  return (
     <TimePickerContainerWithValidation {...getCommonProps()}>
       <TimePicker />
     </TimePickerContainerWithValidation>
-  ));
+  );
+}
+
+WithValidation.story = {
+  name: "with validation",
+};
